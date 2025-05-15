@@ -14,13 +14,13 @@ The PDF and HTML are automatically generated and available in the `site.zip` art
 
 ## 2 How To Contribute
 
-The recommended practice to contribute is by creating a pull request with changes that is addressing a specific GitHub issue. There are two strategies that can be used to accomodate individuals with various levels of git experience. They can be broken down into either:
+The recommended practice to contribute is by creating a pull request with a specific GitHub issue that it is addressing. There are two strategies that can be used to accommodate individuals with various levels of git experience. They can be broken down into either:
 
 - Without Cloning Repository (Easy)
 - Cloning Repository (Preferred)
 
 The high level process for contributing can be summarized by the image as seen below.
-![development-issue-create-branch](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/blob/main/documentation/images/pr-process.png)
+![development-issue-create-branch](https://github.com/Spatial-Web-Foundation/HSML-Implementation-Specification/blob/main/documentation/images/pr-process.png)
 
 The image shown above outlines the following high-level steps:
 
@@ -42,29 +42,29 @@ The image shown above outlines the following high-level steps:
 
      Note: If a branch has already been created for this issue, the name of the branch will be shown instead.
 
-     ![development-issue-create-branch](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/blob/main/documentation/images/development-issue-create-branch.png)
+     ![development-issue-create-branch](https://github.com/Spatial-Web-Foundation/HSML-Implementation-Specification/blob/main/documentation/images/development-issue-create-branch.png)
 
 2. <u>Open browser vscode editor</u>
 
-   - Click [here](https://github.dev/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2) to open a browser version of vscode with the repository checked out.
+   - Click [here](https://github.dev/Spatial-Web-Foundation/HSML-Implementation-Specification) to open a browser version of vscode with the repository checked out.
 
 3. <u>Checkout desired branch</u>
 
    - In order to checkout the desired branch, click the currently checked out branch in the bottom left of the editor. See the image below.
 
-     ![vscode-change-branch-1](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/blob/main/documentation/images/vscode-change-branch-1.png)
+     ![vscode-change-branch-1](https://github.com/Spatial-Web-Foundation/HSML-Implementation-Specification/blob/main/documentation/images/vscode-change-branch-1.png)
 
    - Select, from the list or by searching, the desired branch from the pop window.
 
-     ![vscode-change-branch-2](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/blob/main/documentation/images/vscode-change-branch-2.png)
+     ![vscode-change-branch-2](https://github.com/Spatial-Web-Foundation/HSML-Implementation-Specification/blob/main/documentation/images/vscode-change-branch-2.png)
 
 4. <u>Contribute (commit) to branch</u>
 
-   - Once you've made changes (create, update, or delete) to the checked out branch, the changes need to be commited.
+   - Once you've made changes (create, update, or delete) to the checked out branch, the changes need to be committed.
 
    - Navigate to the commit window by clicking the icon from the left vertical pane. See image below.
 
-   ![vscode-source-control-view](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/blob/main/documentation/images/vscode-source-control-view.png)
+   ![vscode-source-control-view](https://github.com/Spatial-Web-Foundation/HSML-Implementation-Specification/blob/main/documentation/images/vscode-source-control-view.png)
 
    - Add (stage) the files that you would like to commit by pressing the "+" icon next to the files.
 
@@ -72,7 +72,7 @@ The image shown above outlines the following high-level steps:
 
    - Click the commit button that looks like a checkmark on the top right of the source control view panel. See image below.
 
-   ![vscode-commit-button](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/blob/main/documentation/images/vscode-commit-button.png)
+   ![vscode-commit-button](https://github.com/Spatial-Web-Foundation/HSML-Implementation-Specification/blob/main/documentation/images/vscode-commit-button.png)
 
 5. <u>Create a pull request (PR)</u>
 
@@ -86,7 +86,7 @@ The image shown above outlines the following high-level steps:
      - _Modify the description of the PR_ - edit the description of the pull request (i.e. edit the empty description) and typing "Closes" followed by the issue reference on a NEW line. For example, `Closes #123` on a new line in the description will automatically link the issue to the pull request `Closes #123`. Multiple issues can be referenced in the pull request by repeating for each issue to be closed on a new line in the description.
      - _Manually associate issue with PR_ - click the gear icon next to the "Development" section in the right column of the pull request's view. This will prompt a drop down that can be used to search for and associate one or more issues to be closed when the pull request is merged to the "main" branch.
 
-       ![section called "Development"](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/blob/main/documentation/images/development-part-of-PR-page.png)
+       ![section called "Development"](https://github.com/Spatial-Web-Foundation/HSML-Implementation-Specification/blob/main/documentation/images/development-part-of-PR-page.png)
 
 7. <u>Add reviewers</u>
    - In the upper right of the PR view, add the editors, Christine (@cperey) and Prasaanth (@PrasaanthSridharan). In addition, add the lead of the clause associated with the clause or subclause you are changing (assuming that you are not the clause lead). If you create the PR, you can't also be a reviewer.
@@ -121,7 +121,7 @@ The image shown above outlines the following high-level steps:
      - _Modify the description of the PR_ - edit the description of the pull request (i.e. edit the empty description) and typing "Closes" followed by the issue reference on a NEW line. For example, `Closes #123` on a new line in the description will automatically link the issue to the pull request `Closes #123`. Multiple issues can be referenced in the pull request by repeating for each issue to be closed on a new line in the description.
      - _Manually associate issue with PR_ - click the gear icon next to the "Development" section in the right column of the pull request's view. This will prompt a drop down that can be used to search for and associate one or more issues to be closed when the pull request is merged to the "main" branch.
 
-       ![section called "Development"](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/blob/main/documentation/images/development-part-of-PR-page.png)
+       ![section called "Development"](https://github.com/Spatial-Web-Foundation/HSML-Implementation-Specification/blob/main/documentation/images/development-part-of-PR-page.png)
 
 6. <u>Add reviewers</u>
    - In the upper right of the PR view, add the editors, Christine (@cperey) and Prasaanth (@PrasaanthSridharan). In addition, add the lead of the clause associated with the clause or subclause you are changing (assuming that you are not the clause lead). If you create the PR, you can't also be a reviewer.
