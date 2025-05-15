@@ -1,17 +1,12 @@
 [![generate](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/actions/workflows/generate.yml/badge.svg)](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/actions/workflows/generate.yml) [![nightly artifacts cleanup](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/actions/workflows/nightly_cleanup.yml/badge.svg)](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/actions/workflows/nightly_cleanup.yml) [![post status report](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/actions/workflows/post_status_report.yml/badge.svg)](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/actions/workflows/post_status_report.yml)
 
-# IEEEP2874-D2
+# HSML Implementation Specification
 
-This repo contains the contents of the P2874 D1 (from December 1 2021), separated into:
+This repo contains the contents of the HSML Implementation Specification.
 
-- `source/SWF-Corpus` - raw materials from D1 to be considered as foundation for the SWF Corpus and
-- `source/ieee-p2874` - all content considered or recommended for development of D2
+At this time and until further notice, only SWF employees and advisors can access this repository. All contents are SWF copyright.
 
-This repo also contains the [releases (PDF)](https://github.com/Spatial-Web-Foundation/SWF-Corpus_and_IEEEP2874-D2/releases) generated via a bash script using docker.
-
-At this time and until further notice, only SWF employees and advisors can access this repository. All contents is SWF copyright.
-
-https://app.usebubbles.com/qgVNGBkdFQbNevxAJRwNum/p2874-d2-contribution-strategy 
+Most of the information below is provided in [this video](https://app.usebubbles.com/qgVNGBkdFQbNevxAJRwNum/p2874-d2-contribution-strategy). 
 
 ## 1 Getting Started
 
