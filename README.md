@@ -89,7 +89,7 @@ The image shown above outlines the following high-level steps:
        ![section called "Development"](https://github.com/Spatial-Web-Foundation/HSML-Implementation-Specification/blob/main/documentation/images/development-part-of-PR-page.png)
 
 7. <u>Add reviewers</u>
-   - In the upper right of the PR view, add the editors, Christine (@cperey) and Prasaanth (@PrasaanthSridharan). In addition, add the lead of the clause associated with the clause or subclause you are changing (assuming that you are not the clause lead). If you create the PR, you can't also be a reviewer.
+   - In the upper right of the PR view, add the editors, Christine (@cperey) and Reese (@ReesePlews). In addition, add the lead of the clause associated with the clause or subclause you are changing (assuming that you are not the clause lead). If you create the PR, you can't also be a reviewer.
 
 ### 2.2 Cloning Repository (Preferred)
 
@@ -124,7 +124,7 @@ The image shown above outlines the following high-level steps:
        ![section called "Development"](https://github.com/Spatial-Web-Foundation/HSML-Implementation-Specification/blob/main/documentation/images/development-part-of-PR-page.png)
 
 6. <u>Add reviewers</u>
-   - In the upper right of the PR view, add the editors, Christine (@cperey) and Prasaanth (@PrasaanthSridharan). In addition, add the lead of the clause associated with the clause or subclause you are changing (assuming that you are not the clause lead). If you create the PR, you can't also be a reviewer.
+   - In the upper right of the PR view, add the editors, Christine (@cperey) and Reese (@ReesePlews). In addition, add the lead of the clause associated with the clause or subclause you are changing (assuming that you are not the clause lead). If you create the PR, you can't also be a reviewer.
    
 #### 2.2.2 Useful Visual Studio Code Extensions
 
