@@ -1,0 +1,52 @@
+[[hsml-entity]]
+=== Class: hsml:Entity
+
+The class `hsml:Entity` corresponds to the base concept **ENTITY** in IEEE P2874 Section 6.6.2, defined as “that which is perceived, known, or inferred to exist, has existed, or is anticipated to exist”. As the root of the Spatial Web ontology, `hsml:Entity` provides the universal foundation upon which all other HSML classes (Activities, Agents, Domains, Channels, Credentials, Hyperspaces, and Time) are built.
+
+**Key Requirements**
+
+- **Identity**: Every `hsml:Entity` **SHALL** include a Spatial Web Identifier (`hsml:swid`) conformant with W3C DID Core, enabling decentralized resolution and trust.  
+- **Extensibility**: An entity **MAY** declare one or more subclasses to specialize its semantics for domain- or application-specific modeling.  
+- **Credentials**: An entity **MAY** link to zero or more #hsml:Credential# instances, supporting verifiable claims and access control.
+
+These requirements ensure that all HSML elements share a consistent identity mechanism, can be extended without altering the core specification, and support governed interactions via credentials. By acting as a polymorphic base class, `hsml:Entity` enables HSML-compliant software to uniformly ingest, validate, and manipulate heterogeneous spatial-web constructs, providing the semantic interoperability and governance features mandated by IEEE P2874.
+
+
+
+
+==== Class Definition
+
+[cols="1,3"]
+|===
+
+| RDF Class
+| +hsml:Entity+
+
+| Definition
+| An _ENTITY_ is “that which is perceived, known, or inferred to exist, has existed, or is anticipated to exist.” 
+
+| Subclass Of
+|#owl:Thing#
+
+| Usage Note
+| Instances **SHALL** include `hsml:swid` as defined in P2874 §6.6.2; **MAY** include `rdfs:label` for human-readable naming; and **MAY** link to one or more credentials via `hsml:hasCredential` to support verifiable claims and governance.
+
+| Rationale
+| As the root of the Spatial Web ontology, #hsml:Entity# provides a uniform, extensible foundation for all HSML constructs, enabling polymorphic processing and semantic interoperability across heterogeneous systems in compliance with IEEE P2874 Section 6.6.1.
+|===
+
+
+=== Properties
+
+[cols="1,1,3,1",options="header"]
+|===
+| Predicate             | IRI                                                             | Description                                                                                           | Cardinality
+
+| +rdf:type+            | `http://www.w3.org/1999/02/22-rdf-syntax-ns#type`               | Declares the resource as an instance of +hsml:Entity+.                                                 | 1
+
+| `hsml:swid`           | `https://schema.spatialwebfoundation.org/hsml#swid`             | Spatial Web Identifier conformant with W3C DID Core; each Entity **SHALL** have a SWID.                 | 1..1 
+
+| `rdfs:label`          | `http://www.w3.org/2000/01/rdf-schema#label`                    | Optional human-readable name for the Entity.                                                           | 0..1
+
+| `hsml:hasCredential`  | `https://schema.spatialwebfoundation.org/hsml#hasCredential`    | Links to one or more credentials associated with the Entity.                                           | 0..* 
+|===
