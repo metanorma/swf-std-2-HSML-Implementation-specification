@@ -1,1 +1,6 @@
 == Introduction
+
+=== Background and Motivation
+=== Relationship to IEEE P2874 (Spatial Web Foundation)
+=== Goals and Benefits of HSML
+=== Terminology Overview

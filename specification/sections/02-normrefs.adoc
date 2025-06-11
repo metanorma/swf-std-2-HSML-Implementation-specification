@@ -1,1 +1,4 @@
 == Normative references
+
+=== Core Standards (e.g., IEEE P2874, W3C RDF/OWL, SHACL, SKOS)
+=== Related Specifications (e.g., HSTP, DID Core, GeoSPARQL)

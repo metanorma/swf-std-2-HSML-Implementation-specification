@@ -35,11 +35,11 @@ include::sections/02-normrefs.adoc[]
 
 include::sections/03-terms.adoc[]
 
-include::sections/04-technical_clause.adoc[]
+include::sections/04-conventions_and_notations.adoc[]
 
-include::sections/05-technical_clause.adoc[]
+include::sections/05-hsml_core_model.adoc[]
 
-include::sections/06-technical_clause.adoc[]
+include::sections/06-hsml_extensions_and_profiles.adoc[]
 
 include::sections/07-technical_clause.adoc[]
 
