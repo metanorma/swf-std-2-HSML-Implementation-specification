@@ -1,0 +1,39 @@
+[[hsml-concept]]
+=== Class: hsml:Concept
+
+
+
+
+[[hsml-concept-class]]
+==== Class Definition
+
+[cols="1,3"]
+|===
+
+| RDF Class
+| hsml:Concept
+| Is Abstract
+| No
+
+| Definition
+| 
+
+| Subclass Of
+| <<hsml_entity>>
+
+| Usage Note
+| 
+
+| Rationale
+| 
+|===
+
+[[hsml-concept-props]]
+=== Properties
+
+[cols="1,1,3,1",options="header"]
+|===
+| Predicate             | IRI                                                             | Description                                                                                           | Cardinality
+
+
+|===

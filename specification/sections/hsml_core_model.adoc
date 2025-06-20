@@ -1,0 +1,21 @@
+== HSML Core Model
+
+include::hsml_core_model/hsml_entity.adoc[]
+
+include::hsml_core_model/hsml_domain.adoc[]
+
+include::hsml_core_model/hsml_hyperspace.adoc[]
+
+include::hsml_core_model/hsml_agent.adoc[]
+
+include::hsml_core_model/hsml_person.adoc[]
+
+include::hsml_core_model/hsml_organization.adoc[]
+
+include::hsml_core_model/hsml_spatial_feature.adoc[]
+
+include::hsml_core_model/hsml_concept.adoc[]
+
+include::hsml_core_model/hsml_thing.adoc[]
+
+include::hsml_core_model/hsml_activity.adoc[]

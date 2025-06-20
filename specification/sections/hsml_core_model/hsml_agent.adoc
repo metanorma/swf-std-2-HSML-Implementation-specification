@@ -1,0 +1,39 @@
+[[hsml-agent]]
+=== Class: hsml:Agent
+
+
+
+
+[[hsml-agent-class]]
+==== Class Definition
+
+[cols="1,3"]
+|===
+
+| RDF Class
+| hsml:Agent
+| Is Abstract
+| No
+
+| Definition
+| 
+
+| Subclass Of
+| <<hsml_entity>>
+
+| Usage Note
+| 
+
+| Rationale
+| 
+|===
+
+[[hsml-agent-props]]
+=== Properties
+
+[cols="1,1,3,1",options="header"]
+|===
+| Predicate             | IRI                                                             | Description                                                                                           | Cardinality
+
+
+|===

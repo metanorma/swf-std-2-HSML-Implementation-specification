@@ -1,7 +1,0 @@
-== HSML Core Model
-
-include::051-hsml_entity.adoc[]
-
-include::052-hsml_domain.adoc[]
-
-include::053-hsml_hyperspace.adoc[]

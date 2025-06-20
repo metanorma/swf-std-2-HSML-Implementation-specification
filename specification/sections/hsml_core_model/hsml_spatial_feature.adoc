@@ -1,0 +1,39 @@
+[[hsml-spatial_feature]]
+=== Class: hsml:SpatialFeature
+
+
+
+
+[[hsml-spatial_feature-class]]
+==== Class Definition
+
+[cols="1,3"]
+|===
+
+| RDF Class
+| hsml:SpatialFeature
+| Is Abstract
+| No
+
+| Definition
+| 
+
+| Subclass Of
+| <<hsml_entity>>
+
+| Usage Note
+| 
+
+| Rationale
+| 
+|===
+
+[[hsml-spatial_feature-props]]
+=== Properties
+
+[cols="1,1,3,1",options="header"]
+|===
+| Predicate             | IRI                                                             | Description                                                                                           | Cardinality
+
+
+|===

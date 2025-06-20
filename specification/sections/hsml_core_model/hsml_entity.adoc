@@ -13,7 +13,7 @@ These requirements ensure that all HSML elements share a consistent identity mec
 
 
 
-
+[[hsml-entity-class]]
 ==== Class Definition
 
 [cols="1,3"]
@@ -21,32 +21,33 @@ These requirements ensure that all HSML elements share a consistent identity mec
 
 | RDF Class
 | +hsml:Entity+
+| Is Abstract
+| Yes
 
 | Definition
 | An _ENTITY_ is “that which is perceived, known, or inferred to exist, has existed, or is anticipated to exist.” 
 
 | Subclass Of
-|#owl:Thing#
+| owl:Thing
 
 | Usage Note
-| Instances **SHALL** include `hsml:swid` as defined in P2874 §6.6.2; **MAY** include `rdfs:label` for human-readable naming; and **MAY** link to one or more credentials via `hsml:hasCredential` to support verifiable claims and governance.
+| Instances **SHALL** include `hsml:swid` as defined in P2874 §6.6.2; **MAY** include `rdfs:label` for human-readable naming.
+`hsml:Entity` is an abstract class and should not be instantiated directly. Only its subclasses should be instantiated.
 
 | Rationale
-| As the root of the Spatial Web ontology, #hsml:Entity# provides a uniform, extensible foundation for all HSML constructs, enabling polymorphic processing and semantic interoperability across heterogeneous systems in compliance with IEEE P2874 Section 6.6.1.
+| As the root of the Spatial Web ontology, hsml:Entity provides a uniform, extensible foundation for all HSML constructs, enabling polymorphic processing and semantic interoperability across heterogeneous systems in compliance with IEEE P2874 Section 6.6.1.
 |===
 
-
+[[hsml-entity-props]]
 === Properties
 
 [cols="1,1,3,1",options="header"]
 |===
 | Predicate             | IRI                                                             | Description                                                                                           | Cardinality
 
-| +rdf:type+            | `http://www.w3.org/1999/02/22-rdf-syntax-ns#type`               | Declares the resource as an instance of +hsml:Entity+.                                                 | 1
+| +rdf:type+            | `http://www.w3.org/1999/02/22-rdf-syntax-ns#type[rdf:type]`               | Declares the resource as an instance of +hsml:Entity+.                                                 | 1
+| +hsml:swid+           | `https://schema.spatialwebfoundation.org/hsml#swid[hsml:swid]`             | Spatial Web Identifier conformant with W3C DID Core; each Entity **SHALL** have a SWID.           | 1..1
 
-| `hsml:swid`           | `https://schema.spatialwebfoundation.org/hsml#swid`             | Spatial Web Identifier conformant with W3C DID Core; each Entity **SHALL** have a SWID.                 | 1..1 
-
-| `rdfs:label`          | `http://www.w3.org/2000/01/rdf-schema#label`                    | Optional human-readable name for the Entity.                                                           | 0..1
-
-| `hsml:hasCredential`  | `https://schema.spatialwebfoundation.org/hsml#hasCredential`    | Links to one or more credentials associated with the Entity.                                           | 0..* 
+| +rdfs:label+          | `http://www.w3.org/2000/01/rdf-schema#label[rdfs:label]`                    | Optional human-readable name for the Entity.                                                           | 0..1
+| +rdfs:comment+          | `http://www.w3.org/2000/01/rdf-schema#comment[rdfs:comment]`                    | Optional human-readable description for the Entity.                                                           | 0..1
 |===

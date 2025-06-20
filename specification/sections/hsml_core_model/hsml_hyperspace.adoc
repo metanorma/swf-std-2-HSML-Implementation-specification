@@ -1,0 +1,39 @@
+[[hsml-hyperspace]]
+=== Class: hsml:Hyperspace
+
+
+
+
+[[hsml-hyperspace-class]]
+==== Class Definition
+
+[cols="1,3"]
+|===
+
+| RDF Class
+| hsml:Hyperspace
+| Is Abstract
+| No
+
+| Definition
+| 
+
+| Subclass Of
+| <<hsml_entity>>
+
+| Usage Note
+| 
+
+| Rationale
+| 
+|===
+
+[[hsml-hyperspace-props]]
+=== Properties
+
+[cols="1,1,3,1",options="header"]
+|===
+| Predicate             | IRI                                                             | Description                                                                                           | Cardinality
+
+
+|===
