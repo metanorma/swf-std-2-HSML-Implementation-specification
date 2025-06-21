@@ -38,6 +38,10 @@ These requirements ensure that all HSML elements share a consistent identity mec
 | As the root of the Spatial Web ontology, hsml:Entity provides a uniform, extensible foundation for all HSML constructs, enabling polymorphic processing and semantic interoperability across heterogeneous systems in compliance with IEEE P2874 Section 6.6.1.
 |===
 
+
+[[hsml-entity-properties]]
+====  Properties
+
 [[hsml-entity-properties-summary]]
 =====  Properties Summary
 
@@ -45,17 +49,15 @@ These requirements ensure that all HSML elements share a consistent identity mec
 |===
 | Predicate             | JSON(-LD) name                                                             | Description                                                                                           | Cardinality
 
-| <<property-entity-type,rdf:type>>       | @type               | Declares the resource as an instance of +hsml:Entity+.                                                 | 1
+| <<property-entity-type,rdf:type>>       | @type               | Declares the resource as an instance of +hsml:Entity+.                                                 | 1..n
 | <<property-entity-swid,hsml:swid>>           |swid             | Spatial Web Identifier conformant with W3C DID Core; each Entity **SHALL** have a SWID.           | 1..1
 
 | <<property-entity-label,rdfs:label>>        | label                 | Optional human-readable name for the Entity.                                                           | 0..1
 |<<property-entity-comment,rdfs:comment>>         | comment                  | Optional human-readable description for the Entity.                                                           | 0..1
 |===
 
-====  Properties
-
 [[property-entity-type]]
-===== Property: swid
+===== Property: type
 
 [cols="2,4"]
 |===
@@ -93,7 +95,7 @@ These requirements ensure that all HSML elements share a consistent identity mec
 [cols="2,4"]
 |===
 |**Property**       | rdfs:label
-|**IRI**            | `http://www.w3.org/1999/02/22-rdf-syntax-ns#label`
+|**IRI**            | `http://www.w3.org/2000/01/rdf-schema#label`
 |**JSON name**  | label
 |**Requirement Level**    | **Recommended**
 |**Cardinality**    | 0..1
@@ -109,7 +111,7 @@ These requirements ensure that all HSML elements share a consistent identity mec
 [cols="2,4"]
 |===
 |**Property**       | rdfs:comment
-|**IRI**            | `http://www.w3.org/1999/02/22-rdf-syntax-ns#comment`
+|**IRI**            | `http://www.w3.org/2000/01/rdf-schema#comment`
 |**JSON name**  | comment
 |**Requirement Level**    | **Recommended**
 |**Cardinality**    | 0..1
