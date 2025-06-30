@@ -1,0 +1,138 @@
+[[hsml-contract]]
+=== Class: hsml:Contract
+
+The class `hsml:Contract` realises the **CONTRACT** concept in IEEE P2874 § 6.6.4:  
+
+*“A binding agreement between two or more parties—enforceable by law or internal policy—that governs one or more Activities in the Spatial Web.”*
+
+`hsml:Contract` links the initiating *Domain*, the participating *Agents*, the governed *Activity* (or Activities), and the evolving *ContractStatus* instances that capture its lifecycle.
+
+**Key Requirements**
+
+* **Identity** Every Contract **SHALL** possess a Spatial Web Identifier (`hsml:swid`, W3C DID Core-compliant).  
+* **Initiator** Exactly one `hsml:isRequestedBy` **SHALL** reference the *Domain* that issued the request.  
+* **Acceptance** One or more `hsml:isAcceptedBy` references **SHALL** identify the Agent(s) that accept the terms.  
+* **Fulfilment** One or more `hsml:isFulfilledBy` references **SHALL** identify the Agent(s) responsible for execution.  
+* **Governed Activity** One or more `hsml:contractFor` references **SHALL** identify the Activity(ies) the contract governs.  
+* **Lifecycle** One or more `hsml:contractStatus` references **SHALL** record the contract’s state; each status instance **SHOULD** carry a timestamp (`prov:atTime`) for auditability.  
+* **Extensibility** Additional clauses, policy links, or monetary terms **MAY** be added via further properties or subclasses without altering these core semantics.
+
+These rules guarantee that every contract is discoverable, auditable, and machine-actionable across Spatial-Web systems.
+
+[[hsml-contract-class]]
+==== Class Definition
+
+[cols="1,3"]
+|===
+| **RDF Class** | +hsml:Contract+
+| **Is Abstract** | No
+| **Definition** | A binding agreement governing the execution of one or more Activities by specific Agents within a Domain context.
+| **Subclass Of** | hsml:Entity
+| **Usage Note** | Contracts must carry: `hsml:swid`, exactly one initiating Domain, ≥ 1 accepting Agent, ≥ 1 fulfilling Agent, ≥ 1 governed Activity, and ≥ 1 lifecycle status instance.
+| **Rationale** | Provides the normative layer (rights, obligations, state) demanded by P2874 for governed interactions in the Spatial Web.
+|===
+
+
+[[hsml-contract-properties-summary]]
+==== Properties Summary
+
+[cols="1,1,3,1",options="header"]
+|===
+| Predicate                           | JSON(-LD) name | Description                                                               | Cardinality
+
+| <<property-contract-type,rdf:type>>                 | @type            | Declares the resource as an instance of +hsml:Contract+.                   | 1..n
+
+| <<property-contract-swid,hsml:swid>>                | swid             | Spatial Web Identifier conformant with W3C DID Core.                       | 1
+
+| <<property-contract-isRequestedBy,hsml:isRequestedBy>>  | requestedBy      | The *Domain* that initiated or requested this contract.                    | 1
+
+| <<property-contract-isAcceptedBy,hsml:isAcceptedBy>>    | acceptedBy       | The *Agent* (or Agents) that accepted the contract.                        | 1..n
+
+| <<property-contract-isFulfilledBy,hsml:isFulfilledBy>>  | fulfilledBy      | The *Agent* responsible for fulfilling the contractual obligations.        | 1..n
+
+| <<property-contract-contractStatus,hsml:contractStatus>>| contractStatus   | Current lifecycle status of the contract (links to a +hsml:ContractStatus+ instance). | 1
+
+| <<property-contract-hasParticipation,hsml:hasParticipation>>| hasParticipation | Links to participation records detailing which agents participated, their roles, and other metadata. | 0..n
+|===
+
+|===
+
+
+[[property-contract-isRequestedBy]]
+===== Property: isRequestedBy
+[cols="2,4"]
+|===
+| **Property**        | hsml:isRequestedBy
+| **IRI**             | `https://schema.spatialwebfoundation.org/hsml#isRequestedBy`
+| **JSON name**       | requestedBy
+| **Requirement Level** | **Mandatory**
+| **Cardinality**     | 1
+| **Domain**          | hsml:Contract
+| **Range**           | hsml:Domain
+| **Definition**      | Identifies the *Domain* that initiated or requested creation of the contract.
+| **Usage Note**      | Exactly one initiating Domain is recorded.
+|===
+
+
+[[property-contract-isAcceptedBy]]
+===== Property: isAcceptedBy
+[cols="2,4"]
+|===
+| **Property**        | hsml:isAcceptedBy
+| **IRI**             | `https://schema.spatialwebfoundation.org/hsml#isAcceptedBy`
+| **JSON name**       | acceptedBy
+| **Requirement Level** | **Mandatory**
+| **Cardinality**     | 1..n
+| **Domain**          | hsml:Contract
+| **Range**           | hsml:Agent
+| **Definition**      | Agent(s) formally accepting the contract.
+| **Usage Note**      | Multi-party contracts list every accepting Agent.
+|===
+
+
+[[property-contract-isFulfilledBy]]
+===== Property: isFulfilledBy
+[cols="2,4"]
+|===
+| **Property**        | hsml:isFulfilledBy
+| **IRI**             | `https://schema.spatialwebfoundation.org/hsml#isFulfilledBy`
+| **JSON name**       | fulfilledBy
+| **Requirement Level** | **Mandatory**
+| **Cardinality**     | 1..n
+| **Domain**          | hsml:Contract
+| **Range**           | hsml:Agent
+| **Definition**      | Agent(s) tasked with fulfilling the contractual obligations.
+| **Usage Note**      | Often—but not always—the same Agent(s) as *acceptedBy*. 
+|===
+
+
+[[property-contract-contractStatus]]
+===== Property: contractStatus
+[cols="2,4"]
+|===
+| **Property**        | hsml:contractStatus
+| **IRI**             | `https://schema.spatialwebfoundation.org/hsml#contractStatus`
+| **JSON name**       | contractStatus
+| **Requirement Level** | **Mandatory**
+| **Cardinality**     | 1
+| **Domain**          | hsml:Contract
+| **Range**           | hsml:ContractStatus    // enumeration or ontology class
+| **Definition**      | The *current* lifecycle status of the contract (e.g., _Requested_, _Accepted_, _Fulfilled_, _Cancelled_).
+| **Usage Note**      | For audit trails use `hsml:hasStatusRecord` (see § Status History) to record timestamped changes.
+|===
+
+
+[[property-contract-hasParticipation]]
+===== Property: hasParticipation
+[cols="2,4"]
+|===
+| **Property**        | hsml:hasParticipation
+| **IRI**             | `https://schema.spatialwebfoundation.org/hsml#hasParticipation`
+| **JSON name**       | hasParticipation
+| **Requirement Level** | Optional
+| **Cardinality**     | 0..n
+| **Domain**          | hsml:Contract
+| **Range**           | hsml:ContractParticipation
+| **Definition**      | Links the contract to detailed participation records, enabling explicit tracking of each participating agent, their role, and optional temporal metadata.
+| **Usage Note**      | Participation records support fine-grained audit trails, compliance checking, and semantic clarity in contractual relationships.
+|===

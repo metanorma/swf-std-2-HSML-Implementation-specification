@@ -1,0 +1,70 @@
+[[hsml-participation]]
+=== Class: hsml:Participation
+
+`hsml:Participation` is the generic link object that models an entity's involvement in a host resource (e.g., a Contract, Event, or Activity). It is a reified relationship that states:
+
+* What entity is involved (via hsml:participantEntity),
+* What role it plays (via hsml:hasRole), and
+* If needed,  at what time (via prov:atTime).
+
+This pattern is fundamental in the Spatial Web because it provides a **standardized, reusable mechanism** for describing and querying participation across heterogeneous contexts. Whether modeling collaborative activities between agents, contractual agreements, or sensor observations, this design enables interoperability, clarity, and governance. It prevents model duplication and ensures that agentic, legal, and procedural interactions are captured consistently—critical for maintaining trust, accountability, and semantic precision in the distributed Spatial Web.
+
+[[hsml-participation-class]]
+==== Class Definition
+[cols="1,3"]
+|===
+| RDF Class | +hsml:Participation+
+| Is Abstract | No
+| Definition | A reified relationship that captures an entity's specific involvement in a host resource (e.g., a Contract, Event, or Activity). It serves as the bridge connecting the entity and its role to the context.
+| Usage Note | Host resources (like Contract or Event) SHOULD use a property such as hsml:hasParticipation to link to one or more instances of hsml:Participation. This makes the model explicit and easier to query.
+| Rationale | Centralizes the {entity, role, time} pattern for maximum reuse. This single, robust pattern can describe the involvement of agents, artifacts, or even other activities in any situation, preventing model duplication.
+|===
+
+[[hsml-participation-properties]]
+==== Properties
+
+[[hsml-participation-properties-summary]]
+===== Properties Summary
+[cols="1,1,3,1",options="header"]
+|===
+| Predicate | JSON(-LD) name | Description | Cardinality
+| <<participation-entity,hsml:participantEntity>> | participantEntity | The entity playing the role. | 1
+| <<participation-hasRole,hsml:hasRole>> | hasRole | The `hsml:Role` that describes the function or position of the participant. | 1
+| <<participation-atTime,prov:atTime>> | atTime | Timestamp when the participation became effective. | 0..1
+|===
+
+[[participation-entity]]
+===== Property: hsml:participantEntity
+[cols="2,4"]
+|===
+| Property | hsml:participantEntity
+| IRI | https://schema.spatialwebfoundation.org/hsml#participantEntity
+| Requirement | Mandatory
+| Cardinality | Exactly one (1)
+| Range | hsml:Entity
+| Definition | The actual resource (agent, physical object, digital artifact, etc.) that is involved in the context. This property links the Participation instance to the participating entity itself.
+|===
+
+[[participation-hasRole]]
+===== Property: hsml:hasRole
+[cols="2,4"]
+|===
+| Property | hsml:hasRole
+| IRI | https://schema.spatialwebfoundation.org/hsml#hasRole
+| Requirement | Mandatory
+| Cardinality | Exactly one (1)
+| Range | hsml:Role
+| Definition | The role the participant entity fulfills within the participation (e.g., client, sensor, certifier). This references a controlled vocabulary of roles.
+|===
+
+[[participation-atTime]]
+===== Property: prov:atTime
+[cols="2,4"]
+|===
+| Property | prov:atTime
+| IRI | http://www.w3.org/ns/prov#atTime
+| Requirement | Optional
+| Cardinality | Zero or one (0..1)
+| Range | xsd:dateTime
+| Definition | The specific date and time when the participation became effective or was recorded.
+|===
