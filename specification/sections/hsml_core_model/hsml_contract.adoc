@@ -55,7 +55,6 @@ These rules guarantee that every contract is discoverable, auditable, and machin
 | <<property-contract-hasParticipation,hsml:hasParticipation>>| hasParticipation | Links to participation records detailing which agents participated, their roles, and other metadata. | 0..n
 |===
 
-|===
 
 
 [[property-contract-isRequestedBy]]
