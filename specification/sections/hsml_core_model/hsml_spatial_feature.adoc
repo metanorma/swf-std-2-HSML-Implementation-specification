@@ -1,34 +1,26 @@
-[[hsml-spatial_feature]]
+[[hsml-spatialfeature]]
 === Class: hsml:SpatialFeature
 
+The class hsml:SpatialFeature realises the SPATIAL FEATURE concept, corresponding to the GEOGRAPHIC DOMAIN type described in IEEE P2874 § 6.6.3:
 
+“A SPATIAL FEATURE is an ENTITY representing a location-bound or geometry-bearing element within a Domain, corresponding to a GEOGRAPHIC DOMAIN type where position, extent, or spatial relationships are essential.”
 
+hsml:SpatialFeature represents real or abstract entities anchored in space — such as landmarks, boundaries, sensor sites, or natural features — that are meaningful in spatial reasoning and analysis in the Spatial Web. It binds semantic entities to geospatial structure.
 
-[[hsml-spatial_feature-class]]
+[[hsml-spatialfeature-class]]
 ==== Class Definition
 
 [cols="1,3"]
 |===
-
-| RDF Class
-| hsml:SpatialFeature
-| Is Abstract
-| No
-
-| Definition
-| 
-
-| Subclass Of
-| <<hsml_entity>>
-
-| Usage Note
-| 
-
-| Rationale
-| 
+| RDF Class | +hsml:SpatialFeature+
+| Is Abstract | No
+| Definition | An entity that represents a location-bound or geometry-bearing element of the GEOGRAPHIC DOMAIN type in the Spatial Web.
+| Subclass Of | hsml:Entity
+| Usage Note | SpatialFeatures link semantic entities to geospatial structures (geometry, topology, metric) for reasoning, mapping, or analysis.
+| Rationale | Provides a formal mechanism to model GEOGRAPHIC DOMAIN instances (per P2874) and bind entities to spatial coordinates, shapes, and relationships.
 |===
 
-[[hsml-spatial_feature-props]]
+[[hsml-spatialfeature-properties-summary]]
 ==== Properties
 
 [cols="1,1,3,1",options="header"]

@@ -1,7 +1,11 @@
 [[hsml-hyperspace]]
 === Class: hsml:Hyperspace
 
+The class hsml:Hyperspace realises the HYPERSPACE concept in IEEE P2874 § 6.6.3 and Hyperspace Modeling principles:
 
+“A HYPERSPACE is a spatial structure that specifies relationships among elements (points) in a DOMAIN, including notions such as adjacency, distance, connectivity, or metric, enabling spatial reasoning and operations within the Spatial Web.”
+
+hsml:Hyperspace provides the formal structure for expressing the spatial logic that governs how entities in a Domain relate to each other. It generalizes topology, metric spaces, graphs, cellular grids, and vector spaces into a unified model, supporting composable and navigable relationships across Domains.
 
 
 [[hsml-hyperspace-class]]
@@ -9,31 +13,73 @@
 
 [cols="1,3"]
 |===
-
-| RDF Class
-| hsml:Hyperspace
-| Is Abstract
-| No
-
-| Definition
-| 
-
-| Subclass Of
-| <<hsml_entity>>
-
-| Usage Note
-| 
-
-| Rationale
-| 
+| RDF Class | +hsml:Hyperspace+
+| Is Abstract | No
+| Definition | A spatial structure attached to a Domain that defines relationships among its elements, supporting spatial reasoning, navigation, and operations.
+| Subclass Of | hsml:Entity
+| Usage Note | Hyperspaces specify how elements in a Domain relate (e.g., adjacency, distance) and drive spatial queries, validation, and tooling.
+| Rationale | Provides a formal, flexible mechanism to encode spatial structure (graph, cellular, metric) that underpins Spatial Web reasoning.
 |===
 
-[[hsml-hyperspace-props]]
-==== Properties
+[[hsml-hyperspace-properties-summary]]
+==== Properties Summary
 
 [cols="1,1,3,1",options="header"]
 |===
-| Predicate             | IRI                                                             | Description                                                                                           | Cardinality
+| Predicate | JSON(-LD) name | Description | Cardinality
 
+| <<property-hyperspace-type,rdf:type>> | @type | Declares the resource as an instance of +hsml:Hyperspace+. | 1..n
 
+| <<property-hyperspace-swid,hsml:swid>> | swid | Spatial Web Identifier conformant with W3C DID Core. | 1
+
+| <<property-hyperspace-hasElementType,hsml:hasElementType>>| hasElementType | Specifies the type of elements (points) represented in the Hyperspace. | 1
+
+| <<property-hyperspace-hasPathType,hsml:hasPathType>> | hasPathType | Specifies the type of paths (relationships) in the Hyperspace. | 1
+
+| <<property-hyperspace-hasOperation,hsml:hasOperation>> | hasOperation | Declares supported operations or transformations for the Hyperspace. | 0..n
+|===
+
+[[property-hyperspace-hasElementType]]
+===== Property: hasElementType
+[cols="2,4"]
+|===
+| Property | hsml:hasElementType
+| IRI | https://schema.spatialwebfoundation.org/hsml#hasElementType
+| JSON name | hasElementType
+| Requirement Level | Mandatory
+| Cardinality | 1
+| Domain | hsml:Hyperspace
+| Range | rdfs:Class or datatype IRI
+| Definition | Identifies the type of elements (points) comprising the Hyperspace.
+| Usage Note | Examples: geo:Geometry, hsml:Cell, geo:Intersection, WKT literals.
+|===
+
+[[property-hyperspace-hasPathType]]
+===== Property: hasPathType
+[cols="2,4"]
+|===
+| Property | hsml:hasPathType
+| IRI | https://schema.spatialwebfoundation.org/hsml#hasPathType
+| JSON name | hasPathType
+| Requirement Level | Mandatory
+| Cardinality | 1
+| Domain | hsml:Hyperspace
+| Range | rdfs:Class or ObjectProperty IRI
+| Definition | Identifies the type of paths or relationships between elements in the Hyperspace.
+| Usage Note | Examples: hsml:adjacentTo, ex:connectsTo, ex:routeSegment.
+|===
+
+[[property-hyperspace-hasOperation]]
+===== Property: hasOperation
+[cols="2,4"]
+|===
+| Property | hsml:hasOperation
+| IRI | https://schema.spatialwebfoundation.org/hsml#hasOperation
+| JSON name | hasOperation
+| Requirement Level | Optional
+| Cardinality | 0..n
+| Domain | hsml:Hyperspace
+| Range | hsml:Operation
+| Definition | Declares supported operations (e.g., subspace extraction, routing) for the Hyperspace.
+| Usage Note | Allows formal declaration of operations for validation, queries, or tooling.
 |===

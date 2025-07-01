@@ -1,0 +1,87 @@
+[[hsml-activityschema]]
+=== Class: hsml:ActivitySchema
+
+The class hsml:ActivitySchema realises the ACTIVITY SCHEMA concept defined in IEEE P2874 § 6.6.3:
+
+“An ACTIVITY SCHEMA is an ENTITY that defines the template, structure, or plan for an ACTIVITY, specifying its preconditions, postconditions, roles, and expected outcomes.”
+
+hsml:ActivitySchema provides the abstract definition or blueprint for Activities. It enables consistent modeling of repeatable or templated processes, supports validation of Activity instances, and guides execution semantics within the Spatial Web.
+
+Key Requirements
+
+Identity Every ActivitySchema SHALL possess a Spatial Web Identifier (hsml:swid, W3C DID Core-compliant).
+
+Role Definition An ActivitySchema SHALL specify at least one required role or actor type (hsml:requiresRole).
+
+Condition Specification An ActivitySchema SHALL define preconditions and postconditions (hsml:preCondition, hsml:postCondition).
+
+Instance Linkage Activity instances MAY link back to their schema via hsml:hasSchema.
+
+Extensibility ActivitySchemas MAY declare required credentials, tools, or parameter structures.
+
+These requirements ensure that Activities based on schemas are machine-checkable, consistent, and repeatable in Spatial Web systems.
+
+[[hsml-activityschema-class]]
+==== Class Definition
+
+[cols="1,3"]
+|===
+| RDF Class | +hsml:ActivitySchema+
+| Is Abstract | No
+| Definition | A formal template or definition for an Activity, specifying structure, conditions, and roles.
+| Subclass Of | hsml:Entity
+| Usage Note | ActivitySchemas guide execution of Activities and support validation and repeatability.
+| Rationale | Provides a formal mechanism for modeling reusable processes, plans, or procedures in compliance with P2874’s Activity model.
+|===
+
+[[hsml-activityschema-properties-summary]]
+==== Properties Summary
+
+[cols="1,1,3,1",options="header"]
+|===
+| Predicate | JSON(-LD) name | Description | Cardinality
+
+| <<property-activityschema-type,rdf:type>> | @type | Declares the resource as an instance of +hsml:ActivitySchema+. | 1..n
+
+| <<property-activityschema-swid,hsml:swid>> | swid | Spatial Web Identifier conformant with W3C DID Core. | 1
+
+
+| <<property-activityschema-preCondition,hsml:preCondition>> | preCondition | Declares preconditions that must hold before the Activity starts. | 1..n
+
+| <<property-activityschema-postCondition,hsml:postCondition>>| postCondition | Declares conditions that must hold after the Activity completes. | 1..n
+
+|===
+
+
+
+[[property-activityschema-preCondition]]
+===== Property: preCondition
+[cols="2,4"]
+|===
+| Property | hsml:preCondition
+| IRI | https://schema.spatialwebfoundation.org/hsml#preCondition
+| JSON name | preCondition
+| Requirement Level | Mandatory
+| Cardinality | 1..n
+| Domain | hsml:ActivitySchema
+| Range | hsml:Condition
+| Definition | Declares conditions that must be satisfied before the Activity starts.
+| Usage Note | Can be used for rule checking and execution readiness.
+|===
+
+[[property-activityschema-postCondition]]
+===== Property: postCondition
+[cols="2,4"]
+|===
+| Property | hsml:postCondition
+| IRI | https://schema.spatialwebfoundation.org/hsml#postCondition
+| JSON name | postCondition
+| Requirement Level | Mandatory
+| Cardinality | 1..n
+| Domain | hsml:ActivitySchema
+| Range | hsml:Condition
+| Definition | Declares conditions that must be satisfied after the Activity completes.
+| Usage Note | Used for validation of outcomes and success criteria.
+|===
+
+

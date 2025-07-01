@@ -1,39 +1,69 @@
 [[hsml-agent]]
 === Class: hsml:Agent
 
+The class hsml:Agent realises the AGENT concept in IEEE P2874 § 6.6.3:
 
+“An ENTITY that senses, responds, and maintains a model of its environment while performing ACTIVITIES to achieve its goals.”
 
+hsml:Agent represents an autonomous domain capable of perceiving its environment, making decisions, and enacting Activities in pursuit of its goals. It may represent a person, robot, AI system, or other autonomous entity.
 
 [[hsml-agent-class]]
 ==== Class Definition
 
 [cols="1,3"]
 |===
-
-| RDF Class
-| hsml:Agent
-| Is Abstract
-| No
-
-| Definition
-| 
-
-| Subclass Of
-| <<hsml_entity>>
-
-| Usage Note
-| 
-
-| Rationale
-| 
+| RDF Class | +hsml:Agent+
+| Is Abstract | No
+| Definition | An autonomous entity capable of perceiving, deciding, and performing Activities to achieve its goals.
+| Subclass Of | hsml:Entity
+| Disjoint With | hsml:Thing
+| Usage Note | Agents must carry: hsml:swid, at least one capability, at least one goal, and may use tools.
+| Rationale | Provides the model for autonomous actors in the Spatial Web, supporting Activities, goal-directed behavior, and interactions with other Domains.
 |===
 
-[[hsml-agent-props]]
-==== Properties
+[[hsml-agent-properties-summary]]
+==== Properties Summary
 
 [cols="1,1,3,1",options="header"]
 |===
-| Predicate             | IRI                                                             | Description                                                                                           | Cardinality
+| Predicate | JSON(-LD) name | Description | Cardinality
 
+| <<property-agent-type,rdf:type>> | @type | Declares the resource as an instance of +hsml:Agent+. | 1..n
 
+| <<property-agent-swid,hsml:swid>> | swid | Spatial Web Identifier conformant with W3C DID Core. | 1
+
+| <<property-agent-hasGoal,hsml:hasGoal>> | hasGoal | Links the Agent to one or more objectives it seeks to achieve. | 1..n
+
+| <<property-agent-hasCapability,hsml:hasCapability>>| hasCapability | Links the Agent to the Activities it is capable of performing. | 1..n
+
+|===
+
+[[property-agent-hasGoal]]
+===== Property: hasGoal
+[cols="2,4"]
+|===
+| Property | hsml:hasGoal
+| IRI | https://schema.spatialwebfoundation.org/hsml#hasGoal
+| JSON name | hasGoal
+| Requirement Level | Mandatory
+| Cardinality | 1..n
+| Domain | hsml:Agent
+| Range | hsml:Goal (or suitable conceptual Domain)
+| Definition | Links an Agent to one or more goals that it aims to fulfill through its Activities.
+| Usage Note | Goals represent abstract or concrete states the Agent seeks to bring about.
+|===
+
+[[property-agent-hasCapability]]
+===== Property: hasCapability
+[cols="2,4"]
+|===
+| Property | hsml:hasCapability
+| IRI | https://schema.spatialwebfoundation.org/hsml#hasCapability
+| JSON name | hasCapability
+| Requirement Level | Mandatory
+| Cardinality | 1..n
+| Domain | hsml:Agent
+| Range | hsml:Activity or hsml:ActivitySchema
+| Definition | Identifies the types of Activities the Agent is capable of performing.
+| Usage Note | Reflects agentic capacity; at least one capability is required for compliance.
 |===

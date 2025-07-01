@@ -20,6 +20,8 @@ include::hsml_core_model/hsml_thing.adoc[]
 
 include::hsml_core_model/hsml_activity.adoc[]
 
+include::hsml_core_model/hsml_activity_schema.adoc[]
+
 include::hsml_core_model/hsml_channel.adoc[]
 
 include::hsml_core_model/hsml_contract.adoc[]

@@ -1,6 +1,11 @@
 [[hsml-channel]]
 === Class: hsml:Channel
 
+The class hsml:Channel realises the CHANNEL concept in IEEE P2874 § 6.6.3:
+
+“A CHANNEL is a stream of HSML ENTITIES that are related to an ACTIVITY of a specific context that does not itself warrant a DOMAIN or hierarchy.”
+
+hsml:Channel provides a contextual container that links participants, data, and messages around specific Activities or purposes without forming part of the permanent domain hierarchy. It enables ad hoc, ephemeral, or session-based communication, coordination, or monitoring.
 
 
 
@@ -9,31 +14,76 @@
 
 [cols="1,3"]
 |===
-
-| RDF Class
-| hsml:Channel
-| Is Abstract
-| No
-
-| Definition
-| 
-
-| Subclass Of
-| <<hsml_entity>>
-
-| Usage Note
-| 
-
-| Rationale
-| 
+| RDF Class | +hsml:Channel+
+| Is Abstract | No
+| Definition | A non-hierarchical, contextual grouping of entities associated with a specific Activity or purpose.
+| Subclass Of | hsml:Entity
+| Disjoint With | hsml:Domain
+| Usage Note | Channels are for transient, ad hoc collaboration; they do not define domain boundaries or hierarchies.
+| Rationale | Provides a lightweight mechanism for coordinating information, participants, and processes without permanent domain structure.
 |===
 
-[[hsml-channel-props]]
-==== Properties
+[[hsml-channel-properties-summary]]
+==== Properties Summary
 
 [cols="1,1,3,1",options="header"]
 |===
-| Predicate             | IRI                                                             | Description                                                                                           | Cardinality
+| Predicate | JSON(-LD) name | Description | Cardinality
 
+| <<property-channel-type,rdf:type>> | @type | Declares the resource as an instance of +hsml:Channel+. | 1..n
 
+| <<property-channel-swid,hsml:swid>> | swid | Spatial Web Identifier conformant with W3C DID Core. | 1
+
+| <<property-channel-hasMember,hsml:hasMember>> | hasMember | Identifies the entities (Agents, Things, etc.) participating in the Channel. | 1..n
+
+| <<property-channel-forActivity,hsml:forActivity>> | forActivity | Links the Channel to one or more Activities it supports. | 1..n
+
+| <<property-channel-hasSubChannel,hsml:hasSubChannel>>| hasSubChannel | Links to nested sub-channels within the Channel. | 0..n
+
+| <<property-channel-allowedAgent,hsml:allowedAgent>>| allowedAgent | Identifies Agents permitted to participate in the Channel. | 0..n
+|===
+
+[[property-channel-hasMember]]
+===== Property: hasMember
+[cols="2,4"]
+|===
+| Property | hsml:hasMember
+| IRI | https://schema.spatialwebfoundation.org/hsml#hasMember
+| JSON name | hasMember
+| Requirement Level | Mandatory
+| Cardinality | 1..n
+| Domain | hsml:Channel
+| Range | hsml:Entity
+| Definition | Links the Channel to its participants (Agents, Things, or other Entities).
+| Usage Note | A Channel must have at least one member to be meaningful.
+|===
+
+[[property-channel-forActivity]]
+===== Property: forActivity
+[cols="2,4"]
+|===
+| Property | hsml:forActivity
+| IRI | https://schema.spatialwebfoundation.org/hsml#forActivity
+| JSON name | forActivity
+| Requirement Level | Mandatory
+| Cardinality | 1..n
+| Domain | hsml:Channel
+| Range | hsml:Activity
+| Definition | Associates the Channel with one or more Activities it supports or relates to.
+| Usage Note | Channels provide communication or data context for one or more Activities.
+|===
+
+[[property-channel-hasSubChannel]]
+===== Property: hasSubChannel
+[cols="2,4"]
+|===
+| Property | hsml:hasSubChannel
+| IRI | https://schema.spatialwebfoundation.org/hsml#hasSubChannel
+| JSON name | hasSubChannel
+| Requirement Level | Optional
+| Cardinality | 0..n
+| Domain | hsml:Channel
+| Range | hsml:Channel
+| Definition | Links the Channel to its sub-channels for hierarchical structuring of information.
+| Usage Note | Sub-channels enable finer-grained or nested collaboration contexts.
 |===

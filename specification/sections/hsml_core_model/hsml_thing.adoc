@@ -1,6 +1,11 @@
 [[hsml-thing]]
 === Class: hsml:Thing
 
+The class hsml:Thing realises the THING DOMAIN type defined in IEEE P2874 § 6.6.3:
+
+“A THING is a DOMAIN representing a bounded item without agency that can be acted upon, sensed, or described in the Spatial Web.”
+
+hsml:Thing represents physical or virtual entities that lack autonomous action but may be observed, measured, manipulated, or referenced by Agents or Activities. Examples include devices, sensors, vehicles, digital files, or other discrete objects in the Spatial Web.
 
 
 
@@ -9,23 +14,13 @@
 
 [cols="1,3"]
 |===
-
-| RDF Class
-| hsml:Thing
-| Is Abstract
-| No
-
-| Definition
-| 
-
-| Subclass Of
-| <<hsml_entity>>
-
-| Usage Note
-| 
-
-| Rationale
-| 
+| RDF Class | +hsml:Thing+
+| Is Abstract | No
+| Definition | A passive Domain representing a bounded item without agency, which may be sensed, acted upon, or described.
+| Subclass Of | hsml:Entity
+| Disjoint With | hsml:Agent
+| Usage Note | Things are passive entities; they do not possess goals or capabilities but may participate in Activities as targets, inputs, or outputs.
+| Rationale | Provides a formal category for all non-agentic entities in the Spatial Web, ensuring compliance with P2874’s Domain taxonomy.
 |===
 
 [[hsml-thing-props]]

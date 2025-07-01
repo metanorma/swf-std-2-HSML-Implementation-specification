@@ -1,7 +1,11 @@
 [[hsml-person]]
 === Class: hsml:Person
 
+The class `hsml:Person`` realises the PERSON AGENT concept in IEEE P2874 § 6.6.3 and related sections:
 
+“A PERSON is a type of AGENT representing a human individual with autonomy, identity, and capacity to participate in Spatial Web Activities.”
+
+hsml:Person represents a human actor as an Agent Domain within the Spatial Web. It inherits the autonomous characteristics of hsml:Agent, including goal-directed behavior, decision-making, and participation in Activities, while explicitly denoting human identity.
 
 
 [[hsml-person-class]]
@@ -9,23 +13,13 @@
 
 [cols="1,3"]
 |===
-
-| RDF Class
-| hsml:Person
-| Is Abstract
-| No
-
-| Definition
-| 
-
-| Subclass Of
-| <<hsml_entity>>
-
-| Usage Note
-| 
-
-| Rationale
-| 
+| RDF Class | +hsml:Person+
+| Is Abstract | No
+| Definition | A human individual represented as an Agent within the Spatial Web.
+| Subclass Of | <<hsml-agent,hsml:Agent>>
+| Disjoint With | <<hsml-thing,hsml:Thing>>
+| Usage Note | Persons are a specialization of Agent for human actors and must meet all hsml:Agent requirements.
+| Rationale | Enables explicit modeling of human participants in Spatial Web interactions, supporting identity, accountability, and human-in-the-loop systems.
 |===
 
 [[hsml-person-props]]

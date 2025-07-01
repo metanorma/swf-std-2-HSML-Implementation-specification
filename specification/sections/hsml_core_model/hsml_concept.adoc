@@ -1,31 +1,23 @@
 [[hsml-concept]]
 === Class: hsml:Concept
 
+The class hsml:Concept realises the CONCEPT DOMAIN type as described in IEEE P2874 § 6.6.3:
 
+“A CONCEPT is a DOMAIN representing an abstract, non-physical entity or idea that provides semantic context or categorization for other Entities in the Spatial Web.”
 
+hsml:Concept is used to model abstract or symbolic constructs, classifications, or types that help structure knowledge, rules, or ontological categories in the Spatial Web. It does not represent physical or agentic entities, but rather supports semantic reasoning, categorization, and rule expression.
 
 [[hsml-concept-class]]
 ==== Class Definition
 
 [cols="1,3"]
 |===
-
-| RDF Class
-| hsml:Concept
-| Is Abstract
-| No
-
-| Definition
-| 
-
-| Subclass Of
-| <<hsml_entity>>
-
-| Usage Note
-| 
-
-| Rationale
-| 
+| RDF Class | +hsml:Concept+
+| Is Abstract | No
+| Definition | A Domain representing an abstract idea, category, or semantic construct used for classification and knowledge organization.
+| Subclass Of | hsml:Entit
+| Usage Note | Concepts provide the semantic scaffolding of the Spatial Web; they are not physical or agentic entities.
+| Rationale | Supports ontology modeling, classification, and reasoning consistent with P2874’s Concept Domain type.
 |===
 
 [[hsml-concept-props]]
