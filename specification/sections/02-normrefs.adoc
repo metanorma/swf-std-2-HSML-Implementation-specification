@@ -1,4 +1,9 @@
 == Normative references
 
-=== Core Standards (e.g., IEEE P2874, W3C RDF/OWL, SHACL, SKOS)
-=== Related Specifications (e.g., HSTP, DID Core, GeoSPARQL)
+
+
+[W3C did-core], Decentralized Identifiers (DIDs) v1.0
+
+[W3C did-spec-registries]
+
+[W3C json-ld11], A JSON-based Serialization for Linked Data

@@ -1,1 +1,5 @@
 == Terms
+
+For the purposes of this Implementation Specification, key terms and definitions are aligned with those established in the IEEE P2874 standard. Spatial Web ontology entries are represented using uppercase throughout this document to denote their formal definition within HSML.
+
+TODO

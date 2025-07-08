@@ -1,6 +1,50 @@
 == Introduction
 
+This document outlines the Hyperspace Modeling Language (HSML) Implementation Specification, a critical component for realizing the Spatial Web. As defined by the IEEE P2874/D3.3.1 Draft Standard, the Spatial Web is envisioned as a globally interoperable, socio-technical fabric connecting humans, autonomous systems, and the Internet of Things (IoT). The goal is to create a unified digital-physical reality where information is contextual, interactions are secure, and governance is an intrinsic part of the architecture. Achieving this vision requires a data model capable of representing complex, compositional systems with semantic precision and web-scale interoperability. This specification provides concrete requirements and guidelines for developers to implement HSML-compliant systems, ensuring the necessary semantic compatibility and interoperability.
+
+IMPORTANT: It is important to note that the IEEE P2874/D3.3.1 document is an approved draft of a proposed IEEE Standard BUT is subject to change as we develop this specificaiton. This HSML Implementation Specification has been developed to meet the requirements for a set of Implementation Specifications defined within the IEEE P2874 Draft Standard.
+
 === Background and Motivation
+
+The Spatial Web consists of network structures supported by a protocol, architecture, and governance related to the Hyperspace Transaction Protocol (HSTP) and HSML. This standard provides the key concepts of a Spatial Web framework, its relevant terms and definitions, and a generalized system protocol, architecture, and governance. Together, these elements serve as a reference model for Spatial Web components, systems, services, and specifications.
+
+Central to the Spatial Web's foundation is the concept of *HYPERSPACE*, which is broadly defined as a set of 'points' where, for every ordered pair of points, there is a possibly empty set of 'paths' from the first point to the second, and an 'identity' path from every point to itself. The Spatial Web leverages *HYPERSPACE* to fuse the physical and virtual worlds, transcending geographical and national boundaries to create a global commons for expression and imagination. This convergence enables stakeholders to integrate normative values into a seamless digital-physical reality through augmented and virtual reality. Hyperspace geography extends traditional geographic notions, allowing for the calculation of distance in hyperspace where entities, though physically distant, may be strongly coupled in other dimensions.
+
+Complementing *HYPERSPACE* is the central concept of *DOMAIN*. A *DOMAIN* is defined as a "sphere of knowledge, influence, or ACTIVITY." This concept is crucial for the system design, which includes a shared and linkable knowledge domain architecture that provides a common language to describe domain elements and their interrelationships.
+
+The development of the Spatial Web is driven by an emerging ecosystem and its associated trends and needs, including:
+
+* The increasingly graph-like nature of global data.
+* The opportunity for automation and autonomic activities using context-aware, cognitive AI.
+* The need for composable systems and applications, including the governance of such systems.
+* The intrinsic need for secure transactions.
+* The rise of machine learning, neural network computation, and edge computing.
+* The need for explainable AI and robotic governance.
+* The rise of the IoT and sensor mesh.
+
+Fundamentally, the Spatial Web is conceived as a socio-technical system of systems. This means its development must address not only technological considerations but also sociological aspects. Socio-technical standards, like the Spatial Web standard itself, are designed to integrate and balance the technical, social, physical, and legal use of technology.
+
+
 === Relationship to IEEE P2874 (Spatial Web Foundation)
+
+This HSML Implementation Specification is directly derived from and builds upon the IEEE P2874/D3.3.1 Draft Standard for Spatial Web Protocol, Architecture and Governance, dated March 2025. Material from the Spatial Web Foundation's "Spatial Web Protocol, Architecture and Governance," Version D3.3, copyright © 2025 Spatial Web Foundation, was used with permission as the base for this standard.
+
+As a reference model, the IEEE P2874 standard establishes the set of required modules and sub-modules for Spatial Web-compliant implementations, along with their minimum functions and associated information models. It defines requirements for a set of Implementation Specifications, such as this HSML document, and identifies existing technologies and standards to be integrated into these implementations.
+
+
 === Goals and Benefits of HSML
-=== Terminology Overview
+
+The overarching purpose of the IEEE P2874 standard, and by extension this HSML Implementation Specification, is to provide a holistic and coherent technical framework for implementing a collaborative, interactive Spatial Web and shared world system. HSML is designed as a human- and machine-readable modeling language and semantic data ontology schema that describes objects, relations, actions, activities, and their permissions.
+
+Specifically, HSML aims to achieve the following key goals:
+
+* *Spatially Defined Digital Content Fulfillment*:: Enable a functional layer stack capable of fulfilling spatially defined real-world and virtual requests for digital content while respecting governance authorities and self-sovereign identity.
+* *Dimensional Query and Response*:: Provide a spatial range query and response format for requesting content or data about assets within a dimensional range.
+* *Comprehensive Data Ontology*:: Define a data ontology for describing objects, relationships, and activities, which is foundational for consistent data interpretation.
+* *Verifiable Credentialing*:: Specify a verifiable credentialing and certification method for permissioning create, retrieve, update, and delete access to devices, locations, users, and data.
+* *Automated Contracting*:: Include a human- and machine-readable contracting language that enables the expression and automated execution of legal, financial, and physical activities.
+* *Shared Understanding*:: Facilitate a shared understanding of meaning and context between humans and AIs.
+* *Explainable AI*:: Support the explainability of AI systems by enabling the explicit modeling of their decision-making processes.
+* *Universal Interoperability*:: Drive interoperability of models and data to enable universal interaction and collaboration across organizations, networks, and borders.
+* *Compliance and Governance*:: Support compliance with diverse local, regional, national, and international regulatory demands, cultural norms, and ethics.
+* *Secure Identity and Authentication*:: Contribute to authentication and credentialing, ensuring compliance and potential control over critical activities, with privacy, security, identity, and transparency embedded by design.

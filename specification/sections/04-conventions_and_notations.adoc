@@ -1,7 +1,31 @@
 == Conventions and Notation
 
 === URI and IRI Conventions
-=== Namespace Prefixes
+
+==== Normative namespaces and prefixes
+
+[options="header"]
+|===
+|Prefix |Namespace IRI |Source
+
+|hsml |https://purl.org/hsml/core# |[HSML]
+|dct |http://purl.org/dc/terms/ |[DCTERMS]
+|foaf |http://xmlns.com/foaf/0.1/ |[FOAF]
+|gsp |http://www.opengis.net/ont/geosparql# |[GeoSPARQL]
+|org |http://www.w3c.org/ns/org# |[VOCAB-ORG]
+|prov |http://www.w3.org/ns/prov# |[PROV]
+|rdf |http://www.w3.org/1999/02/22-rdf-syntax-ns# |[RDF-SYNTAX-GRAMMAR]
+|rdfs |http://www.w3.org/2000/01/rdf-schema# |[RDF-SCHEMA]
+|schema |http://schema.org/ |[schema-org]
+|sh |http://www.w3.org/ns/shacl# |[SHACL]
+|skos |http://www.w3.org/2004/02/skos/core# |[SKOS-REFERENCE]
+|owl |http://www.w3.org/2002/07/owl# |[OWL2]
+|xsd |http://www.w3.org/2001/XMLSchema# |[XMLSCHEMA11-2]
+|===
+
+
 === RDF/Turtle Syntax Conventions
+
 === JSON-LD Syntax Conventions
+
 === SHACL Shape Syntax and Annotations
