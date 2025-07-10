@@ -1,1 +1,41 @@
 == HSML Extensions and Profiles
+
+HSML is designed for evolution and adaptation. While the Core Model provides a universal foundation, its true power is realized through extensions that tailor the language for specific industries and applications. This is accomplished by creating extensions and application profiles that add specialized concepts while preserving core interoperability and holonic integrity.
+
+=== Subclass from the Core Model
+
+Extensions **must** build upon the established HSML core classes. This is the primary mechanism for ensuring that new concepts are compliant, interoperable, and inherit foundational characteristics.
+
+* *How to Model*: New classes **shall** be defined using `rdfs:subClassOf` to inherit from a base HSML class like `hsml:Thing`, `hsml:Agent`, or `hsml:Activity`. For example, a `smartbuilding:Elevator` would be a subclass of `hsml:Thing`.
+
+* *Reasoning*: This ensures that every new entity is a valid holon that can be uniquely identified by a `hsml:swid`, exist within a `hsml:Domain`, and participate in the governance framework.
+
+
+=== Maximize Reuse of Existing Ontologies
+
+To promote interoperability and avoid reinventing concepts, extensions **should** integrate with established, domain-specific vocabularies wherever possible.
+
+* *How to Model*: Before creating new properties, developers should import and reuse terms from well-known ontologies like SAREF, GeoSPARQL, or the W3C Organization Ontology. Properties like `owl:equivalentClass` can be used to map the extension's concepts to these external standards.
+
+* *Reasoning*: This aligns with P2874's goal of creating a "holistic and coherent technical framework" by leveraging existing work rather than creating isolated data silos.
+
+
+=== Enforce Governance and Data Quality with SHACL
+
+Extensions are not just data schemas; they are governable components of the Spatial Web. Therefore, extensions **must** include formal constraints that define valid data structures and enforce rules.
+
+* *How to Model*: Every extension profile **must** be accompanied by a set of SHACL shapes (`sh:NodeShape`, `sh:PropertyShape`). These shapes define rules such as mandatory properties (`sh:minCount`), data types (`sh:datatype`), and value ranges.
+
+* *Reasoning*: This principle directly implements the P2874 requirements for "Governance by Design" and "Compliance". It allows domains to validate incoming data and ensure that all participants in the ecosystem adhere to the same structural and business rules.
+
+
+=== Package Extensions as Profiles
+
+To be manageable and reusable, extensions **should** be packaged as self-contained Application Profiles.
+
+* *How to Model*: A profile is a collection of files that includes:
+** The OWL ontology defining the new classes and properties.
+** The SHACL shapes defining the constraints.
+** Human-readable documentation.
+
+* *Reasoning*: This approach allows different industries (e.g., mobility, logistics, smart building, healthcare) to develop and maintain their own extensions while ensuring their foundation remains interoperable with the core HSML model and the broader Spatial Web.
