@@ -45,9 +45,16 @@ include::sections/hsml_activity_module.adoc[]
 
 include::sections/hsml_governance_module.adoc[]
 
-include::sections/06-hsml_extensions_and_profiles.adoc[]
+include::sections/hsml_channel_module.adoc[]
 
-include::sections/07-technical_clause.adoc[]
+include::sections/hsml_agent_module.adoc[]
+
+include::sections/hsml_hyperspace_module.adoc[]
+
+include::sections/hsml_thing_module.adoc[]
+
+include::sections/hsml_extensions_and_profiles.adoc[]
+
 
 include::sections/annex-compliance.adoc[]
 

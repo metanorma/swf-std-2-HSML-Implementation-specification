@@ -1,0 +1,4 @@
+== HSML Channel Module
+
+
+include::hsml_core_model/hsml_channel.adoc[]

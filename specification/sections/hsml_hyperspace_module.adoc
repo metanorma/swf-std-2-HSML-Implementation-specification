@@ -1,0 +1,3 @@
+== HSML Hyperspace Module
+
+include::hsml_core_model/hsml_hyperspace.adoc[]
