@@ -9,15 +9,10 @@ hsml:ActivitySchema provides the abstract definition or blueprint for Activities
 
 Key Requirements
 
-Identity Every ActivitySchema SHALL possess a Spatial Web Identifier (hsml:swid, W3C DID Core-compliant).
-
-Role Definition An ActivitySchema SHALL specify at least one required role or actor type (hsml:requiresRole).
-
-Condition Specification An ActivitySchema SHALL define preconditions and postconditions (hsml:preCondition, hsml:postCondition).
-
-Instance Linkage Activity instances MAY link back to their schema via hsml:hasSchema.
-
-Extensibility ActivitySchemas MAY declare required credentials, tools, or parameter structures.
+* Identity: Every ActivitySchema SHALL possess a Spatial Web Identifier (hsml:swid, W3C DID Core-compliant).
+* Condition Specification: An ActivitySchema SHALL define preconditions and postconditions (hsml:preCondition, hsml:postCondition).
+* Parameterization: An ActivitySchema SHALL declare expected input/output variables (hsml:hasInput, hsml:hasOutput).
+* Instance Linkage: Activity instances MAY link back to their schema via hsml:activitySchema.
 
 These requirements ensure that Activities based on schemas are machine-checkable, consistent, and repeatable in Spatial Web systems.
 
@@ -45,14 +40,47 @@ These requirements ensure that Activities based on schemas are machine-checkable
 
 | <<property-activityschema-swid,hsml:swid>> | swid | Spatial Web Identifier conformant with W3C DID Core. | 1
 
+| <<property-activityschema-hasInput,hsml:hasInput>> | hasInput | Declares expected input parameters or variables. | 0..n
+| <<property-activityschema-hasOutput,hsml:hasOutput>> | hasOutput | Declares expected output parameters or results. | 0..n
 
-| <<property-activityschema-preCondition,hsml:preCondition>> | preCondition | Declares preconditions that must hold before the Activity starts. | 1..n
 
-| <<property-activityschema-postCondition,hsml:postCondition>>| postCondition | Declares conditions that must hold after the Activity completes. | 1..n
+| <<property-activityschema-preCondition,hsml:preCondition>> | preCondition | Declares preconditions that must hold before the Activity starts. | 0..n
+
+| <<property-activityschema-postCondition,hsml:postCondition>>| postCondition | Declares conditions that must hold after the Activity completes. | 0..n
+
+
 
 |===
 
+[[property-activityschema-hasInput]]
+===== Property: hasInput
+[cols="2,4"]
+|===
+| Property | hsml:hasInput
+| IRI | https://schema.spatialwebfoundation.org/hsml#hasInput
+| JSON name | hasInput
+| Requirement Level | Optional
+| Cardinality | 0..n
+| Domain | hsml:ActivitySchema
+| Range | hsml:Variable
+| Definition | Declares input parameters required by the Activity.
+| Usage Note | Inputs SHOULD be validated at instance creation using SHACL shapes.
+|===
 
+[[property-activityschema-hasOutput]]
+===== Property: hasOutput
+[cols="2,4"]
+|===
+| Property | hsml:hasOutput
+| IRI | https://schema.spatialwebfoundation.org/hsml#hasOutput
+| JSON name | hasOutput
+| Requirement Level | Optional
+| Cardinality | 0..n
+| Domain | hsml:ActivitySchema
+| Range | hsml:Variable
+| Definition | Declares output parameters produced by the Activity.
+| Usage Note | Outputs SHOULD be validated upon completion.
+|===
 
 [[property-activityschema-preCondition]]
 ===== Property: preCondition

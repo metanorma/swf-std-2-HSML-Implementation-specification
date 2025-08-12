@@ -41,6 +41,10 @@ include::sections/hsml_modeling_paradigm.adoc[]
 
 include::sections/hsml_core_model.adoc[]
 
+include::sections/hsml_activity_module.adoc[]
+
+include::sections/hsml_governance_module.adoc[]
+
 include::sections/06-hsml_extensions_and_profiles.adoc[]
 
 include::sections/07-technical_clause.adoc[]

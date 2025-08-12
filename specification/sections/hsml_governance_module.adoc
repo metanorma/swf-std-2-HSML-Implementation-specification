@@ -1,0 +1,221 @@
+== HSML Governance Module
+
+=== Architectural Principles and Design Rationale
+
+This clause describes the architectural principles underlying the HSML Governance Module. These principles are informative and not required for conformance; however, understanding them is recommended to ensure robust and correct implementations.
+
+==== The Norms/Credentials Pattern: Enabling Contextual Governance
+
+A fundamental principle of this standard is the separation of universal action definitions (`act:ActivitySchema`) from the local rules that govern their execution. This is realized by allowing a Domain Authority to enforce its local Norms by requiring agents to possess a domain-specific Credential.
+
+An `act:ActivitySchema` can be defined by a global standards body and incorporated into any domain by reference. Its own preconditions remain immutable.
+
+A Domain Authority defines its local rules of use (e.g., safety, legal, operational constraints) as Norms.
+
+The Domain Authority then issues a domain-specific Credential only to those agents that can verifiably comply with these Norms.
+
+Governance is enforced by making the validation of any gov:Contract for that activity contingent upon the performing agent possessing this specific Credential.
+
+This "Credential Gating" pattern allows for a powerful system of polycentric governance. It enables the reuse of standardized schemas across the Spatial Web while giving each domain sovereign control over the activities that occur within its boundaries, ensuring that local context and rules are always respected.
+
+==== The Contract as Universal Trigger: Ensuring Auditability
+
+The HSML architecture mandates that every `act:Activity` instance shall be initiated via a `gov:Contract``. There is no mechanism for the "direct" execution of an activity. This design choice is critical for ensuring a consistently governable and auditable system.
+
+When an agent performs an action, even one self-initiated without external parties, it creates a "self-contract" where it is both the requester and the performer. This ensures that every action, no matter how simple, is preceded by a formal, stateful gov:Contract entity. This contract serves as an immutable record of intent. All governance checks, such as verifying required credentials and validating preconditions, are performed at the contract validation stage. This single, universal trigger point for all actions simplifies the governance model and guarantees that no unauthorized or invalid action can be executed, providing a complete and unbroken audit trail for all events on the network.
+
+==== The Verifiable Claims Model: Building on Open Standards
+
+The integrity of the Governance Module rests on the ability to make and verify claims in a secure, decentralized manner. Rather than inventing a proprietary system, the module's architecture is built directly upon mature, open standards from the W3C.
+
+* Decentralized Identifiers (DID Core): All entities, including contracts and the agents party to them, are identified by a SWID, which is a W3C DID. This provides a permanent, globally unique, and resolvable identifier for every participant.
+
+* Verifiable Credentials (VC Data Model): All Credentials used for gating and authorization shall conform to the W3C VC standard.
+
+By building on this foundation, the Spatial Web inherits a robust and interoperable trust model. It ensures that claims of identity, capability, and authorization are tamper-evident, cryptographically verifiable, and can be trusted by any party in the ecosystem without relying on a central authority. This reliance on open standards is a key enabler of the "trust-by-reference" model that underpins the entire Spatial Web.
+
+=== Normative Specification of Class Concepts
+
+This clause provides the normative definitions for all class concepts. It is divided into two parts: classes that are defined as part of this Governance Module, and classes from the HSML Core Module that are normatively used by this module. The namespace prefix gov: refers to https://www.spatialwebfoundation.org/ns/hsml/governance#/.
+
+==== Classes Defined in the Governance Module
+
+[[gov-contract]]
+===== gov:Contract
+
+A gov:Contract is the binding agreement that initiates and governs the execution of one or more activities.
+
+[[gov-contract-class]]
+====== Class Definition
+[cols="1,4"]
+|===
+|Attribute |Value
+
+|Name
+|gov:Contract
+
+|URI
+|https://www.spatialwebfoundation.org/ns/hsml/governance#Contract
+
+|JSON-LD Name
+|"Contract"
+
+|Description
+|A binding agreement governing the execution of one or more Activities by specific Agents within a Domain context.
+
+|Superclasses
+|hsml:Entity
+
+|Usage Notes
+|Contracts must carry: a SWID, exactly one initiating Domain, ≥ 1 accepting Agent, ≥ 1 fulfilling Agent, ≥ 1 governed Activity, and ≥ 1 lifecycle status instance. For detailed roles, it uses hsml:Participation records.
+|===
+
+[[gov-contractstatus]]
+===== gov:ContractStatus
+
+A gov:ContractStatus is a timestamped record of a contract's lifecycle state.
+
+[[gov-contractstatus-class]]
+====== Class Definition
+[cols="1,4"]
+|===
+|Attribute |Value
+
+|Name
+|gov:ContractStatus
+
+|URI
+|https://www.spatialwebfoundation.org/ns/hsml/governance#ContractStatus
+
+|JSON-LD Name
+|"ContractStatus"
+
+|Description
+|A record representing a specific state in the lifecycle of a contract, such as "Requested" or "Fulfilled".
+
+|Superclasses
+|owl:Thing
+
+|Usage Notes
+|A gov:Contract links to its current status via gov:contractStatus. For a full history, a contract may link to multiple gov:ContractStatus instances, each with a prov:atTime timestamp. Each instance shall have a gov:statusValue.
+|===
+
+
+=== Normative Specification of Property Concepts
+
+This clause provides the normative definitions for all property concepts within the HSML Governance Module.
+
+==== Core Contract Properties
+
+These properties define the fundamental parties and subject of a contract.
+
+[[property-contract-isRequestedBy]]
+===== Property: isRequestedBy
+[cols="2,4"]
+|===
+| Property | gov:isRequestedBy
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/governance#isRequestedBy
+| JSON name | requestedBy
+| Requirement Level | Mandatory
+| Cardinality | 1..1
+| Domain | gov:Contract
+| Range | hsml:Domain
+| Definition | Identifies the hsml:Domain that initiated or requested creation of the contract.
+| Usage Note | Exactly one initiating Domain is recorded.
+|===
+
+[[property-contract-isAcceptedBy]]
+===== Property: isAcceptedBy
+[cols="2,4"]
+|===
+| Property | gov:isAcceptedBy
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/governance#isAcceptedBy
+| JSON name | acceptedBy
+| Requirement Level | Mandatory
+| Cardinality | 1..*
+| Domain | gov:Contract
+| Range | hsml:Agent
+| Definition | Agent(s) formally accepting the contract.
+| Usage Note | Multi-party contracts list every accepting Agent.
+|===
+
+[[property-contract-isFulfilledBy]]
+===== Property: isFulfilledBy
+[cols="2,4"]
+|===
+| Property | gov:isFulfilledBy
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/governance#isFulfilledBy
+| JSON name | fulfilledBy
+| Requirement Level | Mandatory
+| Cardinality | 1..*
+| Domain | gov:Contract
+| Range | hsml:Agent
+| Definition | Agent(s) tasked with fulfilling the contractual obligations.
+| Usage Note | Often—but not always—the same Agent(s) as acceptedBy.
+|===
+
+[[property-contract-contractFor]]
+===== Property: contractFor
+[cols="2,4"]
+|===
+| Property | gov:contractFor
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/governance#contractFor
+| JSON name | contractFor
+| Requirement Level | Mandatory
+| Cardinality | 1..*
+| Domain | gov:Contract
+| Range | act:Activity
+| Definition | Identifies the `act:Activity` (or Activities) that this contract governs.
+| Usage Note | This property links the agreement to the specific action(s) to be executed.
+|===
+
+==== Lifecycle and Participation Properties
+
+These properties track the contract's state and the detailed roles of its participants.
+
+[[property-contract-contractStatus]]
+===== Property: contractStatus
+[cols="2,4"]
+|===
+| Property | gov:contractStatus
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/governance#contractStatus
+| JSON name | contractStatus
+| Requirement Level | Mandatory
+| Cardinality | 1..1
+| Domain | gov:Contract
+| Range | gov:ContractStatus
+| Definition | The current lifecycle status of the contract.
+| Usage Note | For a full audit trail, multiple gov:ContractStatus instances, each with a timestamp, should be recorded.
+|===
+
+[[property-contract-statusValue]]
+===== Property: statusValue
+[cols="2,4"]
+|===
+| Property | gov:statusValue
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/governance#statusValue
+| JSON name | statusValue
+| Requirement Level | Mandatory
+| Cardinality | 1..1
+| Domain | gov:ContractStatus
+| Range | xsd:string
+| Definition | The literal value of a status, e.g., "Requested", "Accepted", "Fulfilled", "Cancelled".
+| Usage Note | The set of permissible values should be defined in a controlled vocabulary or enumeration.
+|===
+
+[[property-contract-hasParticipation]]
+===== Property: gov:hasParticipation
+[cols="2,4"]
+|===
+| Property | gov:hasParticipation
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/governance#hasParticipation
+| JSON name | hasParticipation
+| Requirement Level | Optional
+| Cardinality | 0..*
+| Domain | gov:Contract
+| Range | hsml:Participation
+| Definition | Links the contract to detailed participation records.
+| Usage Note | Use for complex contracts to explicitly define agent roles beyond requester/fulfiller.
+|===
+
+
