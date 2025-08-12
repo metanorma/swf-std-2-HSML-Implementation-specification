@@ -80,7 +80,7 @@ This clause provides the normative definitions for all class concepts within the
 
 An `act:Activity` is a run-time, stateful entity that represents a specific execution of an `act:ActivitySchema`. It is the primary entity for recording and tracking actions.
 
-.act:Activity Class Definition
+.act:Activity Definition
 [cols="1,4",options="header"]
 |===
 |Attribute |Value
@@ -104,12 +104,14 @@ An `act:Activity` is a run-time, stateful entity that represents a specific exec
 |An `act:Activity` instance `shall` be created for every action that is planned, executed, or recorded. It `shall` link to its defining `act:ActivitySchema` via `act:activitySchema` and `shall` contain `act:VariableBinding` instances for all required inputs. Its `act:status` property tracks its lifecycle.
 |===
 
+
+[[hsml-activity_schema-class]]
 ==== act:ActivitySchema
 
 An `act:ActivitySchema` is a reusable, design-time template that defines a type of activity.
 
-[cols="1,4"]
-
+.act:ActivitySchema Definition
+[cols="1,4",options="header"]
 |===
 |Attribute |Value
 
@@ -135,12 +137,14 @@ An `act:ActivitySchema` is a reusable, design-time template that defines a type 
 |Schemas define the interface (`act:hasInput`, `act:hasOutput`), preconditions, and effects of an activity type. They are intended to be published and reused across multiple `act:Activity` instances.
 |===
 
+
+[[hsml-atomic_activity_schema-class]]
 ==== act:AtomicActivitySchema
 
 An `act:AtomicActivitySchema` is a schema for a simple, indivisible activity that is not broken down into smaller steps within this model.
 
-[cols="1,4"]
-
+.act:AtomicActivitySchema Definition
+[cols="1,4",options="header"]
 |===
 |Attribute |Value
 
@@ -163,12 +167,13 @@ An `act:AtomicActivitySchema` is a schema for a simple, indivisible activity tha
 |Used for fundamental operations whose internal logic is opaque to the HSML model (e.g., invoking an external API, performing a cryptographic operation).
 |===
 
+[[hsml-composite_activity_schema-class]]
 ==== act:CompositeActivitySchema
 
 An `act:CompositeActivitySchema` is a schema for a complex workflow composed of other activities.
 
-[cols="1,4"]
-
+.act:CompositeActivitySchema Definition
+[cols="1,4",options="header"]
 |===
 |Attribute |Value
 
@@ -191,12 +196,13 @@ An `act:CompositeActivitySchema` is a schema for a complex workflow composed of 
 |This class is the basis for modeling multi-step processes. It `shall` contain `act:ActivityStep` and `act:DataLink` instances and `shall` define a control flow using exactly one of the control flow properties.
 |===
 
+[[hsml-activity_step-class]]
 ==== act:ActivityStep
 
 An `act:ActivityStep` is a unique, addressable step within a `CompositeActivitySchema`.
 
-[cols="1,4"]
-
+.act:ActivityStep Definition
+[cols="1,4",options="header"]
 |===
 |Attribute |Value
 
@@ -219,12 +225,13 @@ An `act:ActivityStep` is a unique, addressable step within a `CompositeActivityS
 |An `ActivityStep` acts as a node in a workflow graph. It does not represent the logic itself, but rather a placeholder in the workflow that uses an `act:ActivitySchema` to define its logic via the `act:usesSchema` property.
 |===
 
+[[hsml-data_link-class]]
 ==== act:DataLink
 
 An `act:DataLink` is a directed "wire" that defines the flow of data within a `CompositeActivitySchema`.
 
-[cols="1,4"]
-
+.act:DataLink Definition
+[cols="1,4",options="header"]
 |===
 |Attribute |Value
 
@@ -247,12 +254,13 @@ An `act:DataLink` is a directed "wire" that defines the flow of data within a `C
 |Making `DataLink` a class allows the data flow itself to be an addressable and governable entity. Metadata (e.g., encryption requirements, Quality of Service policies) can be attached directly to the link.
 |===
 
+[[hsml-variable-class]]
 ==== act:Variable
 
 An `act:Variable` is a parameter placeholder within an `act:ActivitySchema`.
 
-[cols="1,4"]
-
+.act:Variable Definition
+[cols="1,4",options="header"]
 |===
 |Attribute |Value
 
@@ -275,12 +283,13 @@ An `act:Variable` is a parameter placeholder within an `act:ActivitySchema`.
 |A `Variable` defines the name and type constraints for an input or output of a schema. It does not hold a value itself. It `shall` have exactly one `act:variableName` and at least one `hsml:hasConstraint` (to define its type and validation constraints).
 |===
 
+[[hsml-variable_binding-class]]
 ==== act:VariableBinding
 
 An `act:VariableBinding` connects an `act:Variable` to a concrete value within an `act:Activity`.
 
-[cols="1,4"]
-
+.act:VariableBinding Definition
+[cols="1,4",options="header"]
 |===
 |Attribute |Value
 
