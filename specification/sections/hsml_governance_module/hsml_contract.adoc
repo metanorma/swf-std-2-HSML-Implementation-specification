@@ -1,0 +1,183 @@
+[[gov-contract]]
+=== Class: gov:Contract
+
+The class `hsml:Contract` realises the **CONTRACT** concept in IEEE P2874 § 6.6.4:  
+
+*“A binding agreement between two or more parties—enforceable by law or internal policy—that governs one or more Activities in the Spatial Web.”*
+
+`hsml:Contract` links the initiating *Domain*, the participating *Agents*, the governed *Activity* (or Activities), and the evolving *ContractStatus* instances that capture its lifecycle.
+
+**Key Requirements**
+
+* **Identity** Every Contract **SHALL** possess a Spatial Web Identifier (`hsml:swid`, W3C DID Core-compliant).  
+* **Initiator** Exactly one `hsml:isRequestedBy` **SHALL** reference the *Domain* that issued the request.  
+* **Acceptance** One or more `hsml:isAcceptedBy` references **SHALL** identify the Agent(s) that accept the terms.  
+* **Fulfilment** One or more `hsml:isFulfilledBy` references **SHALL** identify the Agent(s) responsible for execution.  
+* **Governed Activity** One or more `hsml:contractFor` references **SHALL** identify the Activity(ies) the contract governs.  
+* **Lifecycle**  `hsml:contractStatus` references **SHALL** record the contract’s state
+* **Extensibility** Additional clauses, policy links, or monetary terms **MAY** be added via further properties or subclasses without altering these core semantics.
+
+These rules guarantee that every contract is discoverable, auditable, and machine-actionable across Spatial-Web systems.
+
+
+[[gov-contract-class]]
+==== Class Definition
+
+.Class Definition for gov:Contract
+[cols="1,3",options="header"]
+|===
+| RDF Class | `gov:Contract`
+| Is Abstract | No
+| Definition | A binding agreement governing the execution of one or more `act:Activity` instances by specific `agt:Agent`s within a `hsml:Domain` context.
+| Subclass Of | `hsml:Entity`
+| Usage Notes | A `gov:Contract` must carry a SWID and link to its initiating domain, accepting and fulfilling agents, the governed activity, and its lifecycle status. For detailed roles, it uses `core:Participation` records.
+|===
+
+.Properties Summary for gov:Contract
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<gov-contract-property-isRequestedBy,`gov:isRequestedBy`>>
+| `requestedBy`
+| The `hsml:Domain` that initiated the contract.
+| `hsml:Domain`
+| 1..1
+| **Mandatory**
+
+| <<gov-contract-property-isAcceptedBy,`gov:isAcceptedBy`>>
+| `acceptedBy`
+| The `agt:Agent`(s) that accepted the contract.
+| `agt:Agent`
+| 1..*
+| **Mandatory**
+
+| <<gov-contract-property-isFulfilledBy,`gov:isFulfilledBy`>>
+| `fulfilledBy`
+| The `agt:Agent`(s) responsible for fulfilling the contract.
+| `agt:Agent`
+| 1..*
+| **Mandatory**
+
+| <<gov-contract-property-contractFor,`gov:contractFor`>>
+| `contractFor`
+| The `act:Activity` the contract governs.
+| `act:Activity`
+| 1..*
+| **Mandatory**
+
+| <<gov-contract-property-contractStatus,`gov:contractStatus`>>
+| `contractStatus`
+| The current lifecycle status of the contract.
+| `xsd:string`
+| 1..1
+| **Mandatory**
+
+| <<gov-contract-property-hasParticipation,`gov:hasParticipation`>>
+| `hasParticipation`
+| Links to detailed participation records.
+| `core:Participation`
+| 0..*
+| Optional
+|===
+
+[[gov-contract-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the `gov:Contract` class.
+
+[[gov-contract-property-isRequestedBy]]
+===== Property: isRequestedBy
+.Property Definition: gov:isRequestedBy
+[cols="2,4"]
+|===
+| **Property** | `gov:isRequestedBy`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#isRequestedBy`
+| **JSON name** | `requestedBy`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..1
+| **Domain** | `gov:Contract`
+| **Range** | `hsml:Domain`
+| **Definition** | Identifies the `hsml:Domain` that initiated or requested creation of the contract.
+| **Usage Note** | Exactly one initiating `hsml:Domain` is recorded.
+|===
+
+[[gov-contract-property-isAcceptedBy]]
+===== Property: isAcceptedBy
+.Property Definition: gov:isAcceptedBy
+[cols="2,4"]
+|===
+| **Property** | `gov:isAcceptedBy`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#isAcceptedBy`
+| **JSON name** | `acceptedBy`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..*
+| **Domain** | `gov:Contract`
+| **Range** | `agt:Agent`
+| **Definition** | Identifies the `agt:Agent`(s) formally accepting the contract.
+| **Usage Note** | Multi-party contracts must list every accepting `agt:Agent`.
+|===
+
+[[gov-contract-property-isFulfilledBy]]
+===== Property: isFulfilledBy
+.Property Definition: gov:isFulfilledBy
+[cols="2,4"]
+|===
+| **Property** | `gov:isFulfilledBy`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#isFulfilledBy`
+| **JSON name** | `fulfilledBy`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..*
+| **Domain** | `gov:Contract`
+| **Range** | `agt:Agent`
+| **Definition** | Identifies the `agt:Agent`(s) tasked with fulfilling the contractual obligations.
+| **Usage Note** | This is often, but not always, the same `agt:Agent`(s) as `gov:isAcceptedBy`.
+|===
+
+[[gov-contract-property-contractFor]]
+===== Property: contractFor
+.Property Definition: gov:contractFor
+[cols="2,4"]
+|===
+| **Property** | `gov:contractFor`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#contractFor`
+| **JSON name** | `contractFor`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..*
+| **Domain** | `gov:Contract`
+| **Range** | `act:Activity`
+| **Definition** | Identifies the `act:Activity` (or Activities) that this contract governs.
+| **Usage Note** | This property links the agreement to the specific action(s) to be executed.
+|===
+
+[[gov-contract-property-contractStatus]]
+===== Property: contractStatus
+.Property Definition: gov:contractStatus
+[cols="2,4"]
+|===
+| **Property** | `gov:contractStatus`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#contractStatus`
+| **JSON name** | `contractStatus`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..1
+| **Domain** | `gov:Contract`
+| **Range** | `xsd:string`
+| **Definition** | The current lifecycle state of the contract. The value **shall** be one of: "Requested", "Executed", "Fulfilled", "Rescinded", or "Breached".
+| **Usage Note** | This property provides the current state of the agreement. For a full audit trail, a history of status changes with timestamps should be recorded.
+|===
+
+[[gov-contract-property-hasParticipation]]
+===== Property: hasParticipation
+.Property Definition: gov:hasParticipation
+[cols="2,4"]
+|===
+| **Property** | `gov:hasParticipation`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#hasParticipation`
+| **JSON name** | `hasParticipation`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..*
+| **Domain** | `gov:Contract`
+| **Range** | `core:Participation`
+| **Definition** | Links the contract to detailed participation records.
+| **Usage Note** | Use for complex contracts to explicitly define agent roles beyond requester/fulfiller.
+|===

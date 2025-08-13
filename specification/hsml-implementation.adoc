@@ -43,7 +43,7 @@ include::sections/hsml_core_model.adoc[]
 
 include::sections/hsml_activity_module/hsml_activity_module.adoc[]
 
-include::sections/hsml_governance_module.adoc[]
+include::sections/hsml_governance_module/hsml_governance_module.adoc[]
 
 include::sections/hsml_channel_module.adoc[]
 

@@ -57,7 +57,7 @@ This clause provides the normative definitions for all class concepts within the
 The namespace prefix `act:` refers to `https://www.spatialwebfoundation.org/ns/hsml/activity#`.
 
 
-=== Summary of Normative Classes
+==== Summary of Normative Classes
 
 .Summary of HSML Activity Module Classes
 [cols="1,3",options="header"]
@@ -91,21 +91,21 @@ The namespace prefix `act:` refers to `https://www.spatialwebfoundation.org/ns/h
 
 
 
-include::hsml_activity.adoc[]
+include::hsml_activity.adoc[leveloffset=+1]
 
-include::hsml_activity_schema.adoc[]
+include::hsml_activity_schema.adoc[leveloffset=+1]
 
-include::hsml_atomic_activity_schema.adoc[]
+include::hsml_atomic_activity_schema.adoc[leveloffset=+1]
 
-include::hsml_composite_activity_schema.adoc[]
+include::hsml_composite_activity_schema.adoc[leveloffset=+1]
 
-include::hsml_activity_step.adoc[]
+include::hsml_activity_step.adoc[leveloffset=+1]
 
-include::hsml_data_link.adoc[]
+include::hsml_data_link.adoc[leveloffset=+1]
 
-include::hsml_variable.adoc[]
+include::hsml_variable.adoc[leveloffset=+1]
 
-include::hsml_variable_binding.adoc[]
+include::hsml_variable_binding.adoc[leveloffset=+1]
 
 
 

@@ -1,0 +1,61 @@
+== HSML Governance Module
+
+=== Architectural Principles and Design Rationale
+
+This clause describes the architectural principles underlying the HSML Governance Module. These principles are informative and not required for conformance; however, understanding them is recommended to ensure robust and correct implementations.
+
+==== The Norms/Credentials Pattern: Enabling Contextual Governance
+
+A fundamental principle of this standard is the separation of universal action definitions (`act:ActivitySchema`) from the local rules that govern their execution. This is realized by allowing a Domain Authority to enforce its local Norms by requiring agents to possess a domain-specific Credential.
+
+An `act:ActivitySchema` can be defined by a global standards body and incorporated into any domain by reference. Its own preconditions remain immutable.
+
+A Domain Authority defines its local rules of use (e.g., safety, legal, operational constraints) as Norms.
+
+The Domain Authority then issues a domain-specific Credential only to those agents that can verifiably comply with these Norms.
+
+Governance is enforced by making the validation of any gov:Contract for that activity contingent upon the performing agent possessing this specific Credential.
+
+This "Credential Gating" pattern allows for a powerful system of polycentric governance. It enables the reuse of standardized schemas across the Spatial Web while giving each domain sovereign control over the activities that occur within its boundaries, ensuring that local context and rules are always respected.
+
+==== The Contract as Universal Trigger: Ensuring Auditability
+
+The HSML architecture mandates that every `act:Activity` instance shall be initiated via a `gov:Contract``. There is no mechanism for the "direct" execution of an activity. This design choice is critical for ensuring a consistently governable and auditable system.
+
+When an agent performs an action, even one self-initiated without external parties, it creates a "self-contract" where it is both the requester and the performer. This ensures that every action, no matter how simple, is preceded by a formal, stateful gov:Contract entity. This contract serves as an immutable record of intent. All governance checks, such as verifying required credentials and validating preconditions, are performed at the contract validation stage. This single, universal trigger point for all actions simplifies the governance model and guarantees that no unauthorized or invalid action can be executed, providing a complete and unbroken audit trail for all events on the network.
+
+==== The Verifiable Claims Model: Building on Open Standards
+
+The integrity of the Governance Module rests on the ability to make and verify claims in a secure, decentralized manner. Rather than inventing a proprietary system, the module's architecture is built directly upon mature, open standards from the W3C.
+
+* Decentralized Identifiers (DID Core): All entities, including contracts and the agents party to them, are identified by a SWID, which is a W3C DID. This provides a permanent, globally unique, and resolvable identifier for every participant.
+
+* Verifiable Credentials (VC Data Model): All Credentials used for gating and authorization shall conform to the W3C VC standard.
+
+By building on this foundation, the Spatial Web inherits a robust and interoperable trust model. It ensures that claims of identity, capability, and authorization are tamper-evident, cryptographically verifiable, and can be trusted by any party in the ecosystem without relying on a central authority. This reliance on open standards is a key enabler of the "trust-by-reference" model that underpins the entire Spatial Web.
+
+=== Normative Classes
+
+This clause provides the normative definitions for all class concepts. It is divided into two parts: classes that are defined as part of this Governance Module, and classes from the HSML Core Module that are normatively used by this module. The namespace prefix gov: refers to https://www.spatialwebfoundation.org/ns/hsml/governance#/.
+
+
+
+==== Summary of Governance Module Classes
+
+.Summary of Classes Used in the HSML Governance Module
+[cols="1,3",options="header"]
+|===
+| Class | Description
+
+| <<gov-contract,gov:Contract>>
+| The binding agreement that initiates and governs the execution of one or more act:Activity instances.
+
+| <<w3c-verifiable-credential,w3c:VerifiableCredential>>
+| A tamper-evident, cryptographically verifiable set of claims, as defined by the W3C standard, used for authentication and authorization.
+
+| <<core-participation,core:Participation>>
+| A reusable, core entity that explicitly models the involvement of an entity in a specific role within a given context, such as a contract.
+|===
+
+
+include::hsml_contract.adoc[leveloffset=+1]
