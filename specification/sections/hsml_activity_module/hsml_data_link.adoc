@@ -10,8 +10,8 @@ The class `act:DataLink` realizes the **DATA LINK** concept as part of a `act:Co
 **Key Requirements**
 
 * **Context**: An `act:DataLink` **SHALL** only exist as part of a `act:CompositeActivitySchema`, linked via the `act:hasDataLink` property.
-* **Source Specification**: An `act:DataLink` **SHALL** identify its data source via `act:sourceVariable` and, if internal, `act:sourceStep`.
-* **Target Specification**: An `act:DataLink` **SHALL** identify its data target via `act:targetVariable` and, if internal, `act:targetStep`.
+* **Source Specification**: An `act:DataLink` **SHALL** identify its data source via `act:sourceVariable` and, if internal, `act:sourceStep`. The link is made using the `schema:identifier` of the respective components.
+* **Target Specification**: An `act:DataLink` **SHALL** identify its data target via `act:targetVariable` and, if internal, `act:targetStep`. The link is made using the `schema:identifier` of the respective components.
 * **Interface Wiring**: To wire the composite's interface, a `DataLink` **SHALL** omit either the `sourceStep` (for an input) or `targetStep` (for an output).
 
 [[act-datalink-class]]
@@ -24,8 +24,8 @@ The class `act:DataLink` realizes the **DATA LINK** concept as part of a `act:Co
 | Is Abstract | No
 | Definition | A directed "wire" defining data flow. It can connect two internal steps, a composite's input to a step, or a step's output to a composite's output.
 | Subclass Of | `owl:Thing`
-| Usage Note | Making `act:DataLink` a class allows the data flow itself to be an addressable and governable entity. Metadata (e.g., encryption requirements, Quality of Service policies) can be attached directly to the link.
-| Rationale | Elevates the workflow's data flow to be an explicit, governable entity, enabling more sophisticated security and management patterns than would be possible if data flow were merely an implicit behavior.
+| Usage Note | Making `act:DataLink` a class allows the data flow itself to be an addressable and governable entity. Metadata (e.g., encryption requirements, Quality of Service policies, names, descriptions) can be attached directly to the link.
+| Rationale | Elevates the workflow's data flow to be an explicit, governable, and self-describing entity, enabling more sophisticated security and management patterns.
 |===
 
 .Properties Summary for act:DataLink
@@ -33,31 +33,45 @@ The class `act:DataLink` realizes the **DATA LINK** concept as part of a `act:Co
 |===
 | Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
 
+| <<act-datalink-property-name,`schema:name`>>
+| `name`
+| A short, human-readable name for the data link.
+| `xsd:string`
+| 0..1
+| Optional
+
+| <<act-datalink-property-description,`schema:description`>>
+| `description`
+| A detailed explanation of the data link's purpose.
+| `xsd:string`
+| 0..1
+| Optional
+
 | <<act-datalink-property-sourceStep,`act:sourceStep`>>
 | `sourceStep`
-| The source `act:ActivityStep` for the data link.
-| `act:ActivityStep`
+| The identifier of the source `act:ActivityStep`.
+| `xsd:string`
 | 0..1
 | Conditional
 
 | <<act-datalink-property-targetStep,`act:targetStep`>>
 | `targetStep`
-| The target `act:ActivityStep` for the data link.
-| `act:ActivityStep`
+| The identifier of the target `act:ActivityStep`.
+| `xsd:string`
 | 0..1
 | Conditional
 
 | <<act-datalink-property-sourceVariable,`act:sourceVariable`>>
 | `sourceVariable`
-| The source `act:Variable` for the data link.
-| `act:Variable`
+| The identifier of the source `act:Variable`.
+| `xsd:string`
 | 1..1
 | **Mandatory**
 
 | <<act-datalink-property-targetVariable,`act:targetVariable`>>
 | `targetVariable`
-| The target `act:Variable` for the data link.
-| `act:Variable`
+| The identifier of the target `act:Variable`.
+| `xsd:string`
 | 1..1
 | **Mandatory**
 |===
@@ -66,6 +80,38 @@ The class `act:DataLink` realizes the **DATA LINK** concept as part of a `act:Co
 ==== Properties
 
 This section provides the detailed normative definitions for the properties of the `act:DataLink` class.
+
+[[act-datalink-property-name]]
+===== Property: name
+.Property Definition: schema:name
+[cols="2,4"]
+|===
+| **Property** | `schema:name`
+| **IRI** | `https://schema.org/name`
+| **JSON name** | `name`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..1
+| **Domain** | `act:DataLink`
+| **Range** | `xsd:string`
+| **Definition** | A short, human-readable name for the data link.
+| **Usage Note** | Useful for documenting the workflow. For example: "Pass User ID to Validator". Reuses the property from Schema.org.
+|===
+
+[[act-datalink-property-description]]
+===== Property: description
+.Property Definition: schema:description
+[cols="2,4"]
+|===
+| **Property** | `schema:description`
+| **IRI** | `https://schema.org/description`
+| **JSON name** | `description`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..1
+| **Domain** | `act:DataLink`
+| **Range** | `xsd:string`
+| **Definition** | A detailed explanation of the data link's purpose or any transformations.
+| **Usage Note** | Can be used to explain complex wiring or data handling logic to developers. Reuses the property from Schema.org.
+|===
 
 [[act-datalink-property-sourceStep]]
 ===== Property: sourceStep
@@ -78,9 +124,9 @@ This section provides the detailed normative definitions for the properties of t
 | **Requirement Level** | Conditional
 | **Cardinality** | 0..1
 | **Domain** | `act:DataLink`
-| **Range** | `act:ActivityStep`
-| **Definition** | Identifies the source `act:ActivityStep` for a `act:DataLink`.
-| **Usage Note** | This property is omitted for data links that wire a public input of the composite schema to an internal step.
+| **Range** | `xsd:string`
+| **Definition** | The identifier of the source `act:ActivityStep` for the data link.
+| **Usage Note** | The value of this property **SHALL** match the `schema:identifier` of an `act:ActivityStep` within the same composite schema. This property is omitted for data links that wire a public input of the composite schema to an internal step.
 |===
 
 [[act-datalink-property-targetStep]]
@@ -94,9 +140,9 @@ This section provides the detailed normative definitions for the properties of t
 | **Requirement Level** | Conditional
 | **Cardinality** | 0..1
 | **Domain** | `act:DataLink`
-| **Range** | `act:ActivityStep`
-| **Definition** | Identifies the target `act:ActivityStep` for a `act:DataLink`.
-| **Usage Note** | This property is omitted for data links that expose the output of an internal step as a public output of the composite schema.
+| **Range** | `xsd:string`
+| **Definition** | The identifier of the target `act:ActivityStep` for the data link.
+| **Usage Note** | The value of this property **SHALL** match the `schema:identifier` of an `act:ActivityStep` within the same composite schema. This property is omitted for data links that expose the output of an internal step as a public output of the composite schema.
 |===
 
 [[act-datalink-property-sourceVariable]]
@@ -110,9 +156,9 @@ This section provides the detailed normative definitions for the properties of t
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..1
 | **Domain** | `act:DataLink`
-| **Range** | `act:Variable`
-| **Definition** | Identifies the source `act:Variable` for a `act:DataLink`.
-| **Usage Note** | This specifies which output variable of the source step (or the composite schema) is being connected.
+| **Range** | `xsd:string`
+| **Definition** | The identifier of the source `act:Variable` for the data link.
+| **Usage Note** | The value of this property **SHALL** match the `schema:identifier` of an `act:Variable` defined in the source step's schema (or the composite schema itself).
 |===
 
 [[act-datalink-property-targetVariable]]
@@ -126,7 +172,7 @@ This section provides the detailed normative definitions for the properties of t
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..1
 | **Domain** | `act:DataLink`
-| **Range** | `act:Variable`
-| **Definition** | Identifies the target `act:Variable` for a `act:DataLink`.
-| **Usage Note** | This specifies which input variable of the target step (or the composite schema) is being connected.
+| **Range** | `xsd:string`
+| **Definition** | The identifier of the target `act:Variable` for the data link.
+| **Usage Note** | The value of this property **SHALL** match the `schema:identifier` of an `act:Variable` defined in the target step's schema (or the composite schema itself).
 |===

@@ -11,7 +11,7 @@ The class `act:ActivityStep` realizes the **ACTIVITY STEP** concept as part of a
 
 * **Context**: An `act:ActivityStep` **SHALL** only exist as part of a `act:CompositeActivitySchema`, linked via properties like `act:hasStep`.
 * **Logic Definition**: An `act:ActivityStep` **SHALL** reference exactly one `act:ActivitySchema` via the `act:usesSchema` property to define its executable logic.
-* **Identification**: An `act:ActivityStep` instance is uniquely identified by its URI. It **SHOULD** also have a simple, locally-unique `dct:identifier` to simplify referencing within the workflow definition.
+* **Identification**: An `act:ActivityStep` **SHOULD** have a simple, locally-unique `schema:identifier` to simplify referencing within the workflow definition.
 * **Description**: An `act:ActivityStep` **SHOULD** have a human-readable `schema:name` for display purposes and **MAY** have a `schema:description` for detailed documentation.
 * **Conditional Execution**: An `act:ActivityStep` **MAY** include an `act:hasCondition` to enable conditional branching within a workflow.
 
@@ -62,7 +62,7 @@ The class `act:ActivityStep` realizes the **ACTIVITY STEP** concept as part of a
 | 0..1
 | Optional
 
-| <<act-activitystep-property-identifier,`dct:identifier`>>
+| <<act-activitystep-property-identifier,`schema:identifier`>>
 | `identifier`
 | A unique identifier for the step within its composite schema.
 | `xsd:string`
@@ -141,16 +141,16 @@ This section provides the detailed normative definitions for the properties of t
 
 [[act-activitystep-property-identifier]]
 ===== Property: identifier
-.Property Definition: dct:identifier
+.Property Definition: schema:identifier
 [cols="2,4"]
 |===
-| **Property** | `dct:identifier`
-| **IRI** | `http://purl.org/dc/terms/identifier`
+| **Property** | `schema:identifier`
+| **IRI** | `https://schema.org/identifier`
 | **JSON name** | `identifier`
 | **Requirement Level** | Recommended
 | **Cardinality** | 0..1
 | **Domain** | `act:ActivityStep`
 | **Range** | `xsd:string`
 | **Definition** | A locally unique, human-friendly identifier for the step.
-| **Usage Note** | While the step's URI provides global uniqueness, this identifier provides a simple, stable "nickname" (e.g., "stepA", "validateUser") that **SHOULD** be used to uniquely identify the step *within its parent `act:CompositeActivitySchema`*. This makes it easier for `act:DataLink` instances to reliably reference the step as a source or target without using long, complex URIs.
+| **Usage Note** | This identifier provides a simple, stable "nickname" (e.g., "stepA", "validateUser") that **SHOULD** be used to uniquely identify the step *within its parent `act:CompositeActivitySchema`*. This makes it easier for `act:DataLink` instances to reliably reference the step as a source or target without using long, complex URIs.
 |===
