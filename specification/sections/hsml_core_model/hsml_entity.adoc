@@ -5,9 +5,9 @@ The class `core:Entity` corresponds to the base concept **ENTITY** in IEEE P2874
 
 **Key Requirements**
 
-- **Identity**: Every `core:Entity` **SHALL** include a Spatial Web Identifier (`core:swid`) conformant with W3C DID Core.
-- **Extensibility**: An entity **MAY** declare one or more subclasses to specialize its semantics.
-- **Credentials**: An entity **MAY** link to zero or more `w3c:VerifiableCredential` instances.
+* **Identity**: Every `core:Entity` **SHALL** possess a Spatial Web Identifier (`core:swid`) conformant with W3C DID Core syntax.
+* **Typing**: Every instance **SHALL** declare its specific class via the `rdf:type` property.
+* **Extensibility**: The `core:Entity` model is designed to be subclassed to create more specialized types.
 
 [[core-entity-class]]
 ==== Class Definition
@@ -18,8 +18,8 @@ The class `core:Entity` corresponds to the base concept **ENTITY** in IEEE P2874
 | Is Abstract | Yes
 | Definition | An _ENTITY_ is “that which is perceived, known, or inferred to exist, has existed, or is anticipated to exist.”
 | Subclass Of | `owl:Thing`
-| Usage Note | `core:Entity` is an abstract class and should not be instantiated directly. Only its subclasses should be instantiated. Instances **SHALL** include `core:swid`.
-| Rationale | As the root of the Spatial Web ontology, `core:Entity` provides a uniform, extensible foundation for all HSML constructs, enabling polymorphic processing and semantic interoperability.
+| Usage Note | `core:Entity` is an abstract class and **SHALL NOT** be instantiated directly. Only its concrete subclasses should be instantiated.
+| Rationale | As the root of the Spatial Web ontology, `core:Entity` provides a uniform, extensible foundation for all HSML constructs, enabling polymorphic processing, universal identification, and semantic interoperability.
 |===
 
 .Properties Summary for core:Entity
@@ -27,10 +27,34 @@ The class `core:Entity` corresponds to the base concept **ENTITY** in IEEE P2874
 |===
 | Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
 
-| `rdf:type` | `@type` | Declares the resource as a subclass of `core:Entity`. | `rdfs:Class` | 1..n | **Mandatory**
-| `core:swid` | `swid` | Spatial Web Identifier conformant with W3C DID Core. | `xsd:anyURI` | 1..1 | **Mandatory**
-| `rdfs:label` | `label` | Optional human-readable name for the Entity. | `xsd:string` | 0..1 | Recommended
-| `rdfs:comment` | `comment` | Optional human-readable description for the Entity. | `xsd:string` | 0..1 | Recommended
+| <<core-entity-property-type,`rdf:type`>>
+| `@type`
+| Declares the specific class of the resource.
+| `rdfs:Class`
+| 1..*
+| **Mandatory**
+
+| <<core-entity-property-swid,`core:swid`>>
+| `swid`
+| The Spatial Web Identifier for the entity.
+| `xsd:anyURI`
+| 1..1
+| **Mandatory**
+
+| <<core-entity-property-name,`schema:name`>>
+| `name`
+| A short, human-readable name for the entity.
+| `xsd:string`
+| 0..1
+| Recommended
+
+| <<core-entity-property-description,`schema:description`>>
+| `description`
+| A detailed explanation of the entity's purpose.
+| `xsd:string`
+| 0..1
+| Optional
+
 |===
 
 [[core-entity-properties]]
@@ -47,11 +71,11 @@ This section provides the detailed normative definitions for the properties of t
 |**IRI** | `http://www.w3.org/1999/02/22-rdf-syntax-ns#type`
 |**JSON name** | `@type`
 |**Requirement Level** | **Mandatory**
-|**Cardinality** | 1..n
+|**Cardinality** | 1..*
 |**Domain** | `core:Entity`
 |**Range** | `rdfs:Class`
-|**Definition** | The type of the entity (subclass of Entity).
-|**Usage Note** | Each Entity must have a class associated with it that is a subclass of `core:Entity` that is not abstract. An entity can have one or more types associated (for inferred classes for example).
+|**Definition** | Declares the specific class (or classes) of which this resource is an instance.
+|**Usage Note** | Every entity **SHALL** have at least one `rdf:type` that specifies a concrete (non-abstract) subclass of `core:Entity`. Multiple types may be present, for example, to include inferred classes.
 |===
 
 [[core-entity-property-swid]]
@@ -66,38 +90,40 @@ This section provides the detailed normative definitions for the properties of t
 |**Cardinality** | 1..1
 |**Domain** | `core:Entity`
 |**Range** | `xsd:anyURI`
-|**Definition** | Spatial Web Identifier conformant with W3C DID Core.
-|**Usage Note** | Every `core:Entity` subclass **must** have exactly one SWID.
+|**Definition** | A globally unique Spatial Web Identifier conformant with W3C DID Core syntax.
+|**Usage Note** | This property provides the stable, universal identifier for the entity across all contexts.
 |===
 
-[[core-entity-property-label]]
-===== Property: label
-.Property Definition: rdfs:label
+[[core-entity-property-name]]
+===== Property: name
+.Property Definition: schema:name
 [cols="2,4"]
 |===
-|**Property** | `rdfs:label`
-|**IRI** | `http://www.w3.org/2000/01/rdf-schema#label`
-|**JSON name** | `label`
-|**Requirement Level** | **Recommended**
+|**Property** | `schema:name`
+|**IRI** | `https://schema.org/name`
+|**JSON name** | `name`
+|**Requirement Level** | Recommended
 |**Cardinality** | 0..1
 |**Domain** | `core:Entity`
 |**Range** | `xsd:string`
-|**Definition** | Human readable label for an entity.
-|**Usage Note** | Each Entity may have a human-readable label.
+|**Definition** | A short, human-readable name for the entity.
+|**Usage Note** | Recommended for all entities to improve usability in user interfaces and logs. Reuses the property from Schema.org.
 |===
 
-[[core-entity-property-comment]]
-===== Property: comment
-.Property Definition: rdfs:comment
+[[core-entity-property-description]]
+===== Property: description
+.Property Definition: schema:description
 [cols="2,4"]
 |===
-|**Property** | `rdfs:comment`
-|**IRI** | `http://www.w3.org/2000/01/rdf-schema#comment`
-|**JSON name** | `comment`
-|**Requirement Level** | **Recommended**
+|**Property** | `schema:description`
+|**IRI** | `https://schema.org/description`
+|**JSON name** | `description`
+|**Requirement Level** | Optional
 |**Cardinality** | 0..1
 |**Domain** | `core:Entity`
 |**Range** | `xsd:string`
-|**Definition** | Human readable description for an entity.
-|**Usage Note** | Each Entity may have a human-readable description.
+|**Definition** | A detailed explanation of the entity's purpose or nature.
+|**Usage Note** | Useful for documentation and for providing context to human users or AI agents. Reuses the property from Schema.org.
 |===
+
+
