@@ -1,0 +1,85 @@
+[[act-activitystep]]
+=== Class: act:ActivityStep
+
+The class `act:ActivityStep` realizes the **ACTIVITY STEP** concept as part of a `act:CompositeActivitySchema` in IEEE P2874 § 6.6.3.
+
+“An ACTIVITY STEP is an addressable node within a composite activity's workflow, representing a discrete stage of execution that uses a specific `act:ActivitySchema` to define its logic.”
+
+`act:ActivityStep` is a structural component used to build complex workflows. It acts as a placeholder or node in a workflow graph, separating the structure of the workflow from the logic of the individual steps. This allows for the creation of modular, reusable, and governable multi-step processes.
+
+**Key Requirements**
+
+* **Context**: An `act:ActivityStep` **SHALL** only exist as part of a `act:CompositeActivitySchema`, linked via properties like `act:hasStep`.
+* **Logic Definition**: An `act:ActivityStep` **SHALL** reference exactly one `act:ActivitySchema` via the `act:usesSchema` property to define its executable logic.
+* **Identification**: An `act:ActivityStep` **SHOULD** have a unique identifier within the scope of its parent composite schema to facilitate addressing by `act:DataLink` instances.
+
+[[act-activitystep-class]]
+==== Class Definition
+
+.Class Definition for act:ActivityStep
+[cols="1,3",options="header"]
+|===
+| RDF Class | `act:ActivityStep`
+| Is Abstract | No
+| Definition | A unique, addressable step within a `act:CompositeActivitySchema`. Each step is an element of the workflow and points to an `act:ActivitySchema` that it executes.
+| Subclass Of | `owl:Thing`
+| Usage Note | An `act:ActivityStep` acts as a node in a workflow graph. It is a structural placeholder, not the logic itself.
+| Rationale | Modeling steps as first-class entities makes the workflow structure explicit, addressable, and governable, allowing metadata to be attached to individual stages of a process.
+|===
+
+.Properties Summary for act:ActivityStep
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<act-activitystep-property-usesSchema,`act:usesSchema`>>
+| `usesSchema`
+| Links the step to the `act:ActivitySchema` defining its logic.
+| `act:ActivitySchema`
+| 1..1
+| **Mandatory**
+
+| <<act-activitystep-property-identifier,`dct:identifier`>>
+| `identifier`
+| A unique identifier for the step within its composite schema.
+| `xsd:string`
+| 0..1
+| Recommended
+|===
+
+[[act-activitystep-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the `act:ActivityStep` class.
+
+[[act-activitystep-property-usesSchema]]
+===== Property: usesSchema
+.Property Definition: act:usesSchema
+[cols="2,4"]
+|===
+| **Property** | `act:usesSchema`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#usesSchema`
+| **JSON name** | `usesSchema`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..1
+| **Domain** | `act:ActivityStep`
+| **Range** | `act:ActivitySchema`
+| **Definition** | Links an `act:ActivityStep` to the `act:ActivitySchema` that defines its executable logic.
+| **Usage Note** | The referenced schema can be either atomic or another composite schema, allowing for nested workflows.
+|===
+
+[[act-activitystep-property-identifier]]
+===== Property: identifier
+.Property Definition: dct:identifier
+[cols="2,4"]
+|===
+| **Property** | `dct:identifier`
+| **IRI** | `http://purl.org/dc/terms/identifier`
+| **JSON name** | `identifier`
+| **Requirement Level** | Recommended
+| **Cardinality** | 0..1
+| **Domain** | `act:ActivityStep`
+| **Range** | `xsd:string`
+| **Definition** | A locally unique identifier for the step.
+| **Usage Note** | **Should** be used to uniquely identify a step within a `act:CompositeActivitySchema` so that `act:DataLink` instances can reliably reference it as a source or target.
+|===

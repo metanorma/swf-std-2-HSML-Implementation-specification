@@ -1,0 +1,111 @@
+
+[[act-variable]]
+=== Class: act:Variable
+
+The class `act:Variable` realizes the **VARIABLE** concept as part of an `act:ActivitySchema` in IEEE P2874 § 6.6.3.
+
+“A VARIABLE represents a typed parameter or binding placeholder within an ACTIVITY SCHEMA, used to specify required inputs, produced outputs, or contextual bindings.”
+
+`act:Variable` supports the **declaration -> binding -> validation** pipeline for activities, enabling `act:ActivitySchema` instances to define reusable templates with explicit parameter slots.
+
+**Key Requirements**
+
+* **Declaration** — Variables **SHALL** be declared in an `act:ActivitySchema` as inputs (via `act:hasInput`) or outputs (via `act:hasOutput`).
+* **Binding** — Each bound value in an `act:Activity` **SHALL** be expressed using `act:VariableBinding` linked to its schema `act:Variable`.
+* **Validation** — All bound values **SHALL** be validated against the `core:Condition` associated with the `act:Variable`.
+
+This ensures `act:ActivitySchema` instances are executable blueprints with clearly defined interfaces and governance rules.
+
+[[act-variable-class]]
+==== Class Definition
+
+.Class Definition for act:Variable
+[cols="1,3",options="header"]
+|===
+| RDF Class | `act:Variable`
+| Is Abstract | No
+| Definition | A parameter definition in an `act:ActivitySchema`, representing an input, output, or contextual binding.
+| Subclass Of | `owl:Thing`
+| Usage Note | Variables define the interface for `act:ActivitySchema` parameters, enabling validation of required/optional bindings.
+| Rationale | Provides a formal structure for parameterizing Activities, ensuring correctness, reusability, and repeatability in accordance with the P2874 Activity model.
+|===
+
+.Properties Summary for act:Variable
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<act-variable-property-variableName,`act:variableName`>>
+| `variableName`
+| Machine-readable identifier for the variable.
+| `xsd:string`
+| 1..1
+| Mandatory
+
+| <<act-variable-property-description,`dct:description`>>
+| `description`
+| Human-readable description of the variable’s purpose.
+| `xsd:string`
+| 0..1
+| Recommended
+
+| <<act-variable-property-hasCondition,`core:hasCondition`>>
+| `hasCondition`
+| Declares conditions (e.g., type constraints) applied to the variable's value.
+| `core:Condition`
+| 1..n
+| Mandatory
+|===
+
+[[act-variable-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the `act:Variable` class.
+
+[[act-variable-property-variableName]]
+===== Property: variableName
+.Property Definition: act:variableName
+[cols="2,4"]
+|===
+| **Property** | `act:variableName`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#variableName`
+| **JSON name** | `variableName`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..1
+| **Domain** | `act:Variable`
+| **Range** | `xsd:string`
+| **Definition** | A machine-readable identifier for the variable, distinct from its label.
+| **Usage Note** | Used for programmatic bindings via `act:VariableBinding` and for referencing variables in `act:DataLink` instances.
+|===
+
+[[act-variable-property-description]]
+===== Property: description
+.Property Definition: dct:description
+[cols="2,4"]
+|===
+| **Property** | `dct:description`
+| **IRI** | `http://purl.org/dc/terms/description`
+| **JSON name** | `description`
+| **Requirement Level** | Recommended
+| **Cardinality** | 0..1
+| **Domain** | `act:Variable`
+| **Range** | `xsd:string`
+| **Definition** | A human-readable description of the variable’s purpose and usage.
+| **Usage Note** | Supports schema documentation and human understanding. Reuses the `dct:description` property from Dublin Core for interoperability.
+|===
+
+[[act-variable-property-hasCondition]]
+===== Property: hasCondition
+.Property Definition: core:hasCondition
+[cols="2,4"]
+|===
+| **Property** | `core:hasCondition`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/core#hasCondition`
+| **JSON name** | `hasCondition`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..n
+| **Domain** | `act:Variable`
+| **Range** | `core:Condition`
+| **Definition** | Declares one or more conditions that the variable's value must satisfy, such as type, range, or format constraints.
+| **Usage Note** | Ensures that bound values in an `act:VariableBinding` meet the schema's requirements. A `core:SHACLCondition` is typically used to define the data type.
+|===

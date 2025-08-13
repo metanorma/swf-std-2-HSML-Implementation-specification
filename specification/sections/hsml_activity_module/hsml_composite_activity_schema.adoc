@@ -1,0 +1,152 @@
+[[act-compositeactivityschema]]
+=== Class: act:CompositeActivitySchema
+
+The class `act:CompositeActivitySchema` realizes the **COMPOSITE ACTIVITY SCHEMA** concept, which extends the `act:ActivitySchema` to model complex, multi-step workflows as defined in IEEE P2874 § 6.6.3.
+
+A `act:CompositeActivitySchema` is a schema for a complex workflow composed of other activities. It acts as a container for a set of `act:ActivityStep` instances and defines the control and data flow between them. This enables the modeling of sophisticated processes like sequences, choices, and parallel operations.
+
+**Key Requirements**
+
+* **Composition**: A `act:CompositeActivitySchema` **SHALL** be composed of one or more `act:ActivityStep` instances linked via `act:hasStep`.
+* **Control Flow**: A `act:CompositeActivitySchema` **SHALL** define its execution logic using exactly one of the control flow properties: `act:hasOrderedSteps`, `act:hasChoice`, or `act:hasUnorderedSteps`.
+* **Data Flow**: A `act:CompositeActivitySchema` **MAY** define the data wiring between its steps and its public interface using `act:DataLink` instances.
+
+[[act-compositeactivityschema-class]]
+==== Class Definition
+
+.Class Definition for act:CompositeActivitySchema
+[cols="1,3",options="header"]
+|===
+| RDF Class | `act:CompositeActivitySchema`
+| Is Abstract | No
+| Definition | A schema for a complex workflow defined in terms of a sequence or combination of other activities.
+| Subclass Of | `act:ActivitySchema`
+| Usage Note | This class is the basis for modeling multi-step processes. It must contain `act:ActivityStep` instances and define a control flow.
+| Rationale | Provides a formal, governable structure for modeling complex workflows, making both the process logic and data dependencies explicit and auditable.
+|===
+
+.Properties Summary for act:CompositeActivitySchema
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<act-compositeactivityschema-property-hasStep,`act:hasStep`>>
+| `hasStep`
+| Connects the composite schema to a constituent `act:ActivityStep`.
+| `act:ActivityStep`
+| 1..*
+| **Mandatory**
+
+| <<act-compositeactivityschema-property-hasDataLink,`act:hasDataLink`>>
+| `hasDataLink`
+| Connects the composite schema to a `act:DataLink` that defines data wiring.
+| `act:DataLink`
+| 0..*
+| Optional
+
+| <<act-compositeactivityschema-property-hasOrderedSteps,`act:hasOrderedSteps`>>
+| `hasOrderedSteps`
+| Defines a strict sequence of `act:ActivityStep`s.
+| `rdf:List`
+| 0..1
+| Conditional
+
+| <<act-compositeactivityschema-property-hasChoice,`act:hasChoice`>>
+| `hasChoice`
+| Defines a set of mutually exclusive `act:ActivityStep` options.
+| `act:ActivityStep`
+| 0..*
+| Conditional
+
+| <<act-compositeactivityschema-property-hasUnorderedSteps,`act:hasUnorderedSteps`>>
+| `hasUnorderedSteps`
+| Defines a set of `act:ActivityStep`s with no prescribed execution order.
+| `act:ActivityStep`
+| 0..*
+| Conditional
+|===
+
+[[act-compositeactivityschema-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the `act:CompositeActivitySchema` class.
+
+[[act-compositeactivityschema-property-hasStep]]
+===== Property: hasStep
+.Property Definition: act:hasStep
+[cols="2,4"]
+|===
+| **Property** | `act:hasStep`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#hasStep`
+| **JSON name** | `hasStep`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..*
+| **Domain** | `act:CompositeActivitySchema`
+| **Range** | `act:ActivityStep`
+| **Definition** | Connects a composite schema to a constituent `act:ActivityStep`.
+| **Usage Note** | Every composite schema must contain at least one step.
+|===
+
+[[act-compositeactivityschema-property-hasDataLink]]
+===== Property: hasDataLink
+.Property Definition: act:hasDataLink
+[cols="2,4"]
+|===
+| **Property** | `act:hasDataLink`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#hasDataLink`
+| **JSON name** | `hasDataLink`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..*
+| **Domain** | `act:CompositeActivitySchema`
+| **Range** | `act:DataLink`
+| **Definition** | Connects a composite schema to a `act:DataLink` that defines data wiring.
+| **Usage Note** | Used to make the data dependencies between steps explicit.
+|===
+
+[[act-compositeactivityschema-property-hasOrderedSteps]]
+===== Property: hasOrderedSteps
+.Property Definition: act:hasOrderedSteps
+[cols="2,4"]
+|===
+| **Property** | `act:hasOrderedSteps`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#hasOrderedSteps`
+| **JSON name** | `hasOrderedSteps`
+| **Requirement Level** | Conditional
+| **Cardinality** | 0..1
+| **Domain** | `act:CompositeActivitySchema`
+| **Range** | `rdf:List`
+| **Definition** | Defines a strict sequence of `act:ActivityStep`s. The value **shall** be a well-formed `rdf:List`.
+| **Usage Note** | A composite schema **shall** use exactly one control flow property. This property defines a sequential workflow.
+|===
+
+[[act-compositeactivityschema-property-hasChoice]]
+===== Property: hasChoice
+.Property Definition: act:hasChoice
+[cols="2,4"]
+|===
+| **Property** | `act:hasChoice`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#hasChoice`
+| **JSON name** | `hasChoice`
+| **Requirement Level** | Conditional
+| **Cardinality** | 0..*
+| **Domain** | `act:CompositeActivitySchema`
+| **Range** | `act:ActivityStep`
+| **Definition** | Defines a set of mutually exclusive `act:ActivityStep` options.
+| **Usage Note** | A composite schema **shall** use exactly one control flow property. If used, this property **shall** link to two or more steps.
+|===
+
+[[act-compositeactivityschema-property-hasUnorderedSteps]]
+===== Property: hasUnorderedSteps
+.Property Definition: act:hasUnorderedSteps
+[cols="2,4"]
+|===
+| **Property** | `act:hasUnorderedSteps`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#hasUnorderedSteps`
+| **JSON name** | `hasUnorderedSteps`
+| **Requirement Level** | Conditional
+| **Cardinality** | 0..*
+| **Domain** | `act:CompositeActivitySchema`
+| **Range** | `act:ActivityStep`
+| **Definition** | Defines a set of `act:ActivityStep`s with no prescribed execution order.
+| **Usage Note** | A composite schema **shall** use exactly one control flow property. This defines a set of steps that may be executed in parallel, subject to data dependencies.
+|===

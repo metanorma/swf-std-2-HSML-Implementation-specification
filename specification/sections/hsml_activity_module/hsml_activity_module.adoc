@@ -1,0 +1,112 @@
+== HSML Activity Module
+
+include::activity_module_principles.adoc[]
+
+
+=== Modeling of Composite Activities
+
+This clause specifies the normative rules for constructing complex, multi-step workflows using the `act:CompositeActivitySchema` class.
+
+==== The Composite Pattern: ActivityStep and DataLink
+
+A `CompositeActivitySchema` `shall` be composed of one or more `act:ActivityStep` instances and zero or more `act:DataLink` instances.
+
+An `act:ActivityStep` `shall` function as an addressable node within the workflow graph defined by the composite schema. Each `act:ActivityStep` `shall` use the `act:usesSchema` property to reference exactly one `act:ActivitySchema` that defines the logic for that step. This referenced schema may be either atomic or another composite schema, allowing for nested workflows.
+
+An `act:DataLink` `shall` function as a directed edge in the workflow graph, representing the flow of data. This formal "wiring" is necessary for composite logic, as it makes the dependencies between steps explicit and machine-checkable.
+
+==== Control Flow Constructs
+
+An `act:CompositeActivitySchema` `shall` define its internal control flow by using exactly one of the following three properties: `act:hasOrderedSteps`, `act:hasChoice`, or `act:hasUnorderedSteps`. This mutual exclusivity is normatively enforced by the `sh:xone` constraint in the `act:CompositeActivitySchemaShape` (see Annex B).
+
+* *Sequence (`act:hasOrderedSteps`)*: If this property is used, its value `shall` be a well-formed `rdf:List` where each member of the list is an `act:ActivityStep`. The steps `shall` be executed by an orchestration engine in the strict order defined by the list.
+* *Choice (`act:hasChoice`)*: If this property is used, it `shall` link to two or more `act:ActivityStep` instances. These steps represent mutually exclusive execution paths. An orchestration engine `shall` select and execute exactly one of the specified choice steps.
+* *Set (`act:hasUnorderedSteps`)*: If this property is used, it `shall` link to one or more `act:ActivityStep` instances. These steps have no prescribed execution order and may be executed in any sequence or in parallel, subject to data dependencies defined by `act:DataLink` instances.
+
+==== Interface Wiring and Data Flow Management
+
+The `act:DataLink` class is used to manage the flow of data between steps and across the boundary of the composite schema. The following normative rules apply, as enforced by the `act:DataLinkInterfaceShape` and `act:DataLinkTypeConsistencyShape` (see Annex B).
+
+* *Internal Wiring*: To connect the output of one step to the input of another, an `act:DataLink` `shall` specify the `act:sourceStep`, `act:sourceVariable`, `act:targetStep`, and `act:targetVariable`.
+* *Input Wiring*: To connect a public input of the `CompositeActivitySchema` to the input of an internal step, an `act:DataLink` `shall` be created that omits the `act:sourceStep` property. For such a link, the `act:sourceVariable` `shall` be a variable that is declared as an `act:hasInput` on the parent `CompositeActivitySchema`.
+* *Output Wiring*: To expose the output of an internal step as a public output of the `CompositeActivitySchema`, an `act:DataLink` `shall` be created that omits the `act:targetStep` property. For such a link, the `act:targetVariable` `shall` be a variable that is declared as an `act:hasOutput` on the parent `CompositeActivitySchema`.
+* *Type Consistency*: For any `act:DataLink`, the type constraint of the `act:sourceVariable` `should` be compatible with the type constraint of the `act:targetVariable`. The `act:DataLinkTypeConsistencyShape` provides a normative check for this compatibility.
+
+=== Execution and Traceability Model
+
+This clause specifies the normative requirements for creating a run-time trace of an executed activity. This model ensures that a complete and auditable record of all actions is preserved.
+
+==== Instantiation of Composite Activities
+
+When an orchestration engine begins the execution of a `CompositeActivitySchema`, it `shall` first create a parent `act:Activity` instance corresponding to the composite schema itself. As the engine proceeds to execute each constituent `act:ActivityStep` defined within the composite, it `shall` create a new, distinct child `act:Activity` instance for each step executed.
+
+==== Normative Requirements for Traceability Links
+
+To ensure a complete and unambiguous provenance graph, the following linking properties `shall` be used on all child `act:Activity` instances created during the execution of a composite activity.
+
+* *Compositional Link (`act:subActivityOf`)*: Every child `Activity` created from an `ActivityStep` `shall` be linked to its parent composite `Activity` using exactly one `act:subActivityOf` property. This creates the compositional hierarchy, clearly defining which actions are part of a larger workflow.
+* *Sequential Link (`act:precededBy`)*: For workflows defined with `act:hasOrderedSteps`, every child `Activity` (except for the first one in the sequence) `shall` be linked to the `Activity` instance of the immediately preceding step using exactly one `act:precededBy` property.
+
+The combined use of these two properties creates a comprehensive, dual-axis traceability graph. The `act:subActivityOf` links provide the compositional or "part-of" hierarchy, while the `act:precededBy` links provide the temporal and causal sequence. Together, they allow for the complete and unambiguous reconstruction of a complex event, which is critical for auditing, debugging, and establishing legal or operational accountability.
+
+
+=== Normative Classes
+
+This clause provides the normative definitions for all class concepts within the HSML Activity Module. Each class is detailed in a table that specifies its URI, description, JSON-LD context name, usage notes, and relationship to other classes. 
+
+The namespace prefix `act:` refers to `https://www.spatialwebfoundation.org/ns/hsml/activity#`.
+
+
+=== Summary of Normative Classes
+
+.Summary of HSML Activity Module Classes
+[cols="1,3",options="header"]
+|===
+| Class | Description
+
+| <<act-activity,act:Activity>>
+| A concrete, stateful record of a specific action that has been, is being, or is planned to be performed.
+
+| <<act-activityschema,act:ActivitySchema>>
+| A reusable, design-time template that defines the logic, interface, and conditions for a type of activity.
+
+| <<act-atomicactivityschema,act:AtomicActivitySchema>>
+| A specialization of act:ActivitySchema for simple, indivisible activities whose internal logic is opaque to the model.
+
+| <<act-compositeactivityschema,act:CompositeActivitySchema>>
+| A specialization of act:ActivitySchema for complex workflows composed of multiple steps and data links.
+
+| <<act-activitystep,act:ActivityStep>>
+| A structural node within a act:CompositeActivitySchema that represents a single step in a workflow.
+
+| <<act-datalink,act:DataLink>>
+| A structural entity that explicitly defines the "wiring" or flow of data between steps in a composite workflow.
+
+| <<act-variable,act:Variable>>
+| An abstract parameter placeholder within an act:ActivitySchema that defines an input or output slot.
+
+| <<act-variablebinding,act:VariableBinding>>
+| A concrete link within an act:Activity that connects an act:Variable to a specific value for an execution.
+|===
+
+
+
+include::hsml_activity.adoc[]
+
+include::hsml_activity_schema.adoc[]
+
+include::hsml_atomic_activity_schema.adoc[]
+
+include::hsml_composite_activity_schema.adoc[]
+
+include::hsml_activity_step.adoc[]
+
+include::hsml_data_link.adoc[]
+
+include::hsml_variable.adoc[]
+
+include::hsml_variable_binding.adoc[]
+
+
+
+

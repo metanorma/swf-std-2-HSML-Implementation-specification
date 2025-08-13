@@ -1,0 +1,132 @@
+[[act-datalink]]
+=== Class: act:DataLink
+
+The class `act:DataLink` realizes the **DATA LINK** concept as part of a `act:CompositeActivitySchema` in IEEE P2874 § 6.6.3.
+
+“A DATA LINK is a construct for connecting the data flow between steps in a composite activity.”
+
+`act:DataLink` is a structural entity that explicitly models the "wiring" of data within a complex workflow. It connects the output of one step to the input of another, or links the inputs and outputs of the composite schema to its internal steps. By modeling data flow as a first-class entity, the standard makes it addressable, auditable, and governable.
+
+**Key Requirements**
+
+* **Context**: An `act:DataLink` **SHALL** only exist as part of a `act:CompositeActivitySchema`, linked via the `act:hasDataLink` property.
+* **Source Specification**: An `act:DataLink` **SHALL** identify its data source via `act:sourceVariable` and, if internal, `act:sourceStep`.
+* **Target Specification**: An `act:DataLink` **SHALL** identify its data target via `act:targetVariable` and, if internal, `act:targetStep`.
+* **Interface Wiring**: To wire the composite's interface, a `DataLink` **SHALL** omit either the `sourceStep` (for an input) or `targetStep` (for an output).
+
+[[act-datalink-class]]
+==== Class Definition
+
+.Class Definition for act:DataLink
+[cols="1,3",options="header"]
+|===
+| RDF Class | `act:DataLink`
+| Is Abstract | No
+| Definition | A directed "wire" defining data flow. It can connect two internal steps, a composite's input to a step, or a step's output to a composite's output.
+| Subclass Of | `owl:Thing`
+| Usage Note | Making `act:DataLink` a class allows the data flow itself to be an addressable and governable entity. Metadata (e.g., encryption requirements, Quality of Service policies) can be attached directly to the link.
+| Rationale | Elevates the workflow's data flow to be an explicit, governable entity, enabling more sophisticated security and management patterns than would be possible if data flow were merely an implicit behavior.
+|===
+
+.Properties Summary for act:DataLink
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<act-datalink-property-sourceStep,`act:sourceStep`>>
+| `sourceStep`
+| The source `act:ActivityStep` for the data link.
+| `act:ActivityStep`
+| 0..1
+| Conditional
+
+| <<act-datalink-property-targetStep,`act:targetStep`>>
+| `targetStep`
+| The target `act:ActivityStep` for the data link.
+| `act:ActivityStep`
+| 0..1
+| Conditional
+
+| <<act-datalink-property-sourceVariable,`act:sourceVariable`>>
+| `sourceVariable`
+| The source `act:Variable` for the data link.
+| `act:Variable`
+| 1..1
+| **Mandatory**
+
+| <<act-datalink-property-targetVariable,`act:targetVariable`>>
+| `targetVariable`
+| The target `act:Variable` for the data link.
+| `act:Variable`
+| 1..1
+| **Mandatory**
+|===
+
+[[act-datalink-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the `act:DataLink` class.
+
+[[act-datalink-property-sourceStep]]
+===== Property: sourceStep
+.Property Definition: act:sourceStep
+[cols="2,4"]
+|===
+| **Property** | `act:sourceStep`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#sourceStep`
+| **JSON name** | `sourceStep`
+| **Requirement Level** | Conditional
+| **Cardinality** | 0..1
+| **Domain** | `act:DataLink`
+| **Range** | `act:ActivityStep`
+| **Definition** | Identifies the source `act:ActivityStep` for a `act:DataLink`.
+| **Usage Note** | This property is omitted for data links that wire a public input of the composite schema to an internal step.
+|===
+
+[[act-datalink-property-targetStep]]
+===== Property: targetStep
+.Property Definition: act:targetStep
+[cols="2,4"]
+|===
+| **Property** | `act:targetStep`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#targetStep`
+| **JSON name** | `targetStep`
+| **Requirement Level** | Conditional
+| **Cardinality** | 0..1
+| **Domain** | `act:DataLink`
+| **Range** | `act:ActivityStep`
+| **Definition** | Identifies the target `act:ActivityStep` for a `act:DataLink`.
+| **Usage Note** | This property is omitted for data links that expose the output of an internal step as a public output of the composite schema.
+|===
+
+[[act-datalink-property-sourceVariable]]
+===== Property: sourceVariable
+.Property Definition: act:sourceVariable
+[cols="2,4"]
+|===
+| **Property** | `act:sourceVariable`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#sourceVariable`
+| **JSON name** | `sourceVariable`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..1
+| **Domain** | `act:DataLink`
+| **Range** | `act:Variable`
+| **Definition** | Identifies the source `act:Variable` for a `act:DataLink`.
+| **Usage Note** | This specifies which output variable of the source step (or the composite schema) is being connected.
+|===
+
+[[act-datalink-property-targetVariable]]
+===== Property: targetVariable
+.Property Definition: act:targetVariable
+[cols="2,4"]
+|===
+| **Property** | `act:targetVariable`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#targetVariable`
+| **JSON name** | `targetVariable`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..1
+| **Domain** | `act:DataLink`
+| **Range** | `act:Variable`
+| **Definition** | Identifies the target `act:Variable` for a `act:DataLink`.
+| **Usage Note** | This specifies which input variable of the target step (or the composite schema) is being connected.
+|===

@@ -1,0 +1,135 @@
+[[act-activity]]
+=== Class: act:Activity
+
+The class `act:Activity` realises the **ACTIVITY** concept defined in IEEE P2874 § 6.6.3:
+
+“An ACTIVITY is an execution-time entity representing a single, concrete, stateful instance of an `act:ActivitySchema` performed by a specific agent at a specific time.”
+
+`act:Activity` is the primary entity for recording and tracking the execution of an action in the Spatial Web. It serves as a stateful, auditable record that links the abstract `act:ActivitySchema` to the concrete agents and values involved in a specific occurrence.
+
+**Key Requirements**
+
+* **Identity**: Every `act:Activity` **SHALL** possess a Spatial Web Identifier (`hsml:swid`, W3C DID Core-compliant).
+* **Schema Conformance**: An `act:Activity` **SHALL** reference exactly one `act:ActivitySchema` via the `act:activitySchema` property.
+* **Agent Assignment**: An `act:Activity` **SHALL** identify the `hsml:Agent`(s) responsible for its execution via the `act:performedBy` property.
+* **Parameter Binding**: An `act:Activity` **SHALL** provide concrete values for all required inputs of its schema using `act:VariableBinding` instances.
+* **Lifecycle Tracking**: An `act:Activity` **SHALL** have its current state tracked via the `act:status` property.
+
+These requirements ensure that every executed action is a complete, self-contained, and verifiable record that is traceable to its defining schema and responsible agent.
+
+[[act-activity-class]]
+==== Class Definition
+
+.Class Definition for act:Activity
+[cols="1,3",options="header"]
+|===
+| RDF Class | `act:Activity`
+| Is Abstract | No
+| Definition | A concrete, stateful execution of an `act:ActivitySchema`. It is the record of an action that has been, is being, or is planned to be performed.
+| Subclass Of | `hsml:Entity`
+| Usage Note | An `act:Activity` instance is created for every action that is initiated via a `gov:Contract`. It contains `act:VariableBinding` instances for all required inputs and its `act:status` property tracks its lifecycle.
+| Rationale | Provides the normative record of execution for all actions, ensuring that every event is auditable, governable, and traceable to its formal definition and responsible parties.
+|===
+
+.Properties Summary for act:Activity
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<act-activity-property-activitySchema,`act:activitySchema`>>
+| `activitySchema`
+| Links the `act:Activity` instance to the `act:ActivitySchema` it implements.
+| `act:ActivitySchema`
+| 1..1
+| **Mandatory**
+
+| <<act-activity-property-performedBy,`act:performedBy`>>
+| `performedBy`
+| Identifies the `hsml:Agent`(s) responsible for performing the `act:Activity`.
+| `hsml:Agent`
+| 1..*
+| **Mandatory**
+
+| <<act-activity-property-status,`act:status`>>
+| `status`
+| The current lifecycle state of the `act:Activity`.
+| `xsd:string`
+| 1..1
+| **Mandatory**
+
+| <<act-activity-property-hasBinding,`act:hasBinding`>>
+| `hasBinding`
+| Associates an `act:VariableBinding` with the `act:Activity`.
+| `act:VariableBinding`
+| 0..*
+| Conditional
+|===
+
+[[act-activity-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the `act:Activity` class.
+
+[[act-activity-property-activitySchema]]
+===== Property: activitySchema
+.Property Definition: act:activitySchema
+[cols="2,4"]
+|===
+| **Property** | `act:activitySchema`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#activitySchema`
+| **JSON name** | `activitySchema`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..1
+| **Domain** | `act:Activity`
+| **Range** | `act:ActivitySchema`
+| **Definition** | Links an `act:Activity` instance to the `act:ActivitySchema` it implements.
+| **Usage Note** | This is a critical link for governance, as it allows validators to check the activity's conformance against its approved template.
+|===
+
+[[act-activity-property-performedBy]]
+===== Property: performedBy
+.Property Definition: act:performedBy
+[cols="2,4"]
+|===
+| **Property** | `act:performedBy`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#performedBy`
+| **JSON name** | `performedBy`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..*
+| **Domain** | `act:Activity`
+| **Range** | `hsml:Agent`
+| **Definition** | Identifies the `hsml:Agent` (or agents) responsible for performing an `act:Activity`.
+| **Usage Note** | Establishes accountability for the action's execution and outcomes.
+|===
+
+[[act-activity-property-status]]
+===== Property: status
+.Property Definition: act:status
+[cols="2,4"]
+|===
+| **Property** | `act:status`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#status`
+| **JSON name** | `status`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..1
+| **Domain** | `act:Activity`
+| **Range** | `xsd:string`
+| **Definition** | The current lifecycle state of an `act:Activity`. The value **shall** be one of: "Planned", "Ongoing", "Completed", "Failed".
+| **Usage Note** | Provides real-time tracking of the action's progress and is used to determine the status of the governing `gov:Contract`.
+|===
+
+[[act-activity-property-hasBinding]]
+===== Property: hasBinding
+.Property Definition: act:hasBinding
+[cols="2,4"]
+|===
+| **Property** | `act:hasBinding`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#hasBinding`
+| **JSON name** | `hasBinding`
+| **Requirement Level** | Conditional
+| **Cardinality** | 0..*
+| **Domain** | `act:Activity`
+| **Range** | `act:VariableBinding`
+| **Definition** | Associates an `act:VariableBinding` with an `act:Activity`, indicating that a variable has been bound to a value.
+| **Usage Note** | An `act:Activity` **should** have a binding for each required input (`act:hasInput`) of its schema.
+|===

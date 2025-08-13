@@ -1,0 +1,84 @@
+
+[[act-variablebinding]]
+=== Class: act:VariableBinding
+
+The class `act:VariableBinding` provides the concrete link between an abstract `act:Variable` in a schema and a specific value in an `act:Activity` instance.
+
+`act:VariableBinding` is the mechanism that makes schemas reusable. It connects the abstract parameter slots defined in the `act:ActivitySchema` to the real-world data and entities used in a particular execution, ensuring that every `act:Activity` is a complete and self-contained record.
+
+**Key Requirements**
+
+* **Variable Reference**: A `act:VariableBinding` **SHALL** reference exactly one `act:Variable` from the parent activity's schema via the `act:bindsVariable` property.
+* **Value Assignment**: A `act:VariableBinding` **SHALL** provide exactly one concrete value (either a literal or an IRI) via the `act:hasValue` property.
+* **Context**: A `act:VariableBinding` only exists as part of an `act:Activity`, linked via the `act:hasBinding` property.
+
+[[act-variablebinding-class]]
+==== Class Definition
+
+.Class Definition for act:VariableBinding
+[cols="1,3",options="header"]
+|===
+| RDF Class | `act:VariableBinding`
+| Is Abstract | No
+| Definition | A binding that connects a `Variable` to a concrete value (object or literal) in the context of an `Activity`.
+| Subclass Of | `owl:Thing`
+| Usage Note | This class is the bridge between the abstract schema and the concrete activity. An `act:Activity` will have one `act:VariableBinding` instance for each parameter it provides.
+| Rationale | Separates the abstract parameter definition from its concrete value, enabling the "Parameter/Binding Pattern" for maximum schema reusability.
+|===
+
+.Properties Summary for act:VariableBinding
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<act-variablebinding-property-bindsVariable,`act:bindsVariable`>>
+| `bindsVariable`
+| Connects the binding to the `act:Variable` it parameterizes.
+| `act:Variable`
+| 1..1
+| **Mandatory**
+
+| <<act-variablebinding-property-hasValue,`act:hasValue`>>
+| `hasValue`
+| The concrete value (IRI or Literal) assigned in the binding.
+| `owl:Thing`
+| 1..1
+| **Mandatory**
+|===
+
+[[act-variablebinding-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the `act:VariableBinding` class.
+
+[[act-variablebinding-property-bindsVariable]]
+===== Property: bindsVariable
+.Property Definition: act:bindsVariable
+[cols="2,4"]
+|===
+| **Property** | `act:bindsVariable`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#bindsVariable`
+| **JSON name** | `bindsVariable`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..1
+| **Domain** | `act:VariableBinding`
+| **Range** | `act:Variable`
+| **Definition** | Connects a `VariableBinding` to the `Variable` it parameterizes.
+| **Usage Note** | This property points to the "slot" in the schema that this binding is filling.
+|===
+
+[[act-variablebinding-property-hasValue]]
+===== Property: hasValue
+.Property Definition: act:hasValue
+[cols="2,4"]
+|===
+| **Property** | `act:hasValue`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#hasValue`
+| **JSON name** | `hasValue`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..1
+| **Domain** | `act:VariableBinding`
+| **Range** | `owl:Thing`
+| **Definition** | The concrete value (IRI for an entity or a Literal for data) assigned in a `VariableBinding`.
+| **Usage Note** | This property provides the actual data for a specific activity execution. The value provided **should** be validated against the `core:hasCondition` of the bound `act:Variable`.
+|===

@@ -1,0 +1,29 @@
+[[act-atomicactivityschema]]
+=== Class: act:AtomicActivitySchema
+
+The class `act:AtomicActivitySchema` realizes the **ATOMIC ACTIVITY SCHEMA** concept, a specialization of `act:ActivitySchema` as defined in IEEE P2874 § 6.6.3.
+
+An `act:AtomicActivitySchema` is a schema for a simple, indivisible activity that is not broken down into smaller steps within the HSML model. It represents a fundamental operation whose internal logic is treated as a "black box."
+
+**Key Requirements**
+
+* **Inheritance**: An `act:AtomicActivitySchema` **SHALL** inherit all requirements from `act:ActivitySchema`.
+* **Indivisibility**: An `act:AtomicActivitySchema` **SHALL NOT** contain any `act:ActivityStep` instances or control flow properties (`act:hasOrderedSteps`, `act:hasChoice`, `act:hasUnorderedSteps`).
+
+[[act-atomicactivityschema-class]]
+==== Class Definition
+
+.Class Definition for act:AtomicActivitySchema
+[cols="1,3",options="header"]
+|===
+| RDF Class | `act:AtomicActivitySchema`
+| Is Abstract | No
+| Definition | A schema for a simple, indivisible activity that does not internally reference other `act:ActivitySchema` instances.
+| Subclass Of | `act:ActivitySchema`
+| Usage Note | Used for fundamental operations whose internal logic is opaque to the HSML model (e.g., invoking an external API, performing a cryptographic operation).
+| Rationale | Provides a clear distinction between simple, black-box tasks and complex, multi-step workflows (`act:CompositeActivitySchema`), which simplifies validation and execution logic.
+|===
+
+==== Properties
+
+An `act:AtomicActivitySchema` defines no new properties. It inherits all of its properties, including `act:hasInput`, `act:hasOutput`, `act:hasPrecondition`, and `act:hasEffect`, from its superclass, `act:ActivitySchema`.
