@@ -1,70 +1,49 @@
 === Architectural Principles and Design Rationale
 
-This clause describes the architectural principles underlying the HSML Activity Module. These principles are *informative* and not required for conformance; however, understanding them is recommended to ensure robust and correct implementations.
+This clause describes the architectural principles underlying the HSML Activity Module. These principles are _informative_ and not required for conformance; however, understanding them is recommended to ensure robust and correct implementations.
 
 ==== The Schema/Instance Pattern: Enabling Scalable Governance
 
-A fundamental principle of this standard is the strict separation between the *definition* of an activity and the *record of its execution*. This separation is realized through two distinct HSML classes:
+A fundamental principle of this standard is the strict separation between the _definition_ of an activity and the _record of its execution_. This separation is realized through two distinct HSML classes:
 
 * `act:ActivitySchema` — A reusable, design-time template that specifies the type of action, its required inputs, expected outputs, and the conditions under which it is valid.
 * `act:Activity` — An execution-time entity representing a single, concrete, stateful instance of an `act:ActivitySchema` performed by a specific agent at a specific time.
 
-Normative requirements:
-
-. An `act:Activity` *shall* reference exactly one `act:ActivitySchema` via the `act:activitySchema` property (IEEE P2874 §6.6.3).
-. An `act:Activity` *shall* conform to all structural and behavioral constraints defined in its referenced `act:ActivitySchema`(IEEE P2874 §6.6.3).
-. An `act:ActivitySchema` *shall* be identified by a Spatial Web Identifier (SWID) conforming to W3C DID Core syntax (IEEE P2874 §6.4.4.2). This implies that `act:ActivitySchema` shall be a subclass of `hsml:Entity`, which is the base class for all Spatial Web entities.
-. An `act:ActivitySchema` *should* be defined, versioned, and published by an authoritative registry under the control of a recognized Domain Authority (IEEE P2874 §6.5.5.4) to ensure traceability, governance, and interoperability across domains.
-. Validation of an `act:Activity` against its `act:ActivitySchema` *shall* be performed using formal constraint definitions (e.g., SHACL shapes), and such validation *shall* be applied both prior to execution (pre-condition checking) and upon completion (post-condition verification) (IEEE P2874 §6.6.3).
-
-This separation is a cornerstone of governance and scalability within the Spatial Web. It enables a "trust-by-reference" model:
-
-* First, a trusted entity (e.g., a domain authority or standards body) vets and publishes an `act:ActivitySchema` to a known, trusted registry.
-* This schema represents an approved pattern of action.
-* Any number of autonomous agents may then propose or perform an action by creating an `act:Activity` instance that normatively links to the approved schema via the `act:activitySchema` property.
-
-An orchestration engine, smart contract, or other governance mechanism can then validate the proposed action with high efficiency. Rather than analyzing the internal logic of the action itself, the validator only needs to check whether this `act:Activity` references an `act:ActivitySchema` from an approved registry. This decouples the high-level, infrequent work of policy definition (approving schemas) from the high-frequency, operational work of validation (checking activities), producing a highly scalable and secure governance framework.
-
-By enforcing SHACL-based conformance checks against authoritative, DID-identified schemas, this architecture ensures that every `act:Activity` instance *shall* conform to a known, verifiable, and trusted pattern—supporting interoperability, auditability, and compliance across the Spatial Web.
-
-==== Domain-Specific Governance of Referenced Schemas
-
-A core tenet of the Spatial Web's architecture is that domains can apply **local, context-specific governance** to universal, standardized `act:ActivitySchema` definitions without modifying the original schema. In a holonic structure, a domain can incorporate an activity schema by reference, making it a functional member of the domain's capabilities. This allows for both global interoperability by using a common schema and local autonomy by enforcing domain-specific rules.
-
-This is achieved by separating the activity's definition (`act:ActivitySchema`) from the rules governing its execution within a domain. The primary mechanism for enforcing these domain-specific rules, or **norms**, is the requirement of a domain-specific **CREDENTIAL**.
-
-===== Governance Workflow
-
-A Domain Authority (DA) shall apply local norms to a referenced `act:ActivitySchema` by following this workflow:
-
-1.  **Reference the Universal Schema**: The DA incorporates an existing `act:ActivitySchema` (e.g., one published by a standards body) into its domain by reference, not by creating a copy.
-
-2.  **Define Domain-Specific Norms**: The DA establishes the set of rules that must be followed when an agent executes the activity within its domain. These norms are defined and managed by the DA.
-
-3.  **Create a Domain-Specific Credential**: The DA defines a unique **CREDENTIAL** that represents an agent's verified ability and authorization to operate in compliance with the local norms. This credential acts as a domain-specific permit.
-
-4.  **Enforce Governance via Credential Gating**: The DA configures its domain's governance policy (i.e., its Policy Enforcement Point) to require any agent wishing to perform the activity to present the specific **CREDENTIAL** from Step 3. The validation of any **CONTRACT** to perform the activity shall fail if the agent does not possess this domain-specific credential.
-
-This model ensures that while the schema remains a universal standard, its execution is always subject to the explicit, verifiable, and non-negotiable rules of the domain in which it is performed. 
-
+This separation is a cornerstone of governance and scalability within the Spatial Web. It enables a "trust-by-reference" model where an orchestration engine can validate an action with high efficiency. Rather than analyzing the internal logic of the action itself, the validator only needs to check whether the `act:Activity` references an `act:ActivitySchema` from an approved registry. This decouples the high-level, infrequent work of policy definition (approving schemas) from the high-frequency, operational work of validation (checking activities), producing a highly scalable and secure governance framework.
 
 ==== The Parameter/Binding Pattern: Achieving Contextual Reusability
 
 Complementing the schema/instance pattern is the separation of abstract parameters from their concrete values. This is achieved through the `act:Variable` and `act:VariableBinding` classes.
 
-* `act:Variable` is used within an `act:ActivitySchema` to define a placeholder for an input or output. It has a variable name (e.g., "target_location") that can be used in queries, a description to explain the meaning of the variable to human and AI agent, and validation constraints (e.g., must be a US State code), but no specific value.
-* `act:VariableBinding` is used within an `act:Activity` to connect a specific `act:Variable` from the schema to a concrete value (e.g., linking the "target_location" variable to a US state code).
+* `act:Variable` is used within an `act:ActivitySchema` to define a placeholder for an input or output (e.g., "target_location"), including its name, description, and constraints, but no specific value.
+* `act:VariableBinding` is used within an `act:Activity` to connect a specific `act:Variable` from the schema to a concrete value (e.g., linking "target_location" to a specific address).
 
-This design allows `act:ActivitySchema` definitions to be generic and broadly reusable. A single schema for "TransferAsset" can be created, defining abstract variables for "asset_to_transfer," "source_account," and "destination_account." This one schema can then be instantiated in thousands of different `act:Activity` instances, each using `act:VariableBinding` to supply the concrete assets and accounts for a specific transaction. This promotes standardization and prevents the proliferation of near-identical schemas, while ensuring that every `act:Activity` is a complete, self-contained, and auditable record with all its parameters fully resolved. This contextual adaptability fulfills the design goal of allowing one schema to drive many different actual events by plugging in different participants, targets, or parameters as needed.
+This design allows `act:ActivitySchema` definitions to be generic and broadly reusable. A single schema for "TransferAsset" can be instantiated in thousands of different `act:Activity` instances, each using `act:VariableBinding` to supply the concrete assets and accounts for a specific transaction. This promotes standardization while ensuring every `act:Activity` is a complete, self-contained, and auditable record.
 
-==== The Composite Model: First-Class-Citizen Workflows
+==== The Composite Model: First-Class Workflows
 
-For composite (multi-step) activities, simply listing sub-activities is not sufficient; the model must also describe how those steps connect and in what order they occur. The Activity Module addresses this by introducing two key auxiliary concepts: `act:ActivityStep` and `act:DataLink`. An `ActivityStep` represents a placeholder node in a composite workflow, an identifiable step that executes a particular sub-activity. A `DataLink` is a construct for connecting the data flow between steps.
+For composite (multi-step) activities, a simple list of sub-activities is insufficient. A robust model must also describe the *sequence of steps*, the *flow of data* between them, and the *control flow logic* (e.g., conditional branches). The Activity Module addresses this by elevating the core components of a workflow to be first-class citizens:
 
-The decision to model `act:ActivityStep` and `act:DataLink` as first-class `owl:Class` instances rather than simple properties is intentional. It elevates the workflow's structure and data flow to be explicit, addressable, and governable entities. Because a `DataLink` is an individual instance, it can be the subject of its own descriptive statements. This allows implementers to attach additional metadata directly to the data flow, such as quality-of-service requirements (e.g., `ex:maxLatency`), security classifications (e.g., `ex:hasEncryptionLevel`), or even attach an `core:Condition` to enforce a policy on the data transfer itself. This enables far more sophisticated security and management patterns than would be possible if data flow were merely an implicit behavior. This design transforms a simple workflow description into a fully governable, introspectable graph of actions that can be inspected, reused, and verified for consistency.
+* `act:ActivityStep`: A node in the workflow graph. It represents a discrete stage of execution and is a rich, self-describing object.
+* `act:DataLink`: An edge in the workflow graph. It represents the explicit flow of data from one step's output to another's input.
 
-==== The Generic Condition Model: Future-Proofing the Logic
+The decision to model `act:ActivityStep` and `act:DataLink` as distinct `owl:Class` instances, rather than simple properties, is a cornerstone of this architecture. It makes the entire workflow—its structure, logic, and data flow—explicit, addressable, and governable.
 
-The HSML architecture separates semantic intent from technical implementation. This is exemplified by the `core:Condition` model, defined in the HSML Core Module and used extensively by this Activity Module for properties like `act:hasPrecondition` and `act:hasEffect`.
+This design allows for sophisticated patterns:
+* *Documentable and Addressable Steps*: Each `act:ActivityStep` can have a human-readable `schema:name` and `schema:description`, making the workflow self-documenting. It is uniquely addressable by its URI and can be given a simple, local `dct:identifier` (e.g., "validate-user") for easy reference within the workflow definition.
+* *Conditional Control Flow*: An `act:ActivityStep` can carry its own `core:Condition`. This enables powerful, declarative control flow, such as an "if/then/else" branch, where the execution of a step depends on the outcome of a formal condition.
+* *Governable Data Flow*: Because a `act:DataLink` is a first-class entity, metadata can be attached directly to the data transfer itself. This allows for specifying quality-of-service requirements (e.g., `ex:maxLatency`), security classifications (e.g., `ex:hasEncryptionLevel`), or even enforcing a policy on the data link with another `core:Condition`.
 
-The `core:Condition` class is abstract; it represents the idea that a condition exists without specifying how that condition must be evaluated. The actual evaluation logic is delegated to concrete subclasses, such as `core:SHACLCondition` or `core:SPARQLCondition`. This architectural choice is a powerful future-proofing mechanism. By having `act:ActivitySchema` reference the abstract `core:Condition`, the standard is not permanently locked into any single validation technology. While the Shapes Constraint Language (SHACL) and SPARQL are the initial supported implementations, the P2874 working group can introduce new subclasses in the future. These new condition types could be adopted without requiring any breaking changes to the core `act:ActivitySchema` model itself. This ensures the long-term relevance and extensibility of the standard, allowing it to evolve alongside the broader technology landscape.
+This approach transforms a simple sequence of tasks into a fully governable, introspectable, and self-describing graph of actions that can be validated, audited, and reused with high fidelity.
+
+==== The Generic Condition Model: Future-Proofing Logic
+
+The HSML architecture separates semantic intent from technical implementation. This is exemplified by the `core:Condition` model, defined in the HSML Core Module and used extensively by this Activity Module for properties like `act:hasPrecondition`, `act:hasEffect`, and for enabling conditional logic on an `act:ActivityStep`.
+
+The `core:Condition` class is abstract; it represents the idea that a condition exists without specifying _how_ that condition must be evaluated. The actual evaluation logic is delegated to concrete subclasses, such as `core:SHACLCondition` or `core:SPARQLCondition`. This architectural choice is a powerful future-proofing mechanism. By having models reference the abstract `core:Condition`, the standard is not locked into any single validation technology. New condition types can be introduced in the future without requiring breaking changes to the core models, ensuring the long-term relevance and extensibility of the standard.
+
+==== Domain-Specific Governance of Referenced Schemas
+
+A core tenet of the Spatial Web's architecture is that domains can apply *local, context-specific governance* to universal, standardized `act:ActivitySchema` definitions without modifying the original schema. This is achieved by separating the activity's definition from the rules governing its execution within a domain. The primary mechanism for enforcing these domain-specific rules is the requirement of a domain-specific *CREDENTIAL*.
+
+A Domain Authority (DA) can incorporate a universal schema by reference and then configure its domain policies to require that any agent performing the activity must present a specific credential. This model ensures that while the schema remains a universal standard, its execution is always subject to the explicit, verifiable, and non-negotiable rules of the domain in which it is performed.

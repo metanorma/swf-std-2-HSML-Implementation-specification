@@ -5,13 +5,15 @@ The class `act:ActivityStep` realizes the **ACTIVITY STEP** concept as part of a
 
 “An ACTIVITY STEP is an addressable node within a composite activity's workflow, representing a discrete stage of execution that uses a specific `act:ActivitySchema` to define its logic.”
 
-`act:ActivityStep` is a structural component used to build complex workflows. It acts as a placeholder or node in a workflow graph, separating the structure of the workflow from the logic of the individual steps. This allows for the creation of modular, reusable, and governable multi-step processes.
+`act:ActivityStep` is a structural component used to build complex workflows. It acts as a placeholder or node in a workflow graph, separating the structure of the workflow from the logic of the individual steps. This allows for the creation of modular, reusable, and governable multi-step processes with declarative control flow, including **conditional branching**.
 
 **Key Requirements**
 
 * **Context**: An `act:ActivityStep` **SHALL** only exist as part of a `act:CompositeActivitySchema`, linked via properties like `act:hasStep`.
 * **Logic Definition**: An `act:ActivityStep` **SHALL** reference exactly one `act:ActivitySchema` via the `act:usesSchema` property to define its executable logic.
-* **Identification**: An `act:ActivityStep` **SHOULD** have a unique identifier within the scope of its parent composite schema to facilitate addressing by `act:DataLink` instances.
+* **Identification**: An `act:ActivityStep` instance is uniquely identified by its URI. It **SHOULD** also have a simple, locally-unique `dct:identifier` to simplify referencing within the workflow definition.
+* **Description**: An `act:ActivityStep` **SHOULD** have a human-readable `schema:name` for display purposes and **MAY** have a `schema:description` for detailed documentation.
+* **Conditional Execution**: An `act:ActivityStep` **MAY** include an `act:hasCondition` to enable conditional branching within a workflow.
 
 [[act-activitystep-class]]
 ==== Class Definition
@@ -21,10 +23,10 @@ The class `act:ActivityStep` realizes the **ACTIVITY STEP** concept as part of a
 |===
 | RDF Class | `act:ActivityStep`
 | Is Abstract | No
-| Definition | A unique, addressable step within a `act:CompositeActivitySchema`. Each step is an element of the workflow and points to an `act:ActivitySchema` that it executes.
+| Definition | A unique, addressable step within a `act:CompositeActivitySchema`. Each step is an element of the workflow that points to an `act:ActivitySchema` it executes and can be annotated with names, descriptions, and conditional logic.
 | Subclass Of | `owl:Thing`
-| Usage Note | An `act:ActivityStep` acts as a node in a workflow graph. It is a structural placeholder, not the logic itself.
-| Rationale | Modeling steps as first-class entities makes the workflow structure explicit, addressable, and governable, allowing metadata to be attached to individual stages of a process.
+| Usage Note | An `act:ActivityStep` acts as a node in a workflow graph. It is a structural placeholder that defines a unit of work.
+| Rationale | Modeling steps as first-class entities makes the workflow structure explicit, addressable, and governable, allowing metadata, documentation, and conditional logic to be attached to individual stages of a process.
 |===
 
 .Properties Summary for act:ActivityStep
@@ -38,6 +40,27 @@ The class `act:ActivityStep` realizes the **ACTIVITY STEP** concept as part of a
 | `act:ActivitySchema`
 | 1..1
 | **Mandatory**
+
+| <<act-activitystep-property-name,`schema:name`>>
+| `name`
+| A short, human-readable name for the step.
+| `xsd:string`
+| 0..1
+| Recommended
+
+| <<act-activitystep-property-description,`schema:description`>>
+| `description`
+| A detailed explanation of the step's purpose.
+| `xsd:string`
+| 0..1
+| Optional
+
+| <<act-activitystep-property-hasCondition,`act:hasCondition`>>
+| `hasCondition`
+| A condition that must be met for this step to be executed.
+| `core:Condition`
+| 0..1
+| Optional
 
 | <<act-activitystep-property-identifier,`dct:identifier`>>
 | `identifier`
@@ -68,6 +91,54 @@ This section provides the detailed normative definitions for the properties of t
 | **Usage Note** | The referenced schema can be either atomic or another composite schema, allowing for nested workflows.
 |===
 
+[[act-activitystep-property-name]]
+===== Property: name
+.Property Definition: schema:name
+[cols="2,4"]
+|===
+| **Property** | `schema:name`
+| **IRI** | `https://schema.org/name`
+| **JSON name** | `name`
+| **Requirement Level** | Recommended
+| **Cardinality** | 0..1
+| **Domain** | `act:ActivityStep`
+| **Range** | `xsd:string`
+| **Definition** | A short, human-readable name for the activity step.
+| **Usage Note** | This property is intended for display in user interfaces, such as workflow diagrams or logs. For example: "Validate User Credentials". Reuses the property from Schema.org.
+|===
+
+[[act-activitystep-property-description]]
+===== Property: description
+.Property Definition: schema:description
+[cols="2,4"]
+|===
+| **Property** | `schema:description`
+| **IRI** | `https://schema.org/description`
+| **JSON name** | `description`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..1
+| **Domain** | `act:ActivityStep`
+| **Range** | `xsd:string`
+| **Definition** | A detailed explanation of the step's purpose, inputs, outputs, or behavior.
+| **Usage Note** | This property is for documentation and maintainability, helping developers understand the role of the step in the overall process. Reuses the property from Schema.org.
+|===
+
+[[act-activitystep-property-hasCondition]]
+===== Property: hasCondition
+.Property Definition: act:hasCondition
+[cols="2,4"]
+|===
+| **Property** | `act:hasCondition`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#hasCondition`
+| **JSON name** | `hasCondition`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..1
+| **Domain** | `act:ActivityStep`
+| **Range** | `core:Condition`
+| **Definition** | An optional condition that must evaluate to true for this step to be eligible for execution.
+| **Usage Note** | This property provides the mechanism for conditional control flow. When multiple steps are presented as part of an `act:hasChoice` construct, the runtime engine **SHALL** evaluate the `act:hasCondition` for each step. The first step whose condition evaluates to true **SHALL** be the path that is executed.
+|===
+
 [[act-activitystep-property-identifier]]
 ===== Property: identifier
 .Property Definition: dct:identifier
@@ -80,6 +151,6 @@ This section provides the detailed normative definitions for the properties of t
 | **Cardinality** | 0..1
 | **Domain** | `act:ActivityStep`
 | **Range** | `xsd:string`
-| **Definition** | A locally unique identifier for the step.
-| **Usage Note** | **Should** be used to uniquely identify a step within a `act:CompositeActivitySchema` so that `act:DataLink` instances can reliably reference it as a source or target.
+| **Definition** | A locally unique, human-friendly identifier for the step.
+| **Usage Note** | While the step's URI provides global uniqueness, this identifier provides a simple, stable "nickname" (e.g., "stepA", "validateUser") that **SHOULD** be used to uniquely identify the step *within its parent `act:CompositeActivitySchema`*. This makes it easier for `act:DataLink` instances to reliably reference the step as a source or target without using long, complex URIs.
 |===

@@ -13,7 +13,9 @@ The class `act:Activity` realises the **ACTIVITY** concept defined in IEEE P2874
 * **Schema Conformance**: An `act:Activity` **SHALL** reference exactly one `act:ActivitySchema` via the `act:activitySchema` property.
 * **Agent Assignment**: An `act:Activity` **SHALL** identify the `hsml:Agent`(s) responsible for its execution via the `act:performedBy` property.
 * **Parameter Binding**: An `act:Activity` **SHALL** provide concrete values for all required inputs of its schema using `act:VariableBinding` instances.
-* **Lifecycle Tracking**: An `act:Activity` **SHALL** have its current state tracked via the `act:status` property.
+* **Lifecycle Tracking**: An `act:Activity` **SHALL** have its current state tracked via the `act:status` property, using the normative HSML Activity Status vocabulary.
+* **Temporality**: An `act:Activity` **SHOULD** record the time execution began (`schema:startTime`) and concluded (`schema:endTime`).
+* **Execution Traceability**: If an `act:Activity` is part of a composite workflow, it **SHOULD** link to its parent activity (`dct:isPartOf`) and the step it realized (`act:realizedStep`).
 
 These requirements ensure that every executed action is a complete, self-contained, and verifiable record that is traceable to its defining schema and responsible agent.
 
@@ -53,7 +55,7 @@ These requirements ensure that every executed action is a complete, self-contain
 | <<act-activity-property-status,`act:status`>>
 | `status`
 | The current lifecycle state of the `act:Activity`.
-| `xsd:string`
+| `skos:Concept`
 | 1..1
 | **Mandatory**
 
@@ -63,6 +65,34 @@ These requirements ensure that every executed action is a complete, self-contain
 | `act:VariableBinding`
 | 0..*
 | Conditional
+
+| <<act-activity-property-startTime,`schema:startTime`>>
+| `startTime`
+| The timestamp when the activity execution began.
+| `xsd:dateTime`
+| 0..1
+| Recommended
+
+| <<act-activity-property-endTime,`schema:endTime`>>
+| `endTime`
+| The timestamp when the activity execution concluded (completed or failed).
+| `xsd:dateTime`
+| 0..1
+| Recommended
+
+| <<act-activity-property-isPartOf,`dct:isPartOf`>>
+| `isPartOf`
+| Links this activity instance to its parent composite activity instance.
+| `act:Activity`
+| 0..1
+| Optional
+
+| <<act-activity-property-realizedStep,`act:realizedStep`>>
+| `realizedStep`
+| Identifies the specific `act:ActivityStep` that this instance realized.
+| `act:ActivityStep`
+| 0..1
+| Optional
 |===
 
 [[act-activity-properties]]
@@ -113,9 +143,9 @@ This section provides the detailed normative definitions for the properties of t
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..1
 | **Domain** | `act:Activity`
-| **Range** | `xsd:string`
-| **Definition** | The current lifecycle state of an `act:Activity`. The value **shall** be one of: "Planned", "Ongoing", "Completed", "Failed".
-| **Usage Note** | Provides real-time tracking of the action's progress and is used to determine the status of the governing `gov:Contract`.
+| **Range** | `skos:Concept`
+| **Definition** | The current lifecycle state of an `act:Activity`.
+| **Usage Note** | The value **SHALL** be an IRI from the normative HSML Activity Status vocabulary (e.g., `act:Planned`, `act:Ongoing`, `act:Completed`, `act:Failed`). Provides real-time tracking of the action's progress and is used to determine the status of the governing `gov:Contract`.
 |===
 
 [[act-activity-property-hasBinding]]
@@ -132,4 +162,68 @@ This section provides the detailed normative definitions for the properties of t
 | **Range** | `act:VariableBinding`
 | **Definition** | Associates an `act:VariableBinding` with an `act:Activity`, indicating that a variable has been bound to a value.
 | **Usage Note** | An `act:Activity` **should** have a binding for each required input (`act:hasInput`) of its schema.
+|===
+
+[[act-activity-property-startTime]]
+===== Property: startTime
+.Property Definition: schema:startTime
+[cols="2,4"]
+|===
+| **Property** | `schema:startTime`
+| **IRI** | `https://schema.org/startTime`
+| **JSON name** | `startTime`
+| **Requirement Level** | Recommended
+| **Cardinality** | 0..1
+| **Domain** | `act:Activity`
+| **Range** | `xsd:dateTime`
+| **Definition** | The specific date and time when the activity execution began.
+| **Usage Note** | Essential for temporal reasoning and auditing. Should be populated when the status transitions to `act:Ongoing`. Reuses the property from Schema.org.
+|===
+
+[[act-activity-property-endTime]]
+===== Property: endTime
+.Property Definition: schema:endTime
+[cols="2,4"]
+|===
+| **Property** | `schema:endTime`
+| **IRI** | `https://schema.org/endTime`
+| **JSON name** | `endTime`
+| **Requirement Level** | Recommended
+| **Cardinality** | 0..1
+| **Domain** | `act:Activity`
+| **Range** | `xsd:dateTime`
+| **Definition** | The specific date and time when the activity execution concluded (completed or failed).
+| **Usage Note** | Essential for temporal reasoning and auditing. Should be populated when the status transitions to a terminal state (`act:Completed` or `act:Failed`). Reuses the property from Schema.org.
+|===
+
+[[act-activity-property-isPartOf]]
+===== Property: isPartOf
+.Property Definition: dct:isPartOf
+[cols="2,4"]
+|===
+| **Property** | `dct:isPartOf`
+| **IRI** | `http://purl.org/dc/terms/isPartOf`
+| **JSON name** | `isPartOf`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..1
+| **Domain** | `act:Activity`
+| **Range** | `act:Activity`
+| **Definition** | Links a child activity instance to its parent composite activity instance.
+| **Usage Note** | Used for execution traceability in composite workflows. If populated, the range must be an instance of an activity whose schema is an `act:CompositeActivitySchema`.
+|===
+
+[[act-activity-property-realizedStep]]
+===== Property: realizedStep
+.Property Definition: act:realizedStep
+[cols="2,4"]
+|===
+| **Property** | `act:realizedStep`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#realizedStep`
+| **JSON name** | `realizedStep`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..1
+| **Domain** | `act:Activity`
+| **Range** | `act:ActivityStep`
+| **Definition** | Identifies the specific `act:ActivityStep` within the parent composite schema that this activity instance realized.
+| **Usage Note** | Provides a precise link between the execution trace and the workflow definition. Should be used in conjunction with `dct:isPartOf`.
 |===
