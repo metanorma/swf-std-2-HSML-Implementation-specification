@@ -1,0 +1,85 @@
+[[agt-agent]]
+=== Class: agt:Agent
+
+The class `agt:Agent` realises the **AGENT** concept in IEEE P2874 § 6.6.3:
+
+“An ENTITY that senses, responds, and maintains a model of its environment while performing ACTIVITIES to achieve its goals.”
+
+`agt:Agent` represents an autonomous entity capable of perceiving its environment, making decisions, and enacting `act:Activity` instances in pursuit of its goals. It may represent a person, robot, AI system, or other autonomous entity.
+
+**Key Requirements**
+
+* **Identity**: Every `agt:Agent` **SHALL** possess a Spatial Web Identifier (`core:swid`, W3C DID Core-compliant).
+* **Goal-Directed**: An `agt:Agent` **SHALL** be linked to one or more objectives it seeks to achieve via the `agt:hasGoal` property.
+* **Capability**: An `agt:Agent` **SHALL** be linked to the `act:ActivitySchema` definitions for the activities it is capable of performing via the `agt:hasCapability` property.
+
+[[agt-agent-class]]
+==== Class Definition
+
+.Class Definition for agt:Agent
+[cols="1,3",options="header"]
+|===
+| RDF Class | `agt:Agent`
+| Is Abstract | No
+| Definition | An autonomous entity capable of perceiving, deciding, and performing Activities to achieve its goals.
+| Subclass Of | `core:Entity`
+| Usage Note | Agents are the actors in the Spatial Web. They initiate `gov:Contract` instances and perform `act:Activity` instances.
+| Rationale | Provides the normative model for autonomous actors in the Spatial Web, supporting goal-directed behavior and governed interactions.
+|===
+
+.Properties Summary for agt:Agent
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<agt-agent-property-hasGoal,`agt:hasGoal`>>
+| `hasGoal`
+| Links the Agent to one or more objectives it seeks to achieve.
+| `core:Entity`
+| 1..*
+| **Mandatory**
+
+| <<agt-agent-property-hasCapability,`agt:hasCapability`>>
+| `hasCapability`
+| Links the Agent to the schemas for Activities it can perform.
+| `act:ActivitySchema`
+| 1..*
+| **Mandatory**
+|===
+
+[[agt-agent-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the `agt:Agent` class.
+
+[[agt-agent-property-hasGoal]]
+===== Property: hasGoal
+.Property Definition: agt:hasGoal
+[cols="2,4"]
+|===
+| **Property** | `agt:hasGoal`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/agent#hasGoal`
+| **JSON name** | `hasGoal`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..*
+| **Domain** | `agt:Agent`
+| **Range** | `core:Entity`
+| **Definition** | Links an Agent to one or more goals that it aims to fulfill through its Activities.
+| **Usage Note** | Goals represent abstract or concrete states the Agent seeks to bring about. The range is `core:Entity` to allow goals to be simple text descriptions or complex, structured entities.
+|===
+
+[[agt-agent-property-hasCapability]]
+===== Property: hasCapability
+.Property Definition: agt:hasCapability
+[cols="2,4"]
+|===
+| **Property** | `agt:hasCapability`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/agent#hasCapability`
+| **JSON name** | `hasCapability`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..*
+| **Domain** | `agt:Agent`
+| **Range** | `act:ActivitySchema`
+| **Definition** | Identifies the types of Activities the Agent is capable of performing.
+| **Usage Note** | This property links an agent to the `act:ActivitySchema` templates for its skills. This is distinct from an `act:Activity`, which is a record of a specific execution.
+|===

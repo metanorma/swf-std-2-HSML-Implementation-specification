@@ -1,138 +1,103 @@
-[[hsml-entity]]
-=== Class: hsml:Entity
+[[core-entity]]
+=== Class: core:Entity
 
-The class `hsml:Entity` corresponds to the base concept **ENTITY** in IEEE P2874 Section 6.6.2, defined as “that which is perceived, known, or inferred to exist, has existed, or is anticipated to exist”. As the root of the Spatial Web ontology, `hsml:Entity` provides the universal foundation upon which all other HSML classes (Activities, Agents, Domains, Channels, Credentials, Hyperspaces, and Time) are built.
+The class `core:Entity` corresponds to the base concept **ENTITY** in IEEE P2874 Section 6.6.2, defined as “that which is perceived, known, or inferred to exist, has existed, or is anticipated to exist”. As the root of the Spatial Web ontology, `core:Entity` provides the universal foundation upon which all other HSML classes are built.
 
 **Key Requirements**
 
-- **Identity**: Every `hsml:Entity` **SHALL** include a Spatial Web Identifier (`hsml:swid`) conformant with W3C DID Core, enabling decentralized resolution and trust.  
-- **Extensibility**: An entity **MAY** declare one or more subclasses to specialize its semantics for domain- or application-specific modeling.  
-- **Credentials**: An entity **MAY** link to zero or more #hsml:Credential# instances, supporting verifiable claims and access control.
+- **Identity**: Every `core:Entity` **SHALL** include a Spatial Web Identifier (`core:swid`) conformant with W3C DID Core.
+- **Extensibility**: An entity **MAY** declare one or more subclasses to specialize its semantics.
+- **Credentials**: An entity **MAY** link to zero or more `w3c:VerifiableCredential` instances.
 
-These requirements ensure that all HSML elements share a consistent identity mechanism, can be extended without altering the core specification, and support governed interactions via credentials. By acting as a polymorphic base class, `hsml:Entity` enables HSML-compliant software to uniformly ingest, validate, and manipulate heterogeneous spatial-web constructs, providing the semantic interoperability and governance features mandated by IEEE P2874.
-
-
-
-[[hsml-entity-class]]
+[[core-entity-class]]
 ==== Class Definition
-
-[cols="1,3"]
+.Class Definition for core:Entity
+[cols="1,3",options="header"]
+|===
+| RDF Class | `core:Entity`
+| Is Abstract | Yes
+| Definition | An _ENTITY_ is “that which is perceived, known, or inferred to exist, has existed, or is anticipated to exist.”
+| Subclass Of | `owl:Thing`
+| Usage Note | `core:Entity` is an abstract class and should not be instantiated directly. Only its subclasses should be instantiated. Instances **SHALL** include `core:swid`.
+| Rationale | As the root of the Spatial Web ontology, `core:Entity` provides a uniform, extensible foundation for all HSML constructs, enabling polymorphic processing and semantic interoperability.
 |===
 
-| RDF Class
-| +hsml:Entity+
-| Is Abstract
-| Yes
+.Properties Summary for core:Entity
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
 
-| Definition
-| An _ENTITY_ is “that which is perceived, known, or inferred to exist, has existed, or is anticipated to exist.” 
-
-| Subclass Of
-| owl:Thing
-
-| Usage Note
-| Instances **SHALL** include `hsml:swid` as defined in P2874 §6.6.2; **MAY** include `rdfs:label` for human-readable naming.
-`hsml:Entity` is an abstract class and should not be instantiated directly. Only its subclasses should be instantiated.
-
-| Rationale
-| As the root of the Spatial Web ontology, hsml:Entity provides a uniform, extensible foundation for all HSML constructs, enabling polymorphic processing and semantic interoperability across heterogeneous systems in compliance with IEEE P2874 Section 6.6.1.
+| `rdf:type` | `@type` | Declares the resource as a subclass of `core:Entity`. | `rdfs:Class` | 1..n | **Mandatory**
+| `core:swid` | `swid` | Spatial Web Identifier conformant with W3C DID Core. | `xsd:anyURI` | 1..1 | **Mandatory**
+| `rdfs:label` | `label` | Optional human-readable name for the Entity. | `xsd:string` | 0..1 | Recommended
+| `rdfs:comment` | `comment` | Optional human-readable description for the Entity. | `xsd:string` | 0..1 | Recommended
 |===
 
+[[core-entity-properties]]
+==== Properties
 
-[[hsml-entity-properties]]
-====  Properties
+This section provides the detailed normative definitions for the properties of the `core:Entity` class.
 
-[[hsml-entity-properties-summary]]
-=====  Properties Summary
-
-[cols="1,1,3,1",options="header"]
-|===
-| Predicate             | JSON(-LD) name                                                             | Description                                                                                           | Cardinality
-
-| <<property-entity-type,rdf:type>>       | @type               | Declares the resource as an instance of +hsml:Entity+.                                                 | 1..n
-| <<property-entity-swid,hsml:swid>>           |swid             | Spatial Web Identifier conformant with W3C DID Core; each Entity **SHALL** have a SWID.           | 1..1
-
-| <<property-entity-label,rdfs:label>>        | label                 | Optional human-readable name for the Entity.                                                           | 0..1
-|<<property-entity-comment,rdfs:comment>>         | comment                  | Optional human-readable description for the Entity.                                                           | 0..1
-|===
-
-[[property-entity-type]]
+[[core-entity-property-type]]
 ===== Property: type
-
+.Property Definition: rdf:type
 [cols="2,4"]
 |===
-|**Property**       | rdf:type
-|**IRI**            | `http://www.w3.org/1999/02/22-rdf-syntax-ns#type`
-|**JSON name**  | @type
-|**Requirement Level**    | **Mandatory**
-|**Cardinality**    | 1..n
-|**Domain**         | hsml:Entity
-|**Range**          | IRI
-|**Definition**     | The type of the entity (subclass of Entity)
-|**Usage Note**     | Each Entity must have a class associatated with it that is a subclass of hsml:Entity that is not abstract. An entity can have one or more types associated (for inferred classes for example)
+|**Property** | `rdf:type`
+|**IRI** | `http://www.w3.org/1999/02/22-rdf-syntax-ns#type`
+|**JSON name** | `@type`
+|**Requirement Level** | **Mandatory**
+|**Cardinality** | 1..n
+|**Domain** | `core:Entity`
+|**Range** | `rdfs:Class`
+|**Definition** | The type of the entity (subclass of Entity).
+|**Usage Note** | Each Entity must have a class associated with it that is a subclass of `core:Entity` that is not abstract. An entity can have one or more types associated (for inferred classes for example).
 |===
 
-[[property-entity-swid]]
+[[core-entity-property-swid]]
 ===== Property: swid
-
+.Property Definition: core:swid
 [cols="2,4"]
 |===
-|**Property**       | hsml:swid
-|**IRI**            | `https://schema.spatialwebfoundation.org/hsml#swid`
-|**JSON name**  | swid
-|**Requirement Level**    | **Mandatory**
-|**Cardinality**    |1
-|**Domain**         | hsml:Entity
-|**Range**          | IRI
-|**Definition**     | Spatial Web Identifier conformant with W3C DID Core;
-|**Usage Note**     | Each Entity must have a SWID  conformant with W3C DID Core
+|**Property** | `core:swid`
+|**IRI** | `https://www.spatialwebfoundation.org/ns/hsml/core#swid`
+|**JSON name** | `swid`
+|**Requirement Level** | **Mandatory**
+|**Cardinality** | 1..1
+|**Domain** | `core:Entity`
+|**Range** | `xsd:anyURI`
+|**Definition** | Spatial Web Identifier conformant with W3C DID Core.
+|**Usage Note** | Every `core:Entity` subclass **must** have exactly one SWID.
 |===
 
-
-[[property-entity-label]]
+[[core-entity-property-label]]
 ===== Property: label
-
+.Property Definition: rdfs:label
 [cols="2,4"]
 |===
-|**Property**       | rdfs:label
-|**IRI**            | `http://www.w3.org/2000/01/rdf-schema#label`
-|**JSON name**  | label
-|**Requirement Level**    | **Recommended**
-|**Cardinality**    | 0..1
-|**Domain**         | hsml:Entity
-|**Range**          | xsd:string
-|**Definition**     | Human readable label for an entity
-|**Usage Note**     | Each Entity may have a human-readable label
+|**Property** | `rdfs:label`
+|**IRI** | `http://www.w3.org/2000/01/rdf-schema#label`
+|**JSON name** | `label`
+|**Requirement Level** | **Recommended**
+|**Cardinality** | 0..1
+|**Domain** | `core:Entity`
+|**Range** | `xsd:string`
+|**Definition** | Human readable label for an entity.
+|**Usage Note** | Each Entity may have a human-readable label.
 |===
 
-[[property-entity-comment]]
+[[core-entity-property-comment]]
 ===== Property: comment
-
+.Property Definition: rdfs:comment
 [cols="2,4"]
 |===
-|**Property**       | rdfs:comment
-|**IRI**            | `http://www.w3.org/2000/01/rdf-schema#comment`
-|**JSON name**  | comment
-|**Requirement Level**    | **Recommended**
-|**Cardinality**    | 0..1
-|**Domain**         | hsml:Entity
-|**Range**          | xsd:string
-|**Definition**     | Human readable description for an entity
-|**Usage Note**     | Each Entity may have a human-readable description 
+|**Property** | `rdfs:comment`
+|**IRI** | `http://www.w3.org/2000/01/rdf-schema#comment`
+|**JSON name** | `comment`
+|**Requirement Level** | **Recommended**
+|**Cardinality** | 0..1
+|**Domain** | `core:Entity`
+|**Range** | `xsd:string`
+|**Definition** | Human readable description for an entity.
+|**Usage Note** | Each Entity may have a human-readable description.
 |===
-
-.Example: Entity as Turtle
-====
-[source,turtle]
-----
-include::../../examples/entity1.ttl[]
-----
-====
-
-.Example: Entity as JSON-LD
-====
-[source,json]
-----
-include::../../examples/entity1.jsonld[]
-----
-====

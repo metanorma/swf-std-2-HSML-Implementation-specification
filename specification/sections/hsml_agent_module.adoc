@@ -1,7 +1,0 @@
-== HSML Agent Module
-
-include::hsml_core_model/hsml_agent.adoc[]
-
-include::hsml_core_model/hsml_person.adoc[]
-
-include::hsml_core_model/hsml_organization.adoc[]

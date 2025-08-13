@@ -1,0 +1,109 @@
+
+[[agt-person]]
+=== Class: agt:Person
+
+The class `agt:Person` realises the **PERSON** concept in IEEE P2874 § 6.3.2.1.6, a special subtype of `agt:Agent` that maintains a self-sovereign identity.
+
+“A person type of Domain refers to entities belonging to the broader agential Domain, but maintaining the capability to control their own Self-Sovereign Identity.”
+
+`agt:Person` represents a human individual in the Spatial Web. While it inherits all the goal-directed and capability-driven characteristics of an `agt:Agent`, its primary distinction is its intrinsic link to a self-sovereign identity, ensuring individual control over personal data and interactions.
+
+**Key Requirements**
+
+* **Inheritance**: An `agt:Person` **SHALL** inherit all requirements from `agt:Agent`, including having a `core:swid`, `agt:hasGoal`, and `agt:hasCapability`.
+* **Self-Sovereignty**: The `core:swid` of an `agt:Person` **SHALL** represent a self-sovereign identity, giving the individual ultimate control over their digital presence and credentials.
+* **Personal Attributes**: An `agt:Person` **SHOULD** use properties from well-known vocabularies like `schema.org` to describe personal attributes for interoperability.
+
+[[agt-person-class]]
+==== Class Definition
+
+.Class Definition for agt:Person
+[cols="1,3",options="header"]
+|===
+| RDF Class | `agt:Person`
+| Is Abstract | No
+| Definition | A human person, modeled as a special type of `agt:Agent` with a self-sovereign identity.
+| Subclass Of | `agt:Agent`
+| Usage Note | Represents human users who can initiate contracts and perform activities. The management of its identity and credentials **SHALL** adhere to the principles of self-sovereignty.
+| Rationale | Provides a specific class for human actors, distinguishing them from autonomous AI or robotic agents and ensuring their rights and privacy are structurally represented.
+|===
+
+.Properties Summary for agt:Person
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<agt-person-property-givenName,`schema:givenName`>>
+| `givenName`
+| The given name (first name) of the person.
+| `xsd:string`
+| 0..1
+| Recommended
+
+| <<agt-person-property-familyName,`schema:familyName`>>
+| `familyName`
+| The family name (last name) of the person.
+| `xsd:string`
+| 0..1
+| Recommended
+
+| <<agt-person-property-email,`schema:email`>>
+| `email`
+| An email address for the person.
+| `xsd:string`
+| 0..*
+| Optional
+|===
+
+[[agt-person-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for properties commonly used with the `agt:Person` class. Note that this class also inherits all properties from `agt:Agent`.
+
+[[agt-person-property-givenName]]
+===== Property: givenName
+.Property Definition: schema:givenName
+[cols="2,4"]
+|===
+| **Property** | `schema:givenName`
+| **IRI** | `https://schema.org/givenName`
+| **JSON name** | `givenName`
+| **Requirement Level** | Recommended
+| **Cardinality** | 0..1
+| **Domain** | `agt:Person`
+| **Range** | `xsd:string`
+| **Definition** | The given name of the person.
+| **Usage Note** | Reuses the property from Schema.org for interoperability in representing personal names.
+|===
+
+[[agt-person-property-familyName]]
+===== Property: familyName
+.Property Definition: schema:familyName
+[cols="2,4"]
+|===
+| **Property** | `schema:familyName`
+| **IRI** | `https://schema.org/familyName`
+| **JSON name** | `familyName`
+| **Requirement Level** | Recommended
+| **Cardinality** | 0..1
+| **Domain** | `agt:Person`
+| **Range** | `xsd:string`
+| **Definition** | The family name of the person.
+| **Usage Note** | Reuses the property from Schema.org for interoperability in representing personal names.
+|===
+
+[[agt-person-property-email]]
+===== Property: email
+.Property Definition: schema:email
+[cols="2,4"]
+|===
+| **Property** | `schema:email`
+| **IRI** | `https://schema.org/email`
+| **JSON name** | `email`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..*
+| **Domain** | `agt:Person`
+| **Range** | `xsd:string`
+| **Definition** | An email address for the person.
+| **Usage Note** | Reuses the property from Schema.org for contact information. Multiple email addresses are permissible.
+|===
