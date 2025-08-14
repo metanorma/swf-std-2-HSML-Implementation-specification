@@ -20,6 +20,13 @@ Complementing the schema/instance pattern is the separation of abstract paramete
 
 This design allows `act:ActivitySchema` definitions to be generic and broadly reusable. A single schema for "TransferAsset" can be instantiated in thousands of different `act:Activity` instances, each using `act:VariableBinding` to supply the concrete assets and accounts for a specific transaction. This promotes standardization while ensuring every `act:Activity` is a complete, self-contained, and auditable record.
 
+A key architectural decision in this pattern is how a `VariableBinding` references its corresponding `Variable`. This model mandates the use of the `Variable`'s locally unique `schema:identifier` (e.g., `"targetLocation"`) rather than its global URI. This choice is deliberate and provides two main benefits:
+
+. *Consistency*: It establishes a single, predictable pattern across the entire Activity model. Just as `act:DataLink` uses local identifiers to wire steps together within a composite schema, `act:VariableBinding` uses the same mechanism to bind values at runtime. This consistency simplifies implementation and makes the model easier to learn.
+. *Portability*: It treats the `ActivitySchema` as a true, self-contained template. An `Activity` instance is bound to the _role_ a variable plays within the schema (its local identifier), not to a rigid, globally unique URI. This decouples the execution record from the schema definition, allowing the schema to be versioned or reused more flexibly without invalidating existing activity instances.
+
+This approach requires the processing engine to resolve the reference by looking up the identifier within the context of the activity's schema. This is a standard pattern and a worthwhile trade-off for the significant gains in consistency, portability, and developer experience.
+
 === The Composite Model: First-Class Workflows
 
 For composite (multi-step) activities, a simple list of sub-activities is insufficient. A robust model must also describe the *sequence of steps*, the *flow of data* between them, and the *control flow logic* (e.g., conditional branches). The Activity Module addresses this by elevating the core components of a workflow to be first-class citizens:
