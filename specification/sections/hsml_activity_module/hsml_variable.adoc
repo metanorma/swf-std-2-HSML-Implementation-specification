@@ -5,12 +5,12 @@ The class `act:Variable` realizes the **VARIABLE** concept as part of an `act:Ac
 
 “A VARIABLE represents a typed parameter or binding placeholder within an ACTIVITY SCHEMA, used to specify required inputs, produced outputs, or contextual bindings.”
 
-`act:Variable` is a structural component that formally defines the interface for a single parameter within a schema. It supports the **declaration -> binding -> validation** pipeline by separating the declaration of a variable's type from the formal conditions used to enforce its validity.
+`act:Variable` is a structural component that formally defines the interface for a single parameter within a schema. It supports the **declaration -> binding -> validation** pipeline by separating the declaration of a variable's expected type from the formal conditions used to enforce its validity.
 
 **Key Requirements**
 
 * **Identification**: A variable **SHALL** have a locally unique, machine-readable `schema:identifier`. It **SHOULD** also be described with a `schema:name` and **MAY** have a `schema:description`.
-* **Declaration**: A variable **SHOULD** declare its expected data type via the `act:hasType` property. This serves as a clear, human- and machine-readable declaration of intent.
+* **Declaration**: A variable **SHOULD** declare its expected data type(s) via the `act:expects` property. This serves as a clear, human- and machine-readable declaration of intent.
 * **Enforcement**: A variable **MAY** be constrained by one or more `core:Condition` instances. This is the formal mechanism for enforcing complex validation rules.
 * **Usage**: Variables **SHALL** be used in an `act:ActivitySchema` to define inputs (`act:hasInput`) or outputs (`act:hasOutput`).
 
@@ -24,7 +24,7 @@ The class `act:Variable` realizes the **VARIABLE** concept as part of an `act:Ac
 | Is Abstract | No
 | Definition | A formal parameter definition for an `act:ActivitySchema`, representing an input, output, or contextual binding.
 | Subclass Of | `owl:Thing`
-| Usage Note | A `Variable` is a structural component of a schema's interface. It defines the complete signature for a parameter, including its identifier, name, type, and validation logic.
+| Usage Note | A `Variable` is a structural component of a schema's interface. It defines the complete signature for a parameter, including its identifier, name, expected type(s), and validation logic.
 | Rationale | Provides a formal structure for parameterizing Activities, ensuring correctness and reusability. Separating type declaration from validation conditions improves both usability and robustness.
 |===
 
@@ -54,11 +54,11 @@ The class `act:Variable` realizes the **VARIABLE** concept as part of an `act:Ac
 | 0..1
 | Optional
 
-| <<act-variable-property-hasType,`act:hasType`>>
-| `hasType`
-| The declared data type or class of the variable.
+| <<act-variable-property-expects,`act:expects`>>
+| `expects`
+| The expected data type or class of the variable's value.
 | `rdfs:Class`
-| 0..1
+| 0..*
 | Recommended
 
 | <<act-variable-property-hasCondition,`core:hasCondition`>>
@@ -122,20 +122,20 @@ This section provides the detailed normative definitions for the properties of t
 | **Usage Note** | This property is for documentation and maintainability, helping developers understand the role of the variable. Reuses the property from Schema.org.
 |===
 
-[[act-variable-property-hasType]]
-===== Property: hasType
-.Property Definition: act:hasType
+[[act-variable-property-expects]]
+===== Property: expects
+.Property Definition: act:expects
 [cols="2,4"]
 |===
-| **Property** | `act:hasType`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#hasType`
-| **JSON name** | `hasType`
+| **Property** | `act:expects`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#expects`
+| **JSON name** | `expects`
 | **Requirement Level** | Recommended
-| **Cardinality** | 0..1
+| **Cardinality** | 0..*
 | **Domain** | `act:Variable`
 | **Range** | `rdfs:Class`
-| **Definition** | A declaration of the expected data type or class for the variable's value.
-| **Usage Note** | This property provides a simple, direct way for applications to understand the variable's type without needing to parse a `core:Condition`. The range can be an XSD datatype (e.g., `xsd:string`, `xsd:integer`) or another class (e.g., `hsml:Agent`). This is the **declaration of intent**.
+| **Definition** | A declaration of the expected data type(s) or class(es) for the variable's value.
+| **Usage Note** | This property provides a simple, direct way for applications to understand the variable's type without needing to parse a `core:Condition`. The range can be an XSD datatype (e.g., `xsd:string`) or another class (e.g., `core:Agent`). The property may be repeated to allow for union types (e.g., a variable that expects either a `core:Agent` or an `xsd:string`). This is the **declaration of intent**.
 |===
 
 [[act-variable-property-hasCondition]]
@@ -151,5 +151,5 @@ This section provides the detailed normative definitions for the properties of t
 | **Domain** | `act:Variable`
 | **Range** | `core:Condition`
 | **Definition** | Associates one or more formal conditions that a variable's bound value must satisfy.
-| **Usage Note** | This is the **enforcement mechanism**. While `act:hasType` declares the basic type, `core:hasCondition` is used to enforce more complex rules, such as value ranges, string patterns (regex), or conformance to a SHACL shape. A `core:SHACLCondition` can also be used to enforce the `act:hasType` declaration.
+| **Usage Note** | This is the **enforcement mechanism**. While `act:expects` declares the basic type, `core:hasCondition` is used to enforce more complex rules, such as value ranges, string patterns (regex), or conformance to a SHACL shape. A `core:SHACLCondition` can also be used to enforce the `act:expects` declaration.
 |===
