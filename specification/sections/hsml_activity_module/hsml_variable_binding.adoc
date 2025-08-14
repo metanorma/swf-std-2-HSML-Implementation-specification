@@ -1,4 +1,3 @@
-
 [[act-variablebinding]]
 === Class: act:VariableBinding
 
@@ -8,8 +7,8 @@ The class `act:VariableBinding` provides the concrete link between an abstract `
 
 **Key Requirements**
 
-* **Variable Reference**: A `act:VariableBinding` **SHALL** reference exactly one `act:Variable` from the parent activity's schema via the `act:bindsVariable` property.
-* **Value Assignment**: A `act:VariableBinding` **SHALL** provide exactly one concrete value (either a literal or an IRI) via the `act:hasValue` property.
+* **Variable Reference**: A `act:VariableBinding` **SHALL** reference exactly one `act:Variable` from the parent activity's schema via the `act:variable` property, using the variable's local identifier.
+* **Value Assignment**: A `act:VariableBinding` **SHALL** provide exactly one concrete value (either a literal or a resource) via the standard `rdf:value` property.
 * **Context**: A `act:VariableBinding` only exists as part of an `act:Activity`, linked via the `act:hasBinding` property.
 
 [[act-variablebinding-class]]
@@ -31,17 +30,17 @@ The class `act:VariableBinding` provides the concrete link between an abstract `
 |===
 | Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
 
-| <<act-variablebinding-property-bindsVariable,`act:bindsVariable`>>
-| `bindsVariable`
-| Connects the binding to the `act:Variable` it parameterizes.
-| `act:Variable`
+| <<act-variablebinding-property-variable,`act:variable`>>
+| `variable`
+| The identifier of the `act:Variable` this binding parameterizes.
+| `xsd:string`
 | 1..1
 | **Mandatory**
 
-| <<act-variablebinding-property-hasValue,`act:hasValue`>>
-| `hasValue`
+| <<act-variablebinding-property-value,`rdf:value`>>
+| `value`
 | The concrete value (IRI or Literal) assigned in the binding.
-| `owl:Thing`
+| `rdfs:Resource` or `rdfs:Literal`
 | 1..1
 | **Mandatory**
 |===
@@ -51,34 +50,34 @@ The class `act:VariableBinding` provides the concrete link between an abstract `
 
 This section provides the detailed normative definitions for the properties of the `act:VariableBinding` class.
 
-[[act-variablebinding-property-bindsVariable]]
-===== Property: bindsVariable
-.Property Definition: act:bindsVariable
+[[act-variablebinding-property-variable]]
+===== Property: variable
+.Property Definition: act:variable
 [cols="2,4"]
 |===
-| **Property** | `act:bindsVariable`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#bindsVariable`
-| **JSON name** | `bindsVariable`
+| **Property** | `act:variable`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#variable`
+| **JSON name** | `variable`
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..1
 | **Domain** | `act:VariableBinding`
-| **Range** | `act:Variable`
-| **Definition** | Connects a `VariableBinding` to the `Variable` it parameterizes.
-| **Usage Note** | This property points to the "slot" in the schema that this binding is filling.
+| **Range** | `xsd:string`
+| **Definition** | Connects a `VariableBinding` to the `Variable` it parameterizes by referencing the variable's identifier.
+| **Usage Note** | The value of this property **SHALL** match the `schema:identifier` of an `act:Variable` defined in the activity's schema. This provides a consistent, portable binding mechanism.
 |===
 
-[[act-variablebinding-property-hasValue]]
-===== Property: hasValue
-.Property Definition: act:hasValue
+[[act-variablebinding-property-value]]
+===== Property: value
+.Property Definition: rdf:value
 [cols="2,4"]
 |===
-| **Property** | `act:hasValue`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#hasValue`
-| **JSON name** | `hasValue`
+| **Property** | `rdf:value`
+| **IRI** | `http://www.w3.org/1999/02/22-rdf-syntax-ns#value`
+| **JSON name** | `value`
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..1
 | **Domain** | `act:VariableBinding`
-| **Range** | `owl:Thing`
-| **Definition** | The concrete value (IRI for an entity or a Literal for data) assigned in a `VariableBinding`.
-| **Usage Note** | This property provides the actual data for a specific activity execution. The value provided **should** be validated against the `core:hasCondition` of the bound `act:Variable`.
+| **Range** | `rdfs:Resource` or `rdfs:Literal`
+| **Definition** | The concrete value assigned in a `VariableBinding`.
+| **Usage Note** | This standard RDF property is used to provide the actual data for a specific activity execution. The value can be a literal (e.g., string, number, boolean) or a URI pointing to another entity. The value provided **should** be validated against the `core:hasCondition` of the bound `act:Variable`.
 |===
