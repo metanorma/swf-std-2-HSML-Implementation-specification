@@ -1,0 +1,62 @@
+[[core-shaclcondition]]
+=== core:SHACLCondition
+
+The class core:SHACLCondition is a concrete implementation of core:Condition that uses a SHACL shape for validation. It provides a standardized way to express constraints on the structure and values of RDF data.
+
+As a foundational element of the Generic Condition Model, core:SHACLCondition is the primary mechanism for defining data types, cardinality, value ranges, and other structural rules for entities and variables throughout the HSML ontology.
+
+.Key Requirements
+
+Inheritance: Every core:SHACLCondition is a subclass of core:Condition.
+
+Shape Definition: Every core:SHACLCondition SHALL link to exactly one sh:Shape via the core:hasShape property.
+
+Validation Logic: The validation of a core:SHACLCondition is performed by evaluating the associated SHACL shape against a target RDF graph.
+
+[[core-shaclcondition-class]]
+==== Class Definition
+.Class Definition for core:SHACLCondition
+[cols="1,3",options="header"]
+|===
+| RDF Class | core:SHACLCondition
+| Is Abstract | No
+| Definition | A condition defined by a SHACL shape, used to validate the structure and values of RDF data.
+| Subclass Of | core:Condition
+| Usage Note | This is the primary mechanism for defining data type, cardinality, and other structural constraints on variables and entities.
+| Rationale | Leverages the W3C SHACL standard for robust, standardized data validation, ensuring interoperability and machine-checkable conformance.
+|===
+
+.Properties Summary for core:SHACLCondition
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<core-shaclcondition-property-hasShape,core:hasShape>>
+| hasShape
+| Links the condition to the SHACL shape defining its logic.
+| sh:Shape
+| 1..1
+| Mandatory
+|===
+
+[[core-shaclcondition-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the core:SHACLCondition class.
+
+[[core-shaclcondition-property-hasShape]]
+===== Property: hasShape
+
+.Property Definition: core:hasShape
+[cols="2,4"]
+|===
+| Property | core:hasShape
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/core#hasShape
+| JSON name | hasShape
+| Requirement Level | Mandatory
+| Cardinality | 1..1
+| Domain | core:SHACLCondition
+| Range | sh:Shape
+| Definition | Links a core:SHACLCondition to the specific SHACL shape that defines its validation logic.
+| Usage Note | The object of this property must be a valid SHACL shape definition. This shape is used by validation engines to evaluate the condition.
+|===

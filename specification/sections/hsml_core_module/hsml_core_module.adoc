@@ -59,6 +59,8 @@ This clause provides the normative definitions for all class concepts within the
 
 The namespace prefix `core:` refers to `https://www.spatialwebfoundation.org/ns/hsml/core#`.
 
+TODO: Summary of classes
+
 include::hsml_entity.adoc[leveloffset=+1]
 
 include::hsml_domain.adoc[leveloffset=+1]
@@ -66,3 +68,7 @@ include::hsml_domain.adoc[leveloffset=+1]
 include::hsml_role.adoc[leveloffset=+1]
 
 include::hsml_participation.adoc[leveloffset=+1]
+
+include::hsml_condition.adoc[leveloffset=+1]
+
+include::hsml_shaclcondition.adoc[leveloffset=+1]

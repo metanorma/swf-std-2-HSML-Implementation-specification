@@ -1,0 +1,17 @@
+[[core-condition]]
+=== core:Condition
+
+A core:Condition is an abstract class representing a logical condition that can be evaluated to be true or false.
+
+[[core-condition-class]]
+==== Class Definition
+.Class Definition for core:Condition
+[cols="1,3",options="header"]
+|===
+| RDF Class | core:Condition
+| Is Abstract | Yes
+| Definition | An abstract representation of a logical condition that must be satisfied.
+| Subclass Of | owl:Thing
+| Usage Note | This class is never instantiated directly. Concrete subclasses like core:SHACLCondition must be used to provide the specific evaluation logic.
+| Rationale | Provides a single, abstract root for all types of logical validation, ensuring that the ontology can evolve to support new validation technologies without breaking changes.
+|===
