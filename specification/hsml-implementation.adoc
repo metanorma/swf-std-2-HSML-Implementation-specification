@@ -19,6 +19,7 @@
 :local-cache-only:
 :toc-figures: true
 :toc-tables: true
+:toclevels: 3
 
 // Approval date
 //:confirmation-date: 2022-05-01
