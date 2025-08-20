@@ -1,3 +1,0 @@
-== HSML Thing Module
-
-include::hsml_core_model/hsml_thing.adoc[]

@@ -48,8 +48,11 @@ include::sections/hsml_governance_module/hsml_governance_module.adoc[]
 
 include::sections/hsml_agent_module/hsml_agent_module.adoc[]
 
-//include::sections/hsml_hyperspace_module/hsml_hyperspace_module.adoc[]
+include::sections/hsml_hyperspace_module/hsml_hyperspace_module.adoc[]
 
+include::sections/hsml_channel_module/hsml_channel_module.adoc[]
+
+include::sections/hsml_thing_module/hsml_thing_module.adoc[]
 //include::sections/hsml_thing_module.adoc[]
 
 include::sections/hsml_extensions_and_profiles.adoc[]

@@ -1,0 +1,4 @@
+== HSML Thing Module
+
+
+include::hsml_thing.adoc[]

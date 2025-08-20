@@ -36,10 +36,33 @@ This enables the creation of specific `Goal` subclasses that align with differen
 
 By defining these and other goal specializations (like **Hard** vs. **Soft Goals** with preference models), the architecture allows for a rich and precise description of agent behavior. A sophisticated Deliberative Agent might pursue complex `AchievementGoal`s, while a simpler monitoring agent would be concerned with a `MaintenanceGoal`. This provides a flexible and future-proof framework that can adapt to new agent designs by simply introducing new, well-defined subclasses of `agt:Goal`.
 
-include::hsml_agent.adoc[]
+=== Normative Classes
 
-include::hsml_person.adoc[]
+This clause provides the normative definitions for all class concepts within the HSML Agent Module. Each class is detailed in a table that specifies its URI, description, JSON-LD context name, usage notes, and relationship to other classes.
 
-include::hsml_organization.adoc[]
+The namespace prefix `agt:` refers to `https://www.spatialwebfoundation.org/ns/hsml/agent#`.
 
-include::hsml_goal.adoc[]
+==== Summary of Normative Classes
+
+.Summary of HSML Agent Module Classes
+[cols="1,3",options="header"]
+|===
+| Class | Description
+
+| <<agt-agent,agt:Agent>>
+| An autonomous entity capable of perceiving, deciding, and performing Activities to achieve its goals.
+
+| <<agt-person,agt-Person>>
+| A human person, modeled as a special type of `agt:Agent` with a self-sovereign identity.
+
+| <<agt-goal,agt:Goal>>
+| A state or objective that an Agent aims to achieve through the performance of Activities.
+|===
+
+include::hsml_agent.adoc[leveloffset=+1]
+
+include::hsml_person.adoc[leveloffset=+1]
+
+include::hsml_organization.adoc[leveloffset=+1]
+
+include::hsml_goal.adoc[leveloffset=+1]

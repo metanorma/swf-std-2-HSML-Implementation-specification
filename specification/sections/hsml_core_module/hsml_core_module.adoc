@@ -64,3 +64,5 @@ include::hsml_entity.adoc[leveloffset=+1]
 include::hsml_domain.adoc[leveloffset=+1]
 
 include::hsml_role.adoc[leveloffset=+1]
+
+include::hsml_participation.adoc[leveloffset=+1]
