@@ -1,0 +1,27 @@
+[[core-thing]]
+=== core:Thing
+
+The class core:Thing realises the THING DOMAIN type defined in IEEE P2874 § 6.3.2.1.7:
+
+“A THING is a DOMAIN representing a bounded item without agency that can be acted upon, sensed, or described in the Spatial Web.”
+
+core:Thing represents physical or virtual entities that lack autonomous action but may be observed, measured, manipulated, or referenced by Agents or Activities. Examples include devices, sensors, vehicles, digital files, or other discrete objects.
+
+[[core-thing-class]]
+==== Class Definition
+.Class Definition for core:Thing
+[cols="1,3",options="header"]
+|===
+| RDF Class | core:Thing
+| Is Abstract | No
+| Definition | A passive core:Domain representing a bounded item without agency, which may be sensed, acted upon, or described.
+| Subclass Of | core:Domain
+| Disjoint With | agt:Agent
+| Usage Note | Things are passive entities; they do not possess goals or capabilities but may participate in Activities as targets, inputs, or outputs.
+| Rationale | Provides a formal category for all non-agentic entities in the Spatial Web, ensuring compliance with P2874’s Domain taxonomy.
+|===
+
+[[core-thing-properties]]
+==== Properties
+
+The core:Thing class inherits all properties from core:Domain and core:Entity. It introduces no new properties at this level, providing a minimal base class that can be extended by more specific standards (such as W3C WoT or SAREF) for detailed device modeling.

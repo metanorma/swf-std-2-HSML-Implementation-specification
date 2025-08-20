@@ -1,31 +1,41 @@
-[[hsml-spatialfeature]]
-=== Class: hsml:SpatialFeature
+[[core-spatialfeature]]
+==== core:SpatialFeature
 
-The class hsml:SpatialFeature realises the SPATIAL FEATURE concept, corresponding to the GEOGRAPHIC DOMAIN type described in IEEE P2874 § 6.6.3:
+The class core:SpatialFeature realises the SPATIAL FEATURE concept, corresponding to the GEOGRAPHIC DOMAIN type described in IEEE P2874 § 6.3.2.1.2:
 
 “A SPATIAL FEATURE is an ENTITY representing a location-bound or geometry-bearing element within a Domain, corresponding to a GEOGRAPHIC DOMAIN type where position, extent, or spatial relationships are essential.”
 
-hsml:SpatialFeature represents real or abstract entities anchored in space — such as landmarks, boundaries, sensor sites, or natural features — that are meaningful in spatial reasoning and analysis in the Spatial Web. It binds semantic entities to geospatial structure.
+`core:SpatialFeature` represents real or abstract entities anchored in space—such as landmarks, boundaries, sensor sites, or natural features—that are meaningful in spatial reasoning and analysis. It is the fundamental class for binding semantic entities to geospatial structure in the Spatial Web.
 
-[[hsml-spatialfeature-class]]
-==== Class Definition
+**Key Requirements**
 
-[cols="1,3"]
+* Identity: Every core:SpatialFeature SHALL possess a Spatial Web Identifier (core:swid).
+
+* Geometry: A core:SpatialFeature SHOULD have at least one geometric representation linked via the geosparql:hasGeometry property.
+
+[[core-spatialfeature-class]]
+===== Class Definition
+
+.Class Definition for core:SpatialFeature
+[cols="1,3",options="header"]
 |===
-| RDF Class | +hsml:SpatialFeature+
+| RDF Class | core:SpatialFeature
 | Is Abstract | No
 | Definition | An entity that represents a location-bound or geometry-bearing element of the GEOGRAPHIC DOMAIN type in the Spatial Web.
-| Subclass Of | hsml:Entity
-| Usage Note | SpatialFeatures link semantic entities to geospatial structures (geometry, topology, metric) for reasoning, mapping, or analysis.
-| Rationale | Provides a formal mechanism to model GEOGRAPHIC DOMAIN instances (per P2874) and bind entities to spatial coordinates, shapes, and relationships.
+| Subclass Of | core:Domain
+| Usage Note | core:SpatialFeature instances link semantic entities to geospatial structures (geometry, topology) for reasoning, mapping, or analysis.
+| Rationale | Provides a formal mechanism to model GEOGRAPHIC DOMAIN instances (per P2874) and bind entities to spatial coordinates, shapes, and relationships, aligning with established geospatial standards like OGC GeoSPARQL.
 |===
 
-[[hsml-spatialfeature-properties-summary]]
-==== Properties
-
-[cols="1,1,3,1",options="header"]
+.Properties Summary for core:SpatialFeature
+[cols="2,2,4,2,1,2",options="header"]
 |===
-| Predicate             | IRI                                                             | Description                                                                                           | Cardinality
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
 
-
+| <<core-spatialfeature-property-hasGeometry,geosparql:hasGeometry>>
+| hasGeometry
+| Links the feature to its geometric representation.
+| geosparql:Geometry
+| 0..*
+| Recommended
 |===

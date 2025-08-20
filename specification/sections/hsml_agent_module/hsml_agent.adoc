@@ -22,7 +22,7 @@ The class `agt:Agent` realises the **AGENT** concept in IEEE P2874 § 6.6.3:
 | RDF Class | `agt:Agent`
 | Is Abstract | No
 | Definition | An autonomous entity capable of perceiving, deciding, and performing Activities to achieve its goals.
-| Subclass Of | `core:Entity`
+| Subclass Of | `core:Domain`
 | Usage Note | Agents are the actors in the Spatial Web. They initiate `gov:Contract` instances and perform `act:Activity` instances.
 | Rationale | Provides the normative model for autonomous actors in the Spatial Web, supporting goal-directed behavior and governed interactions.
 |===
