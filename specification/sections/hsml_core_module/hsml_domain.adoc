@@ -30,27 +30,14 @@ As a foundational element, core:Domain provides the structure for all entities t
 .Properties Summary for core:Domain
 [cols="2,2,4,2,1,2",options="header"]
 |===
-| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
-| <<core-domain-property-domainType,core:domainType>>
-| domainType
-| The classification of the Domain based on its defining characteristics.
-| skos:Concept
-| 1..1
-| Mandatory
 
 | <<core-domain-property-hasSpace,core:hasSpace>>
 | hasSpace
 | Links the domain to the Hyperspace in which it applies or is located.
-| HYPERSPACE
+| space:Hyperspace
 | 0..*
 | Optional
 
-| <<core-domain-property-hasMember,core:hasMember>>
-| hasMember
-| An entity that is a member of this domain, central to Organization Domains.
-| core:Entity
-| 0..*
-| Optional
 
 | <<core-domain-property-managedBy,core:managedBy>>
 | managedBy
@@ -75,19 +62,6 @@ This section provides the detailed normative definitions for the properties of t
 [[core-domain-property-domainType]]
 ===== Property: domainType
 
-.Property Definition: core:domainType
-[cols="2,4"]
-|===
-| Property | core:domainType
-| IRI | https://www.spatialwebfoundation.org/ns/hsml/core#domainType
-| JSON name | domainType
-| Requirement Level| Mandatory
-| Cardinality| 1..1
-| Domain| core:Domain
-| Range| skos:Concept
-| Definition| An attribute that specifies the type of the Domain.
-| Usage Note| The value SHALL be a concept from a controlled vocabulary. Per the specification, acceptable values include Geographic, Concept, Organization, Agent, Person, and Thing.
-|===
 
 [[core-domain-property-hasSpace]]
 ===== Property: hasSpace
@@ -101,27 +75,11 @@ This section provides the detailed normative definitions for the properties of t
 | Requirement Level| Optional
 | Cardinality| 0..*
 | Domain| core:Domain
-| Range| HYPERSPACE
+| Range| space:Hyperspace
 | Definition| Associates the domain with a HYPERSPACE, indicating the spatial boundary, location, or context in which the domain's rules and membership apply.
 | Usage Note| Essential for location-aware governance. For example, a geographic Domain is implicitly or explicitly associated with a location. The HYPERSPACE can be a geometry in Cartesian space or a range of values.
 |===
 
-[[core-domain-property-hasMember]]
-===== Property: hasMember
-
-.Property Definition: core:hasMember
-[cols="2,4"]
-|===
-| Property | core:hasMember
-| IRI | https://www.spatialwebfoundation.org/ns/hsml/core#hasMember
-| JSON name | hasMember
-| Requirement Level | Optional
-| Cardinality | 0..*
-| Domain | core:Domain
-| Range | core:Entity
-| Definition | Specifies an entity that is a member of the domain.
-| Usage Note | This property is central for the Organization Domain type, which pertains to entities where membership plays a central role.
-|===
 
 [[core-domain-property-managedBy]]
 ===== Property: managedBy

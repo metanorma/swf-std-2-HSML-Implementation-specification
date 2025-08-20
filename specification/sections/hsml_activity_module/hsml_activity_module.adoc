@@ -1,6 +1,6 @@
 == HSML Activity Module
 
-include::activity_module_principles.adoc[]
+include::activity_module_principles.adoc[leveloffset=+1]
 
 
 === Modeling of Composite Activities
