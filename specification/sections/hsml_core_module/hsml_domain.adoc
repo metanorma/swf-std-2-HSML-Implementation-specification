@@ -1,0 +1,158 @@
+[[core-domain]]
+=== Class: core:Domain
+
+The class core:Domain realizes the DOMAIN concept, defined in the Spatial Web ontology as an ENTITY with identity through time endowed with rights and credentials. It represents a sphere of knowledge, influence, or ACTIVITY.
+
+As a foundational element, core:Domain provides the structure for all entities that have a persistent identity as their defining essence. It serves as a distinct container for people, places, things, and concepts, allowing reality to be described from multiple perspectives and through correlated hierarchies. Domains are hierarchical in nature, allowing for parent, child, and sibling relationships, and can be nested within one another to maintain coherence. They form a holarchy, where each domain is a self-contained whole (a holon) that can also be a constituent part of a larger domain.
+
+.Key Requirements
+
+* *Identity:* Every core:Domain SHALL possess a Spatial Web Identifier (core:swid).
+* *Typing:* Every core:Domain SHALL have a domainType attribute specifying its classification (e.g., Geographic, Concept, Agent, etc.).
+* *Authority:* Every core:Domain SHALL have a Domain Authority that governs its norms, terms, and contracts.
+* *Spatial Context:* A core:Domain MAY reference a HYPERSPACE to define its location, boundaries, or paths.
+* *Holonic Structure:* A core:Domain MAY be part of a parent domain via a holonic (part-whole) link to create nested and hierarchical structures.
+
+[[core-domain-class]]
+==== Class Definition
+
+.Class Definition for core:Domain
+[cols="1,3",options="header"]
+|===
+| RDF Class | core:Domain
+| Is Abstract | No
+| Definition | An ENTITY with identity through time endowed with rights and credentials, representing a sphere of knowledge, influence, or ACTIVITY.
+| Subclass Of | core:Entity
+| Usage Note | Domains are used to partition the Spatial Web into manageable regions. For example, a "Metropolis Digital Twin" is a geographic Domain, while the "Regional Energy Grid" is a concept Domain. An AGENT is also a type of Domain.
+| Rationale | Provides a foundational, general-purpose mechanism for grouping entities. This enables the creation of scalable, hierarchical, and nested structures necessary for contextual awareness, governance, and decentralized administration in the Spatial Web.
+|===
+
+.Properties Summary for core:Domain
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+| <<core-domain-property-domainType,core:domainType>>
+| domainType
+| The classification of the Domain based on its defining characteristics.
+| skos:Concept
+| 1..1
+| Mandatory
+
+| <<core-domain-property-hasSpace,core:hasSpace>>
+| hasSpace
+| Links the domain to the Hyperspace in which it applies or is located.
+| HYPERSPACE
+| 0..*
+| Optional
+
+| <<core-domain-property-hasMember,core:hasMember>>
+| hasMember
+| An entity that is a member of this domain, central to Organization Domains.
+| core:Entity
+| 0..*
+| Optional
+
+| <<core-domain-property-managedBy,core:managedBy>>
+| managedBy
+| Identifies the Domain Authority credentialed to define norms and govern the domain.
+| agent:Agent
+| 1..1
+| Mandatory
+
+| <<core-domain-property-partOf,rdfh:partOf>>
+| partOf
+| Establishes a holonic link, indicating this domain is a constituent part of a parent domain.
+| core:Domain
+| 0..1
+| Optional
+|===
+
+[[core-domain-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the core:Domain class. (Properties inherited from core:Entity such as core:swid and schema:name are not redefined here).
+
+[[core-domain-property-domainType]]
+===== Property: domainType
+
+.Property Definition: core:domainType
+[cols="2,4"]
+|===
+| Property | core:domainType
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/core#domainType
+| JSON name | domainType
+| Requirement Level| Mandatory
+| Cardinality| 1..1
+| Domain| core:Domain
+| Range| skos:Concept
+| Definition| An attribute that specifies the type of the Domain.
+| Usage Note| The value SHALL be a concept from a controlled vocabulary. Per the specification, acceptable values include Geographic, Concept, Organization, Agent, Person, and Thing.
+|===
+
+[[core-domain-property-hasSpace]]
+===== Property: hasSpace
+
+.Property Definition: core:hasSpace
+[cols="2,4"]
+|===
+| Property | core:hasSpace
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/core#hasSpace
+| JSON name | hasSpace
+| Requirement Level| Optional
+| Cardinality| 0..*
+| Domain| core:Domain
+| Range| HYPERSPACE
+| Definition| Associates the domain with a HYPERSPACE, indicating the spatial boundary, location, or context in which the domain's rules and membership apply.
+| Usage Note| Essential for location-aware governance. For example, a geographic Domain is implicitly or explicitly associated with a location. The HYPERSPACE can be a geometry in Cartesian space or a range of values.
+|===
+
+[[core-domain-property-hasMember]]
+===== Property: hasMember
+
+.Property Definition: core:hasMember
+[cols="2,4"]
+|===
+| Property | core:hasMember
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/core#hasMember
+| JSON name | hasMember
+| Requirement Level | Optional
+| Cardinality | 0..*
+| Domain | core:Domain
+| Range | core:Entity
+| Definition | Specifies an entity that is a member of the domain.
+| Usage Note | This property is central for the Organization Domain type, which pertains to entities where membership plays a central role.
+|===
+
+[[core-domain-property-managedBy]]
+===== Property: managedBy
+
+.Property Definition: core:managedBy
+[cols="2,4"]
+|===
+| Property | core:managedBy
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/core#managedBy
+| JSON name | managedBy
+| Requirement Level | Mandatory
+| Cardinality | 1..1
+| Domain | core:Domain
+| Range | agent:Agent
+| Definition | Identifies the Domain Authority: an entity credentialed to define the norms and terms under which contracts are created for AGENTS, ACTIVITIES, and CREDENTIALS within that Domain.
+| Usage Note| Every Spatial Web Domain SHALL have a Domain Authority. The managing agent is responsible for defining domain policies and governing the entities and activities within it.
+|===
+
+[[core-domain-property-partOf]]
+===== Property: partOf
+
+.Property Definition: rdfh:partOf
+[cols="2,4"]
+|===
+| Property | rdfh:partOf
+| IRI | http://purl.org/rdfh/partOf
+| JSON name | partOf
+| Requirement Level | Optional
+| Cardinality | 0..1
+| Domain | core:Domain
+| Range | core:Domain
+| Definition | Establishes a holonic or mereological (part-whole) link, indicating this domain is a constituent part of a parent domain.
+| Usage Note | This property is used to create nested and hierarchical domain structures. It allows for parent, child, and sibling relationships, enabling domains to maintain coherence while being contained within other domains.
+|===

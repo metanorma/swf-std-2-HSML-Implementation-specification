@@ -1,5 +1,6 @@
 == HSML Core Model
 
+
 include::hsml_core_model/hsml_entity.adoc[]
 
 include::hsml_core_model/hsml_domain.adoc[]
@@ -21,6 +22,6 @@ include::hsml_core_model/hsml_concept.adoc[]
 
 include::hsml_core_model/hsml_participation.adoc[]
 
-include::hsml_core_model/hsml_role.adoc[]
+
 
 include::hsml_core_model/hsml_time.adoc[]

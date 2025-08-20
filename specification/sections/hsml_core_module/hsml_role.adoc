@@ -1,0 +1,103 @@
+[[core-role]]
+=== Class: core:Role
+
+The class `core:Role` represents a named capacity, position, or function that a bearer (e.g., person, agent, device, or service) may hold within some context. It is a **definition-level concept** (the role itself), distinct from any particular assignment or holding of that role.
+
+**Key Requirements**
+
+* **Typing**: Every instance **SHALL** declare its class via the `rdf:type` property.
+* **Minimal Metadata**: Role definitions **SHOULD** provide a human-readable `schema:name` and **MAY** include a `schema:description`.
+* **Neutral & Standalone**: `core:Role` **SHALL NOT** require any superclass from external ontologies and **SHALL** remain independent of assignment-specific data (e.g., time bounds, authority, or basis).
+
+[[core-role-class]]
+==== Class Definition
+.Class Definition for core:Role
+[cols="1,3",options="header"]
+|===
+| RDF Class | `core:Role`
+| Is Abstract | No
+| Definition | A named capacity, position, or function that can be held by an agent, object, or service within a context.
+| Subclass Of | `owl:Thing`
+| Usage Note | `core:Role` captures the *definition* of a role. Assignment-specific details (bearer, time, authority, basis) **SHOULD NOT** be modeled on this class and belong in a separate assignment pattern if needed.
+| Rationale | Provides a lightweight, interoperable notion of “role” that can be reused across activities, memberships, stewardship, and other Spatial Web contexts without imposing external ontology dependencies.
+|===
+
+.Properties Summary for core:Role
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<core-role-property-type,`rdf:type`>>
+| `@type`
+| Declares the specific class of the resource.
+| `rdfs:Class`
+| 1..*
+| **Mandatory**
+
+| <<core-role-property-name,`schema:name`>>
+| `name`
+| A short, human-readable name for the role.
+| `xsd:string`
+| 0..1
+| Recommended
+
+| <<core-role-property-description,`schema:description`>>
+| `description`
+| A human-readable explanation of the role’s purpose or scope.
+| `xsd:string`
+| 0..1
+| Optional
+|===
+
+[[core-role-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the `core:Role` class.
+
+[[core-role-property-type]]
+===== Property: type
+.Property Definition: rdf:type
+[cols="2,4"]
+|===
+|**Property** | `rdf:type`
+|**IRI** | `http://www.w3.org/1999/02/22-rdf-syntax-ns#type`
+|**JSON name** | `@type`
+|**Requirement Level** | **Mandatory**
+|**Cardinality** | 1..*
+|**Domain** | `core:Role`
+|**Range** | `rdfs:Class`
+|**Definition** | Declares the specific class (or classes) of which this resource is an instance.
+|**Usage Note** | Every role **SHALL** have at least one `rdf:type` equal to `core:Role`. Additional types (e.g., domain-specific categories) MAY be included.
+|===
+
+[[core-role-property-name]]
+===== Property: name
+.Property Definition: schema:name
+[cols="2,4"]
+|===
+|**Property** | `schema:name`
+|**IRI** | `https://schema.org/name`
+|**JSON name** | `name`
+|**Requirement Level** | Recommended
+|**Cardinality** | 0..1
+|**Domain** | `core:Role`
+|**Range** | `xsd:string`
+|**Definition** | A short, human-readable name for the role.
+|**Usage Note** | Recommended for UI, documentation, and discoverability. Reuses widely adopted Schema.org semantics.
+|===
+
+[[core-role-property-description]]
+===== Property: description
+.Property Definition: schema:description
+[cols="2,4"]
+|===
+|**Property** | `schema:description`
+|**IRI** | `https://schema.org/description`
+|**JSON name** | `description`
+|**Requirement Level** | Optional
+|**Cardinality** | 0..1
+|**Domain** | `core:Role`
+|**Range** | `xsd:string`
+|**Definition** | A human-readable explanation of the role’s purpose, responsibilities, or scope.
+|**Usage Note** | Useful to clarify intent and distinguish similarly named roles in catalogs and governance artifacts.
+|===

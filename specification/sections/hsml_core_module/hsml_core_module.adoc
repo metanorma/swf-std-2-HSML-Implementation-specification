@@ -1,0 +1,66 @@
+== HSML Core Module: Normative Specification
+
+=== Architectural Principles and Design Rationale
+
+This clause describes the key architectural principles that underpin the Hyperspace Modelling Language (HSML) Core Module. This module provides the foundational concepts upon which all other HSML modules are built. Understanding this rationale is not required for conformance but is highly recommended for a robust and correct implementation, as it clarifies the intent behind the normative rules specified in subsequent clauses.
+
+==== The Universal Foundation: core:Entity
+
+The cornerstone of the HSML ontology is the `core:Entity` class, which serves as the universal root for every object, agent, and concept within the Spatial Web. This abstract class embodies the principle that everything which "is perceived, known, or inferred to exist" can be represented and managed within a single, coherent framework. By establishing `core:Entity` as the ultimate superclass, the standard ensures that all HSML-compliant software can uniformly ingest, validate, and manipulate heterogeneous constructs. This polymorphic foundation is the key to the semantic interoperability and extensibility mandated by the IEEE P2874 standard.
+
+==== Decentralized Identity: The Spatial Web Identifier (SWID)
+
+A core principle of the Spatial Web is that every core:Entity SHALL be uniquely identified by a Spatial Web Identifier (SWID). This is enforced via the core:swid property. The modeling of this identifier is a critical design choice.
+
+The core:swid property SHALL contain a W3C Decentralized Identifier (DID) conformant URI. This value is modeled as a literal of type xsd:anyURI, not as a link to another resource. This ensures the SWID is a verifiable attribute of the entity.
+
+More importantly, this design establishes a fundamental separation of concerns between the identifier for an entity and the identifier for its description.
+
+core:swid (The "Thing"): This property identifies the entity itself—the person, device, or concept—independent of any single representation or network location. It is the stable, location-agnostic anchor for identity.
+
+Subject IRI (The "Document"): This is the URI of the data record (e.g., an HTTP URL) that describes the entity. An entity can have many different descriptions at different locations, each with its own subject IRI.
+
+This distinction, which aligns with the "Cool URIs for the Semantic Web" best practice, provides several key advantages:
+
+Data Federation: A single conceptual entity, identified by one core:swid, can have multiple representations across the web—a record in a corporate database, a profile on a social network, a state entry in a distributed ledger. The shared SWID makes it possible to link and integrate this federated data.
+
+Resilience & Flexibility: The entity’s identity persists even if specific descriptions change or become unavailable. The core:swid provides a permanent identifier that can be resolved to discover current, valid representations of the entity.
+
+Interoperability: It allows any existing web resource (e.g., from DBPedia or a corporate dataset) to be integrated into the Spatial Web non-invasively. By simply adding the core:swid attribute, the resource becomes part of the Spatial Web without altering its original, native identity.
+
+In summary, modeling the SWID as a literal-valued property provides a robust, flexible, and architecturally sound foundation essential for building a distributed, interoperable, and resilient Spatial Web.
+
+
+
+==== Contextual Scaffolding: core:Domain
+
+The Spatial Web is not a flat collection of entities; it is a structured network of contexts. The `core:Domain` class provides the formal mechanism for this structure, and its placement in the Core Module is essential. While other modules define specific *types* of entities, the Core Module must provide the universal scaffolding *for* all entities. `core:Domain` is this scaffold, providing the foundational "where" for every "what" (`core:Entity`).
+
+Domains are conceptualized as *holons*—a term coined by Arthur Koestler to describe an entity that is simultaneously a whole in and of itself, as well as a part of a larger whole. A holon is a semi-autonomous, self-reliant unit that can handle local contingencies, yet it is also integrated into and subject to the context of a larger system. For example, a cell is a whole, but it is also a part of an organ; the organ is a whole, but also part of an organism.
+
+This nested structure of Domains (as holons) forms a *holarchy*—a hierarchy of holons. Unlike a traditional hierarchy based on top-down command, a holarchy emphasizes composition and interdependence. The relationship between levels is best described as "made up of" or "making up" the next level, where the whole exists only as an integration of its semi-independent parts.
+
+This holonic model is critically important for modeling the Spatial Web for several reasons:
+
+*   **Reflects Real-World Complexity**: It allows for the creation of complex, multi-level systems that mirror natural and social structures, from biological organisms to human organizations.
+*   **Enables Polycentric Governance**: It provides a robust framework for distributed governance. Each Domain, as a holon, can maintain its own autonomy and internal rules while being an interdependent part of a larger containing Domain. This allows for policies and logic to be scoped at the appropriate level.
+*   **Promotes Scalability and Resilience**: The semi-autonomous nature of holons means they can manage local operations and disturbances without constant instruction from higher levels, creating a more resilient and scalable system.
+
+By modeling Domains as holons within a holarchy, HSML provides a powerful and flexible framework for organizing the vast, interconnected, and multi-layered contexts of the Spatial Web.
+
+
+==== Pragmatic Reuse of Established Vocabularies
+
+To promote maximum interoperability and avoid reinventing core concepts, HSML pragmatically reuses well-established, standardized vocabularies where appropriate. Rather than defining new properties for common descriptive metadata, the standard incorporates terms from foundational ontologies like RDF Schema (RDFS) and widely adopted vocabularies such as Schema.org and DCTerms. For example, `schema:name` and `schema:description` are used for human-readable names and descriptions, respectively. This principle lowers the barrier to adoption for developers familiar with the semantic web ecosystem and ensures that HSML data can be more easily processed and understood by a wide range of existing tools and platforms, enhancing its integration into the broader web of data.
+
+=== Normative Classes
+
+This clause provides the normative definitions for all class concepts within the HSML Activity Module. Each class is detailed in a table that specifies its URI, description, JSON-LD context name, usage notes, and relationship to other classes. 
+
+The namespace prefix `core:` refers to `https://www.spatialwebfoundation.org/ns/hsml/core#`.
+
+include::hsml_entity.adoc[]
+
+include::hsml_domain.adoc[]
+
+include::hsml_role.adoc[]

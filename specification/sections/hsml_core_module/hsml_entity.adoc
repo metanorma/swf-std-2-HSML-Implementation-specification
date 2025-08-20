@@ -1,13 +1,18 @@
+
 [[core-entity]]
 === Class: core:Entity
 
-The class `core:Entity` corresponds to the base concept **ENTITY** in IEEE P2874 Section 6.6.2, defined as “that which is perceived, known, or inferred to exist, has existed, or is anticipated to exist”. As the root of the Spatial Web ontology, `core:Entity` provides the universal foundation upon which all other HSML classes are built.
+The class `core:Entity` realizes the base concept **ENTITY** in IEEE P2874 Section 6.6.2, defined as “that which is perceived, known, or inferred to exist, has existed, or is anticipated to exist”.
+
+As the root of the Spatial Web ontology, `core:Entity` provides the universal, abstract foundation upon which all other HSML classes are built. It establishes the mandatory requirements for universal identification and class declaration, ensuring that every object in the ecosystem is uniquely addressable and explicitly typed.
 
 **Key Requirements**
 
 * **Identity**: Every `core:Entity` **SHALL** possess a Spatial Web Identifier (`core:swid`) conformant with W3C DID Core syntax.
-* **Typing**: Every instance **SHALL** declare its specific class via the `rdf:type` property.
-* **Extensibility**: The `core:Entity` model is designed to be subclassed to create more specialized types.
+* **Typing**: Every instance **SHALL** declare its specific, concrete class via the `rdf:type` property.
+* **Extensibility**: The `core:Entity` model is designed to be subclassed to create more specialized types. It **SHALL NOT** be instantiated directly.
+
+These requirements ensure that all HSML constructs share a common, machine-readable foundation, enabling polymorphic processing, universal identification, and semantic interoperability.
 
 [[core-entity-class]]
 ==== Class Definition
@@ -19,7 +24,7 @@ The class `core:Entity` corresponds to the base concept **ENTITY** in IEEE P2874
 | Definition | An _ENTITY_ is “that which is perceived, known, or inferred to exist, has existed, or is anticipated to exist.”
 | Subclass Of | `owl:Thing`
 | Usage Note | `core:Entity` is an abstract class and **SHALL NOT** be instantiated directly. Only its concrete subclasses should be instantiated.
-| Rationale | As the root of the Spatial Web ontology, `core:Entity` provides a uniform, extensible foundation for all HSML constructs, enabling polymorphic processing, universal identification, and semantic interoperability.
+| Rationale | As the root of the Spatial Web ontology, `core:Entity` provides a uniform, extensible foundation for all HSML constructs, enabling universal identification and semantic interoperability.
 |===
 
 .Properties Summary for core:Entity
@@ -68,7 +73,7 @@ This section provides the detailed normative definitions for the properties of t
 [cols="2,4"]
 |===
 |**Property** | `rdf:type`
-|**IRI** | `http://www.w3.org/1999/02/22-rdf-syntax-ns#type`
+|**IRI** | `http://www.w.org/1999/02/22-rdf-syntax-ns#type`
 |**JSON name** | `@type`
 |**Requirement Level** | **Mandatory**
 |**Cardinality** | 1..*
@@ -91,7 +96,7 @@ This section provides the detailed normative definitions for the properties of t
 |**Domain** | `core:Entity`
 |**Range** | `xsd:anyURI`
 |**Definition** | A globally unique Spatial Web Identifier conformant with W3C DID Core syntax.
-|**Usage Note** | This property provides the stable, universal identifier for the entity across all contexts.
+|**Usage Note** | This property provides the stable, universal identifier for the entity across all contexts and networks.
 |===
 
 [[core-entity-property-name]]
@@ -107,7 +112,7 @@ This section provides the detailed normative definitions for the properties of t
 |**Domain** | `core:Entity`
 |**Range** | `xsd:string`
 |**Definition** | A short, human-readable name for the entity.
-|**Usage Note** | Recommended for all entities to improve usability in user interfaces and logs. Reuses the property from Schema.org.
+|**Usage Note** | Recommended for all entities to improve usability in user interfaces, logs, and administrative tools. Reuses the widely adopted property from Schema.org.
 |===
 
 [[core-entity-property-description]]
@@ -123,7 +128,5 @@ This section provides the detailed normative definitions for the properties of t
 |**Domain** | `core:Entity`
 |**Range** | `xsd:string`
 |**Definition** | A detailed explanation of the entity's purpose or nature.
-|**Usage Note** | Useful for documentation and for providing context to human users or AI agents. Reuses the property from Schema.org.
+|**Usage Note** | Useful for documentation and for providing context to human users or AI agents. Reuses the widely adopted property from Schema.org.
 |===
-
-
