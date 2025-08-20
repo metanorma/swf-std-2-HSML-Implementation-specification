@@ -1,0 +1,57 @@
+[[agt-goal]]
+=== Class: agt:Goal
+
+The class `agt:Goal` realizes the concept of an objective that an `agt:Agent` is motivated to achieve. A Goal represents a state or objective that an Agent seeks to bring about through its activities.
+
+It can be instantiated directly to represent a general-purpose goal or serve as a parent class for more specialized goal types (e.g., `AchievementGoal`, `MaintenanceGoal`, TBD). Every `agt:Agent` is required to be linked to one `agt:Goal`, making this concept fundamental to defining goal-directed behavior in the Spatial Web.
+
+[[agt-goal-class]]
+==== Class Definition
+
+.Class Definition for agt:Goal
+[cols="1,3",options="header"]
+|===
+| RDF Class | `agt:Goal`
+| Is Abstract | **No**
+| Definition | A state or objective that an Agent aims to achieve through the performance of Activities.
+| Subclass Of | Not specified in the provided text.
+| Usage Note | This class can be instantiated directly for general objectives. An LLM-based agent could use the `description` property for task planning.
+| Rationale | Provides a flexible, instantiable class for representing the objectives that drive autonomous, goal-directed actions in the Spatial Web.
+|===
+
+[[agt-goal-properties]]
+==== Properties
+
+This section provides the detailed normative definitions for the properties of the `agt:Goal` class.
+
+[[agt-goal-property-description]]
+===== Property: description
+.Property Definition: schema:description
+[cols="2,4"]
+|===
+| Property | `schema:description`
+| IRI | `http://schema.org/description`
+| JSON name | `description`
+| Requirement Level | **Mandatory**
+| Cardinality | **1..1**
+| Domain | `agt:Goal`
+| Range | `xsd:string`
+| Definition | A human-readable text description of the objective the Agent seeks to achieve.
+| Usage Note | This value should be a clear, unambiguous string that explains the goal.
+|===
+
+[[agt-goal-property-hasSubGoal]]
+===== Property: hasSubGoal
+.Property Definition: agt:hasSubGoal
+[cols="2,4"]
+|===
+| Property | `agt:hasSubGoal`
+| IRI | `https://www.spatialwebfoundation.org/ns/hsml/agent#hasSubGoal`
+| JSON name | `subGoal`
+| Requirement Level | **Optional**
+| Cardinality | `0..*` (zero to many)
+| Domain | `agt:Goal`
+| Range | `agt:Goal`
+| Definition | Links a Goal to one or more subordinate Goals that contribute to the fulfillment of the parent Goal.
+| Usage Note | This property enables the creation of goal trees or hierarchies (hierarchical goal decomposition), which is essential for complex planning.
+|===

@@ -35,12 +35,12 @@ The class `agt:Agent` realises the **AGENT** concept in IEEE P2874 § 6.6.3:
 | <<agt-agent-property-hasGoal,`agt:hasGoal`>>
 | `hasGoal`
 | Links the Agent to one or more objectives it seeks to achieve.
-| `core:Entity`
+| `agt:Goal`
 | 1..*
 | **Mandatory**
 
-| <<agt-agent-property-hasCapability,`agt:hasCapability`>>
-| `hasCapability`
+| <<agt-agent-property-canPerform,`agt:canPerform`>>
+| `canPerform`
 | Links the Agent to the schemas for Activities it can perform.
 | `act:ActivitySchema`
 | 1..*
@@ -62,20 +62,20 @@ This section provides the detailed normative definitions for the properties of t
 | **JSON name** | `hasGoal`
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..*
-| **Domain** | `agt:Agent`
-| **Range** | `core:Entity`
+| **Domain** | `agent:Agent`
+| **Range** | `agent:Goal`
 | **Definition** | Links an Agent to one or more goals that it aims to fulfill through its Activities.
 | **Usage Note** | Goals represent abstract or concrete states the Agent seeks to bring about. The range is `core:Entity` to allow goals to be simple text descriptions or complex, structured entities.
 |===
 
-[[agt-agent-property-hasCapability]]
-===== Property: hasCapability
-.Property Definition: agt:hasCapability
+[[agt-agent-property-canPerform]]
+===== Property: canPerform
+.Property Definition: agt:canPerform
 [cols="2,4"]
 |===
-| **Property** | `agt:hasCapability`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/agent#hasCapability`
-| **JSON name** | `hasCapability`
+| **Property** | `agt:canPerform`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/agent#canPerform`
+| **JSON name** | `canPerform`
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..*
 | **Domain** | `agt:Agent`

@@ -1,7 +1,45 @@
 == HSML Agent Module
 
+=== Architectural Principles and Design Rationale
+
+This clause describes the architectural principles underlying the HSML Agent Module. These principles are _informative_ and not required for conformance; however, understanding them is recommended to ensure robust and correct implementations.
+
+==== The Goal-Directed Actor Pattern: Defining Purpose
+
+A fundamental principle of the Agent Module is that all autonomous actions are **purpose-driven**. An agent doesn't simply act; it acts to achieve an objective. This is realized through a clear separation between the actor and its purpose:
+
+* `agt:Agent` -- The actor itself. An autonomous entity capable of perception, decision-making, and action.
+* `agt:Goal` -- A declarative, self-contained entity that represents the desired state or objective the agent seeks to achieve.
+
+This separation is the cornerstone of **explainable AI** and **governable autonomy** in the Spatial Web. By making an agent's `Goal` an explicit, inspectable entity linked via the mandatory `agt:hasGoal` property, the model ensures that the "why" behind an agent's behavior is always a first-class citizen. This allows an orchestration engine or auditor to understand an agent's intent without needing to reverse-engineer its internal logic. It provides a clear, declarative basis for authorizing agent actions—if the goal is permissible within a domain, the agent's subsequent actions can be evaluated against it.
+
+==== The Capability Model: Separating Potential from Action
+
+Complementing the goal-directed pattern is the distinction between an agent's **potential to act** and its **actual performance of an action**. This is achieved by linking the agent to the `act:ActivitySchema` rather than to specific `act:Activity` instances:
+
+* `agt:Agent` -- The actor.
+* `act:ActivitySchema` -- A reusable template defining a _type_ of action an agent is capable of performing.
+* `agt:canPerform` -- The property linking an `Agent` to the `act:ActivitySchema` instances that represent its skills or functions.
+
+This design decouples the agent's intrinsic abilities from its operational history. The `agt:canPerform` property defines the agent's **skill set**, which is a relatively static and verifiable aspect of its identity. This allows a Domain Authority to grant credentials based on a clear, auditable list of an agent's capabilities. It ensures that governance is applied to what an agent _can do_ in principle, providing a stable foundation for trust and permissioning. The agent's actual execution of these capabilities is then recorded as separate `act:Activity` instances, creating a clean and auditable separation between an agent's potential and its performance.
+
+==== The Specialization Pattern: Tailoring Agents and Goals
+
+A key architectural principle is that the `agt:Agent` and `agt:Goal` classes are designed as extensible foundations. This allows the framework to support a wide variety of agent architectures—such as **Simple Reflex**, **Goal-based**, **Deliberative (BDI)**, or **LLM-based Agents**—without being overly prescriptive. The primary mechanism for this is the specialization of the base `agt:Goal` class, as the way an agent describes its goals is fundamental to its nature.
+
+This enables the creation of specific `Goal` subclasses that align with different agent behaviors:
+
+* `AchievementGoal`:: A goal to bring about a specific state of the world. Once the state is reached, the goal is considered achieved and is complete. For example, "Deliver a package to a specific address."
+* `MaintenanceGoal`:: A goal to keep a specific condition continuously true over time. This type of goal persists and is never truly "complete." For example, "Keep the server uptime above 99.9%."
+* `PerformingGoal`:: A goal where success is defined by the execution of an action itself, regardless of the resulting state. For example, "Perform a system diagnostic scan every 24 hours."
+* `QueryGoal`:: A goal whose aim is to acquire information, to know the true value of a proposition, or to otherwise reduce uncertainty before planning or acting. For example, "Determine the current traffic conditions on the planned route."
+
+By defining these and other goal specializations (like **Hard** vs. **Soft Goals** with preference models), the architecture allows for a rich and precise description of agent behavior. A sophisticated Deliberative Agent might pursue complex `AchievementGoal`s, while a simpler monitoring agent would be concerned with a `MaintenanceGoal`. This provides a flexible and future-proof framework that can adapt to new agent designs by simply introducing new, well-defined subclasses of `agt:Goal`.
+
 include::hsml_agent.adoc[]
 
 include::hsml_person.adoc[]
 
 include::hsml_organization.adoc[]
+
+include::hsml_goal.adoc[]
