@@ -1,11 +1,11 @@
 [[gov-contract]]
 === Class: gov:Contract
 
-The class `hsml:Contract` realises the **CONTRACT** concept in IEEE P2874 § 6.6.4:  
+The class `gov:Contract` realises the **CONTRACT** concept in IEEE P2874 § 6.6.4:  
 
 *“A binding agreement between two or more parties—enforceable by law or internal policy—that governs one or more Activities in the Spatial Web.”*
 
-`hsml:Contract` links the initiating *Domain*, the participating *Agents*, the governed *Activity* (or Activities), and the evolving *ContractStatus* instances that capture its lifecycle.
+`gov:Contract` links the initiating *Domain*, the participating *Agents*, the governed *Activity* (or Activities), and the evolving *ContractStatus* instances that capture its lifecycle.
 
 **Key Requirements**
 
@@ -29,7 +29,7 @@ These rules guarantee that every contract is discoverable, auditable, and machin
 | RDF Class | `gov:Contract`
 | Is Abstract | No
 | Definition | A binding agreement governing the execution of one or more `act:Activity` instances by specific `agt:Agent`s within a `hsml:Domain` context.
-| Subclass Of | `hsml:Entity`
+| Subclass Of | `core:Entity`
 | Usage Notes | A `gov:Contract` must carry a SWID and link to its initiating domain, accepting and fulfilling agents, the governed activity, and its lifecycle status. For detailed roles, it uses `core:Participation` records.
 |===
 
@@ -40,8 +40,8 @@ These rules guarantee that every contract is discoverable, auditable, and machin
 
 | <<gov-contract-property-isRequestedBy,`gov:isRequestedBy`>>
 | `requestedBy`
-| The `hsml:Domain` that initiated the contract.
-| `hsml:Domain`
+| The `core:Domain` that initiated the contract.
+| `core:Domain`
 | 1..1
 | **Mandatory**
 

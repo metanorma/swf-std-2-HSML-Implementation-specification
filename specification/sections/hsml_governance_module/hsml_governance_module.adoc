@@ -36,8 +36,10 @@ By building on this foundation, the Spatial Web inherits a robust and interopera
 
 === Normative Classes
 
-This clause provides the normative definitions for all class concepts. It is divided into two parts: classes that are defined as part of this Governance Module, and classes from the HSML Core Module that are normatively used by this module. The namespace prefix gov: refers to https://www.spatialwebfoundation.org/ns/hsml/governance#/.
+This clause provides the normative definitions for all class concepts. It is divided into two parts: classes that are defined as part of this Governance Module, and classes from the HSML Core Module that are normatively used by this module.
 
+
+The namespace prefix gov: refers to https://www.spatialwebfoundation.org/ns/hsml/governance#/.
 
 
 ==== Summary of Governance Module Classes
@@ -50,12 +52,12 @@ This clause provides the normative definitions for all class concepts. It is div
 | <<gov-contract,gov:Contract>>
 | The binding agreement that initiates and governs the execution of one or more act:Activity instances.
 
-| <<w3c-verifiable-credential,w3c:VerifiableCredential>>
+| <<gov-credential,gov:Credential>>
 | A tamper-evident, cryptographically verifiable set of claims, as defined by the W3C standard, used for authentication and authorization.
 
-| <<core-participation,core:Participation>>
-| A reusable, core entity that explicitly models the involvement of an entity in a specific role within a given context, such as a contract.
 |===
 
 
 include::hsml_contract.adoc[leveloffset=+1]
+
+include::hsml_credential.adoc[leveloffset=+1]
