@@ -1,46 +1,52 @@
-== HSML Governance Module
-
 === Architectural Principles and Design Rationale
 
-This clause describes the architectural principles underlying the HSML Governance Module. These principles are informative and not required for conformance; however, understanding them is recommended to ensure robust and correct implementations.
+This clause explains the design choices behind the HSML Governance Module and how they satisfy IEEE P2874’s requirements for governable, auditable, and interoperable action across Domains. The principles are informative (non-normative), but they motivate the normative models and constraints defined in subsequent clauses.
 
-==== The Norms/Credentials Pattern: Enabling Contextual Governance
+==== The Norm/Policy Separation: Atomic Rules vs Governance Bundles
 
-A fundamental principle of this standard is the separation of universal action definitions (`act:ActivitySchema`) from the local rules that govern their execution. This is realized by allowing a Domain Authority to enforce its local Norms by requiring agents to possess a domain-specific Credential.
+The foundation of the governance model is the separation between atomic rules and the governance bundles that publish them. `act:ActivitySchema` defines the universal semantics of an action—its roles, inputs, outputs, and pre/post conditions—in a way that is portable and immutable across Domains. By contrast, a `gov:Norm` represents a single deontic rule. Each Norm specifies whether an action or state is Obligatory, Prohibited, or Permitted, and links that modality to explicit machine-executable conditions (`core:Condition`). Norms are intentionally minimal: they state “what rule applies, to whom, and under which condition.” 
 
-An `act:ActivitySchema` can be defined by a global standards body and incorporated into any domain by reference. Its own preconditions remain immutable.
+To make those rules effective in practice, authorities issue `gov:Policy` artifacts. A Policy bundles one or more Norms and supplies the governance context that a Norm by itself does not carry. Policies declare scope (which actors, activities, or domains the rules apply to), set validity periods, publish lifecycle state, establish ordering in case of conflicts, and—critically—reference credential profiles that define what types of verifiable credentials are acceptable. This separation allows Norms to remain atomic and reusable across contexts, while Policies provide the authoritative packaging that determines where and when Norms are in force.
 
-A Domain Authority defines its local rules of use (e.g., safety, legal, operational constraints) as Norms.
+==== Credentials and Credential Profiles
 
-The Domain Authority then issues a domain-specific Credential only to those agents that can verifiably comply with these Norms.
+Verifiable Credentials (VCs) are not embedded in Norms but are instead attached to Agents. Norms may presuppose that certain credentials exist, but it is Policies that enforce credential requirements through `gov:CredentialProfile`. A Credential Profile describes, at the type level, what any acceptable VC must satisfy—its type, issuer trust, subject binding, attribute constraints, proof suite, and freshness requirements. During contract validation, Agents present credential instances, and the validation process checks both their cryptographic proofs and their conformance to the profiles declared by the applicable Policies. This design keeps Policies declarative and reusable, while preserving Agent privacy until execution time.
 
-Governance is enforced by making the validation of any gov:Contract for that activity contingent upon the performing agent possessing this specific Credential.
+==== Deontic Modality and Executable Conditions
 
-This "Credential Gating" pattern allows for a powerful system of polycentric governance. It enables the reuse of standardized schemas across the Spatial Web while giving each domain sovereign control over the activities that occur within its boundaries, ensuring that local context and rules are always respected.
+The heart of each Norm is its deontic modality—Obligation, Prohibition, or Permission—coupled with one or more executable conditions. A Norm is therefore both semantically clear and operational: it not only states the normative force but also the concrete, machine-checkable predicates under which the rule applies. These conditions are expressed in standards-aligned constraint languages such as SHACL, SPARQL ASK, JSON-Schema, or CEL, ensuring determinism, auditability, and interoperability. Policy-level precedence rules determine how to resolve conflicts when multiple Norms apply at once.
 
-==== The Contract as Universal Trigger: Ensuring Auditability
+==== Time-Bound Governance
 
-The HSML architecture mandates that every `act:Activity` instance shall be initiated via a `gov:Contract``. There is no mechanism for the "direct" execution of an activity. This design choice is critical for ensuring a consistently governable and auditable system.
+Policies provide temporal boundaries for governance. They carry `schema:validFrom` and `schema:validThrough` properties to indicate when a bundle of Norms is in force. A Policy outside its validity window must not be considered during contract validation. If no end time is declared, the Policy remains in effect until explicitly revoked. Individual Norms may also include effectivity windows when a rule itself is inherently time-limited, but the general assumption is that time-scoping is managed at the Policy level.
 
-When an agent performs an action, even one self-initiated without external parties, it creates a "self-contract" where it is both the requester and the performer. This ensures that every action, no matter how simple, is preceded by a formal, stateful gov:Contract entity. This contract serves as an immutable record of intent. All governance checks, such as verifying required credentials and validating preconditions, are performed at the contract validation stage. This single, universal trigger point for all actions simplifies the governance model and guarantees that no unauthorized or invalid action can be executed, providing a complete and unbroken audit trail for all events on the network.
+==== Contracts as the Universal Trigger
 
-==== The Verifiable Claims Model: Building on Open Standards
+Execution of every `act:Activity` is mediated through a `gov:Contract`. The Contract acts as the universal trigger and single enforcement point. It records the intent to act, the participating parties, the validation process, and the resulting lifecycle status. By funnelling all execution through Contracts, the module ensures a tamper-evident audit trail that links the governing Policies and Norms, the conditions that were evaluated, the credentials that were presented, and the decision outcomes. This approach guarantees both consistent enforcement and complete traceability.
 
-The integrity of the Governance Module rests on the ability to make and verify claims in a secure, decentralized manner. Rather than inventing a proprietary system, the module's architecture is built directly upon mature, open standards from the W3C.
+==== Trust Substrate and Evidence
 
-* Decentralized Identifiers (DID Core): All entities, including contracts and the agents party to them, are identified by a SWID, which is a W3C DID. This provides a permanent, globally unique, and resolvable identifier for every participant.
+The governance model relies on W3C standards for identity and credentials. Spatial Web Identifiers (DIDs) identify Agents, Domains, and Contracts. Verifiable Credentials supply cryptographic attestations of authority, qualification, or compliance. Validation always includes proof verification, issuer trust assessment, revocation checks, and freshness evaluation. Implementations are expected to persist minimal verification transcripts so that decisions can be independently re-audited, providing accountability without unnecessary data retention.
 
-* Verifiable Credentials (VC Data Model): All Credentials used for gating and authorization shall conform to the W3C VC standard.
+==== Evaluation Flow
 
-By building on this foundation, the Spatial Web inherits a robust and interoperable trust model. It ensures that claims of identity, capability, and authorization are tamper-evident, cryptographically verifiable, and can be trusted by any party in the ecosystem without relying on a central authority. This reliance on open standards is a key enabler of the "trust-by-reference" model that underpins the entire Spatial Web.
+The governance evaluation process follows a predictable sequence. First, the system discovers which Policies apply given the Domain, ActivitySchema, actors, and time. It then collects the Norms bundled in those Policies and applies precedence rules to resolve conflicts. Next, the system verifies that the Agent’s credentials satisfy the CredentialProfiles declared by the Policies. Once credential gates are passed, the executable conditions associated with the Norms are evaluated against the current state. The combined results yield a decision—permit, deny, or permit with obligations—which is recorded in the Contract along with evidence. If permitted, obligations may be monitored at runtime, and violations may trigger enforcement actions.
+
+==== Interoperability and Extensibility
+
+The model is designed to be interoperable across heterogeneous Domains. Activities are always referenced by IRIs, making schema usage neutral. Conditions are pluggable: any standards-aligned constraint language can be used so long as it is identifiable by content type. Policies can be composed hierarchically to represent organizational or jurisdictional layers. Evidence is linked but content-agnostic, allowing different proof suites and VC profiles to interoperate.
+
+==== Security and Privacy
+
+Finally, the governance design incorporates privacy and security considerations. Policies declare only credential *types*, never instances, limiting disclosure. Contracts bind VC presentations to specific transactions, preventing replay. Selective disclosure and zero-knowledge proofs are preferred when only one attribute is needed. Revocation checks are repeated when contracts extend across expiry or state changes, preventing drift. Together these measures ensure least disclosure, freshness, and resistance to side-channel leakage.
+
+
 
 === Normative Classes
 
 This clause provides the normative definitions for all class concepts. It is divided into two parts: classes that are defined as part of this Governance Module, and classes from the HSML Core Module that are normatively used by this module.
 
-
 The namespace prefix gov: refers to https://www.spatialwebfoundation.org/ns/hsml/governance#/.
-
 
 ==== Summary of Governance Module Classes
 
@@ -50,14 +56,31 @@ The namespace prefix gov: refers to https://www.spatialwebfoundation.org/ns/hsml
 | Class | Description
 
 | <<gov-contract,gov:Contract>>
-| The binding agreement that initiates and governs the execution of one or more act:Activity instances.
+| The binding agreement that initiates and governs the execution of one or more `act:Activity` instances.
 
 | <<gov-credential,gov:Credential>>
-| A tamper-evident, cryptographically verifiable set of claims, as defined by the W3C standard, used for authentication and authorization.
+| A tamper-evident, cryptographically verifiable set of claims, as defined by the W3C VC standard, used for authentication and authorization.
 
+| <<gov-credential-profileProfile,gov:Credential>>
+ |A reusable bundle of constraints describing what a Verifiable Credential instance MUST satisfy (type, issuer/trust, subject binding, attribute constraints, proof, freshness)
+| <<gov-norm,gov:Norm>>
+| An atomic deontic rule (Obligation, Prohibition, Permission) governing behavior in a Domain, expressed as one or more executable Conditions.
+
+| <<gov-policy,gov:Policy>>
+| A governance artifact issued by an authority, bundling one or more Norms, and declaring their scope, applicability, and lifecycle.
+
+| <<gov-deontic-modality,gov:DeonticModality>>
+| An enumeration class that defines the set of allowable deontic modalities for Norms (`Obligation`, `Prohibition`, `Permission`).
 |===
-
 
 include::hsml_contract.adoc[leveloffset=+1]
 
 include::hsml_credential.adoc[leveloffset=+1]
+
+include::hsml_credential_profile.adoc[leveloffset=+1]
+
+include::hsml_deontic_modality.adoc[leveloffset=+1]
+
+include::hsml_norm.adoc[leveloffset=+1]
+
+include::hsml_policy.adoc[leveloffset=+1]

@@ -1,0 +1,43 @@
+[[gov-deontic-modality]]
+=== Class: gov:DeonticModality
+
+The class `gov:DeonticModality` defines the **enumerated values** of deontic force that a `gov:Norm` may express.  
+It provides the controlled vocabulary for `gov:modality` values.
+
+**Key Requirements**
+
+* **Identity** Every modality value **SHALL** be globally identified by an IRI in the `gov:` namespace.  
+* **Closed Enumeration** Allowed values are strictly limited to: `gov:Obligation`, `gov:Prohibition`, `gov:Permission`.  
+* **Usage** Every `gov:Norm` **MUST** reference exactly one `gov:DeonticModality` via `gov:modality`.
+
+[[gov-deontic-modality-class]]
+==== Class Definition
+
+.Class Definition for gov:DeonticModality
+[cols="1,3",options="header"]
+|===
+| RDF Class | `gov:DeonticModality`
+| Is Abstract | Yes (enumeration)
+| Definition | An enumeration class for deontic modalities representing the normative force of a Norm.
+| Subclass Of | `skos:Concept` (optional alignment)
+| Usage Notes | Used only as the range of `gov:modality`. Instances are controlled vocabulary individuals.
+|===
+
+==== Individuals
+
+.Enumeration Values of gov:DeonticModality
+[cols="1,3",options="header"]
+|===
+| Individual | Description
+
+| `gov:Obligation`
+| A Norm requiring that an action **must** be performed or a condition **must** hold.
+
+| `gov:Prohibition`
+| A Norm requiring that an action **must not** be performed or a condition **must not** hold.
+
+| `gov:Permission`
+| A Norm indicating that an action **may** be performed or a condition **may** hold (neither required nor forbidden).
+|===
+
+
