@@ -1,3 +1,5 @@
+== HSML Governance Module: Normative Specification
+
 === Architectural Principles and Design Rationale
 
 This clause explains the design choices behind the HSML Governance Module and how they satisfy IEEE P2874’s requirements for governable, auditable, and interoperable action across Domains. The principles are informative (non-normative), but they motivate the normative models and constraints defined in subsequent clauses.
