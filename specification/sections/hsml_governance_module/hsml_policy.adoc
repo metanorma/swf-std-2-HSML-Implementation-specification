@@ -28,6 +28,13 @@ The class `gov:Policy` is a governance artifact issued by an authority to **decl
 |===
 | Predicate | JSON-LD name | Description | Range | Cardinality | Requirement
 
+| <<gov-policy-property-description,`schema:description`>>
+| `rationale`
+| Human‑readable rationale/summary.
+| `xsd:string`
+| 0..1
+| Optional
+
 | <<gov-policy-property-issuedBy,`schema:creator`>>
 | `issuedBy`
 | Issuing authority (Domain or Agent) responsible for the policy.
@@ -126,16 +133,28 @@ The class `gov:Policy` is a governance artifact issued by an authority to **decl
 | 0..*
 | Optional
 
-| <<gov-policy-property-rationale,`schema:description`>>
-| `rationale`
-| Human‑readable rationale/summary.
-| `xsd:string`
-| 0..1
-| Optional
+
 |===
 
 [[gov-policy-properties]]
 ==== Properties
+
+[[gov-policy-property-description]]
+===== Property: description
+.Property Definition: schema:description
+[cols="2,4"]
+|===
+| **Property** | `schema:description`
+| **IRI** | `https://schema.org/description`
+| **JSON name** | `rationale`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..1
+| **Domain** | `gov:Policy`
+| **Range** | `xsd:string`
+| **Definition** | Human‑readable summary, rationale, or notes.
+| **Usage Note** | Non‑normative; do not encode executable constraints here.
+|===
+
 
 [[gov-policy-property-issuedBy]]
 ===== Property: issuedBy
@@ -361,18 +380,3 @@ The class `gov:Policy` is a governance artifact issued by an authority to **decl
 | **Usage Note** | Use `gov:relatedPolicy` with subproperties if finer relation typing is required.
 |===
 
-[[gov-policy-property-rationale]]
-===== Property: rationale
-.Property Definition: schema:description
-[cols="2,4"]
-|===
-| **Property** | `schema:description`
-| **IRI** | `https://schema.org/description`
-| **JSON name** | `rationale`
-| **Requirement Level** | Optional
-| **Cardinality** | 0..1
-| **Domain** | `gov:Policy`
-| **Range** | `xsd:string`
-| **Definition** | Human‑readable summary, rationale, or notes.
-| **Usage Note** | Non‑normative; do not encode executable constraints here.
-|===
