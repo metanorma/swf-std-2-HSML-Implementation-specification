@@ -1,135 +1,123 @@
-[[hsml-channel]]
-=== Class: hsml:Channel
+[[comm-channel]]
+== Class: +comm:Channel+
 
-The class `hsml:Channel` realises the CHANNEL concept in IEEE P2874 § 6.6.6:
+The +comm:Channel+ class realizes the *CHANNEL* concept as defined in the IEEE P2e874 draft standard. As a central element of the communications (+comm+) module, it provides a contextual container that links participants, data, and messages around specific Activities without forming part of the permanent domain hierarchy. This enables ad-hoc, session-based, or otherwise transient coordination and monitoring.
 
-“A CHANNEL is a stream of HSML ENTITIES that are related to an ACTIVITY of a specific context that does not itself warrant a DOMAIN or hierarchy.”
+This class is a subclass of +hsml:Entity+, inheriting a +hsml:swid+ as its unique identifier.
 
-`hsml:Channel` provides a contextual container that links participants, data, and messages around specific Activities or purposes without forming part of the permanent domain hierarchy. It enables ad-hoc, session-based, or otherwise transient coordination and monitoring.
+---
 
-[[hsml-channel-class]]
-==== Class Definition
+=== Key Requirements & Design Principles
 
+* A +comm:Channel+ *shall link* to at least one +hsml:Activity+ it supports.
+* A +comm:Channel+ *shall be disjoint* from +hsml:Domain+, as it represents a non-hierarchical, transient grouping.
+* A +comm:Channel+ *shall include* one or more participants via the +core:hasParticipant+ property.
+* Parent-child relationships between channels *shall be modeled* using the inverse properties +comm:hasSubChannel+ and +comm:subChannelOf+.
+* Governance and access control *are intentionally delegated* to the Governance Module and are not embedded properties of a Channel.
+
+---
+
+[[comm-channel-class]]
+=== Class Definition
+
+.Class Definition
 [cols="1,3"]
 |===
-| RDF Class | +hsml:Channel+
-| Is Abstract | No
-| Definition | A non-hierarchical, contextual grouping of entities associated with a specific Activity or purpose.
-| Subclass Of | +hsml:Entity+
-| Usage Note | Channels are for transient, ad-hoc collaboration; they do not define domain boundaries or hierarchies.
-| Rationale | Provides a lightweight mechanism for coordinating information, participants, and processes without permanent domain structure.
+| *RDF Class* | +comm:Channel+
+| *Is Abstract* | No
+| *Definition* | A contextual, non-hierarchical grouping of entities associated with a specific Activity or purpose, for coordinating transient communications.
+| *Subclass Of* | +hsml:Entity+
+| *Usage Note* | Channels are for transient, ad-hoc collaboration; they do not define domain boundaries or permanent hierarchies. The +core+ namespace refers to a separate module defining foundational, cross-cutting properties.
+| *Rationale* | Provides a lightweight mechanism for coordinating information and participants. Access control is delegated to the Governance Module; Channels do not embed their own access control lists (ACLs).
 |===
 
-[[hsml-channel-properties-summary]]
-==== Properties Summary
+---
 
+[[comm-channel-properties-summary]]
+=== Properties Summary
+
+.Properties Summary
 [cols="1,1,3,1",options="header"]
 |===
-| Predicate | JSON(-LD) name | Description | Cardinality
+| Predicate | JSON(-LD) Name | Description | Cardinality
 
-| <<property-channel-type,rdf:type>> | @type | Declares the resource as an instance of +hsml:Channel+. | 1..n
-
-| <<property-channel-swid,hsml:swid>> | swid | Spatial Web Identifier conformant with W3C DID Core. | 1
-
-| <<property-channel-hasMember,hsml:hasMember>> | hasMember | Identifies the entities (Agents, Things, etc.) participating in the Channel. | 1..n
-
-| <<property-channel-forActivity,hsml:forActivity>> | forActivity | Links the Channel to one or more Activities it supports. | 1..n
-
-| <<property-channel-hasSubChannel,hsml:hasSubChannel>> | hasSubChannel | Links to nested sub-channels within the Channel. | 0..n
-
-| <<property-channel-allowedAgent,hsml:allowedAgent>> | allowedAgent | Identifies Agents permitted to participate in the Channel (may be asserted or inferred). | 0..n
-
-| <<property-channel-requiresCredentialSchema,hsml:requiresCredentialSchema>> | requiresCredentialSchema | References the credential *schema* (SHACL / JSON Schema) that a verifiable claims must conform to. | 0..n
-
-| <<property-channel-enforcedByPolicy,hsml:enforcedByPolicy>> | enforcedByPolicy | Links to a policy (e.g., ODRL) that expresses business rules over the VC claims. | 0..n
+| <<property-channel-type,rdf:type>> | +@type+ | Declares the resource as an instance of +comm:Channel+. | 1..n
+| <<property-channel-swid,hsml:swid>> | +swid+ | The Spatial Web Identifier (SWID) inherited from +hsml:Entity+. | 1
+| <<property-channel-hasParticipant,core:hasParticipant>> | +hasParticipant+ | Identifies the entities participating in the Channel. | 1..n
+| <<property-channel-forActivity,comm:forActivity>> | +forActivity+ | Links the Channel to the Activity it supports. | 1..n
+| <<property-channel-hasSubChannel,comm:hasSubChannel>> | +hasSubChannel+ | Links to a nested sub-channel. | 0..n
+| <<property-channel-subChannelOf,comm:subChannelOf>> | +subChannelOf+ | Links to the parent channel. | 0..1
 |===
 
-[[property-channel-hasMember]]
-===== Property: hasMember
+---
+
+=== Property Details
+
+[[property-channel-hasParticipant]]
+==== Property: +core:hasParticipant+
+
 [cols="2,4"]
 |===
-| Property | +hsml:hasMember+
-| IRI | https://schema.spatialwebfoundation.org/hsml#hasMember
-| JSON name | hasMember
-| Requirement Level | Mandatory
-| Cardinality | 1..n
-| Domain | +hsml:Channel+
-| Range | +hsml:Entity+
-| Definition | Links the Channel to its participants (Agents, Things, or other Entities).
-| Usage Note | A Channel must have at least one member to be meaningful.
+| *Property* | +core:hasParticipant+
+| *IRI* | https://schema.spatialwebfoundation.org/core#hasParticipant
+| *JSON Name* | +hasParticipant+
+| *Requirement Level* | Mandatory
+| *Cardinality* | 1..n
+| *Domain* | +comm:Channel+
+| *Range* | +hsml:Entity+
+| *Definition* | Links the Channel to its participants (Agents, Things, or other Entities).
+| *Usage Note* | A Channel must have at least one participant to be meaningful.
 |===
 
 [[property-channel-forActivity]]
-===== Property: forActivity
+==== Property: +comm:forActivity+
+
 [cols="2,4"]
 |===
-| Property | +hsml:forActivity+
-| IRI | https://schema.spatialwebfoundation.org/hsml#forActivity
-| JSON name | forActivity
-| Requirement Level | Mandatory
-| Cardinality | 1..n
-| Domain | +hsml:Channel+
-| Range | +hsml:Activity+
-| Definition | Associates the Channel with one or more Activities it supports or relates to.
-| Usage Note | Channels provide communication or data context for their referenced Activities.
+| *Property* | +comm:forActivity+
+| *IRI* | https://schema.spatialwebfoundation.org/comm#forActivity
+| *JSON Name* | +forActivity+
+| *Requirement Level* | Mandatory
+| *Cardinality* | 1..n
+| *Range* | +hsml:Activity+
+| *Definition* | Associates the Channel with one or more Activities it supports or relates to.
+| *Usage Note* | Channels provide the necessary communication and data context for their referenced Activities.
 |===
 
 [[property-channel-hasSubChannel]]
-===== Property: hasSubChannel
+==== Property: +comm:hasSubChannel+
+
 [cols="2,4"]
 |===
-| Property | +hsml:hasSubChannel+
-| IRI | https://schema.spatialwebfoundation.org/hsml#hasSubChannel
-| JSON name | hasSubChannel
-| Requirement Level | Optional
-| Cardinality | 0..n
-| Domain | +hsml:Channel+
-| Range | +hsml:Channel+
-| Definition | Links the Channel to its sub-channels for hierarchical structuring of information streams.
-| Usage Note | Sub-channels enable finer-grained or nested collaboration contexts.
+| *Property* | +comm:hasSubChannel+
+| *IRI* | https://schema.spatialwebfoundation.org/comm#hasSubChannel
+| *JSON Name* | +hasSubChannel+
+| *Requirement Level* | Optional
+| *Cardinality* | 0..n
+| *Range* | +comm:Channel+
+| *Inverse Property* | +comm:subChannelOf+
+| *Definition* | Links the Channel to its sub-channels for hierarchical structuring of information streams.
+| *Usage Note* | This property enables efficient downward traversal of the Channel hierarchy (from parent to children).
 |===
 
-[[property-channel-allowedAgent]]
-===== Property: allowedAgent
+[[property-channel-subChannelOf]]
+==== Property: +subChannelOf+
+
 [cols="2,4"]
 |===
-| Property | +hsml:allowedAgent+
-| IRI | https://schema.spatialwebfoundation.org/hsml#allowedAgent
-| JSON name | allowedAgent
-| Requirement Level | Optional
-| Cardinality | 0..n
-| Domain | +hsml:Channel+
-| Range | +hsml:Agent+
-| Definition | Identifies Agents explicitly authorised to participate in the Channel. May be asserted or inferred from credential validation.
-| Usage Note | Typically inferred from credential checks; can be asserted for static allow-lists.
+| *Property* | +comm:subChannelOf+
+| *IRI* | https://schema.spatialwebfoundation.org/comm#subChannelOf
+| *JSON Name* | +subChannelOf+
+| *Requirement Level* | Optional
+| *Cardinality* | 0..1
+| *Range* | +comm:Channel+
+| *Inverse Property* | +comm:hasSubChannel+
+| *Definition* | Links a sub-channel to its parent Channel.
+| *Usage Note* | This property allows for efficient upward traversal of the Channel hierarchy. The `0..1` cardinality enforces a strict tree structure, preventing a single channel from having multiple parents.
 |===
 
-[[property-channel-requiresCredentialSchema]]
-===== Property: requiresCredentialSchema
-[cols="2,4"]
-|===
-| Property | +hsml:requiresCredentialSchema+
-| IRI | https://schema.spatialwebfoundation.org/hsml#requiresCredentialSchema
-| JSON name | requiresCredentialSchema
-| Requirement Level | Optional
-| Cardinality | 0..n
-| Domain | +hsml:Channel+
-| Range | +hsml:CredentialSchema+
-| Definition | Specifies one or more credential schemas that a Verifiable Credential must conform to for an Agent to be considered for participation.
-| Usage Note | Provides structural validation of VC claims via SHACL or JSON Schema before policy evaluation.
-|===
+=== Example (Developer-Friendly JSON-LD)
 
-[[property-channel-enforcedByPolicy]]
-===== Property: enforcedByPolicy
-[cols="2,4"]
-|===
-| Property | +hsml:enforcedByPolicy+
-| IRI | https://schema.spatialwebfoundation.org/hsml#enforcedByPolicy
-| JSON name | enforcedByPolicy
-| Requirement Level | Optional
-| Cardinality | 0..n
-| Domain | +hsml:Channel+
-| Range | +odrl:Policy+
-| Definition | Links the Channel to an ODRL (or compatible) policy that expresses business rules, constraints, duties, or prohibitions over the validated claims.
-| Usage Note | Evaluated *after* the VC passes `requiresCredentialSchema`. Failed policy constraints deny access even if the VC is structurally valid.
-|===
+.Example of a Channel with a Sub-Channel using DIDs
+[source,jsonl]
+include::../../examples/channel1.jsonld[]

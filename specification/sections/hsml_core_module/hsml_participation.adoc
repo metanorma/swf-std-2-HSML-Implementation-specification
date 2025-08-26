@@ -72,7 +72,6 @@ This section provides the detailed normative definitions for the properties of t
 | JSON name | hasParticipant
 | Requirement Level | Mandatory
 | Cardinality | 1..1
-| Domain | core:Participation
 | Range | hsml:Entity
 | Definition | The actual resource (agent, object, etc.) that is involved in the context.
 | Usage Note | This property links the core:Participation instance to the participating entity itself.
@@ -88,7 +87,6 @@ This section provides the detailed normative definitions for the properties of t
 | JSON name | hasRole
 | Requirement Level | Mandatory
 | Cardinality | 1..1
-| Domain | core:Participation
 | Range | core:Role
 | Definition | The role the participant entity fulfills within the participation (e.g., client, sensor, certifier).
 | Usage Note | The value should be an IRI pointing to a concept in a controlled vocabulary of roles.
@@ -104,7 +102,6 @@ This section provides the detailed normative definitions for the properties of t
 | JSON name | startTime
 | Requirement Level | Optional
 | Cardinality | 0..1
-| Domain | core:Participation
 | Range | xsd:dateTime
 | Definition | The specific date and time when the participation begins or becomes effective.
 | Usage Note | Reuses the property from Schema.org for standardized temporal metadata.
@@ -120,7 +117,6 @@ This section provides the detailed normative definitions for the properties of t
 | JSON name | endTime
 | Requirement Level | Optional
 | Cardinality | 0..1
-| Domain | core:Participation
 | Range | xsd:dateTime
 | Definition | The specific date and time when the participation ends or is no longer effective.
 | Usage Note | Reuses the property from Schema.org for standardized temporal metadata.

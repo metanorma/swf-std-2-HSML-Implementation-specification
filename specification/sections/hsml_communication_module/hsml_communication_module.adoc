@@ -9,12 +9,12 @@ This clause explains the design choices behind the HSML Communication Module and
 A core principle is that **Channels are not Domains**. While Domains represent enduring identity-bearing contexts (geographic, organizational, or conceptual), Channels are **ad-hoc and transient groupings** of HSML Entities around a purpose or Activity. P2874 defines a Channel as “a stream of HSML ENTITIES that are related to an ACTIVITY of a specific context that does not itself warrant a DOMAIN or hierarchy.” This design ensures that Channels do not alter the permanent domain hierarchy but still allow session-like coordination.
 
 * Channels are modeled as subclass of `hsml:Entity` but declared **disjoint from `hsml:Domain`**.  
-* Membership is flexible: any Entity (Agents, Things, Digital Twins, Activities) may appear in a Channel.  
+* Membership is flexible, but typically they are Agent, Person entities. 
 * Sub-channels allow hierarchical scoping of collaborative contexts without redefining domain hierarchies.
 
 ==== Messages as Optional Semantic Projections
 
-The Communication Module distinguishes **wire messages** (defined by the Hyperspace Transport Protocol, HSTP) from **semantic message entities**. HSTP envelopes move bytes; Channels may choose to **project messages** as HSML `comm:Message` entities when semantic traceability is required (e.g., for provenance, policy, or analytics). This duality prevents duplication of concepts:
+The Communication Module distinguishes **wire messages** (defined by the Hyperspace Transaction Protocol, HSTP) from **semantic message entities**. HSTP envelopes move bytes; Channels may choose to **project messages** as HSML `comm:Message` entities when semantic traceability is required (e.g., for provenance, policy, or analytics). This duality prevents duplication of concepts:
 
 * At minimum, Channel membership can simply reference Agents and Activities, with message exchange implicit in HSTP.  
 * When auditing, governance, or discovery are required, each HSTP envelope may be projected into a `comm:Message` entity with semantic annotations (sender, media type, content schema, relation to Channel).  
@@ -30,7 +30,7 @@ The Communication Module does **not redefine transport**. HSTP specifies the abs
 
 ==== Activity-Linked Communication
 
-Channels are almost always **linked to Activities**. This supports use cases such as:
+Channels are always **linked to Activities**. This supports use cases such as:
 
 * Real-time coordination of an Activity (e.g., multiple agents working on a shared task).  
 * Streaming sensor data into a Channel associated with a monitoring Activity.  
@@ -60,6 +60,7 @@ The design follows Semantic Web and Internet principles:
 The Communication Module provides a lightweight, semantically grounded way to model **Channels and Messages** without duplicating HSTP transport concerns or Domain governance rules. It supports ephemeral, Activity-linked collaboration while leaving transport framing to HSTP and policy enforcement to the Governance Module. This separation yields clarity, reuse, and flexibility across diverse use cases, from ad-hoc collaboration to persistent provenance trails.
 
 
+
 === Normative Classes
 
 This clause provides the normative definitions for the classes of the Communication Module.  
@@ -70,15 +71,17 @@ This clause provides the normative definitions for the classes of the Communicat
 |===
 | Class | Description
 
-| <<comm-message,comm:Message>>
-| Optional semantic description of a communicative artifact exchanged via HSTP. Used when provenance, validation, or audit are needed.
-
 | <<chan-channel,chan:Channel>>
 | Ephemeral, non-hierarchical, Domain-hosted context for grouping Entities and exchanging Messages around Activities.
 
-| <<comm-topic,comm:Topic>>
-| Persistent, named stream within a Domain for durable publish/subscribe.
+| <<comm-message,comm:Message>>
+| Optional semantic description of a communicative artifact exchanged via HSTP. Used when provenance, validation, or audit are needed.
+
 
 | <<comm-subscription,comm:Subscription>>
 | Declares an Agent’s interest in receiving Messages from a Topic or Channel, optionally with filters and delivery hints.
 |===
+
+include::hsml_channel.adoc[leveloffset=+1]
+
+include::hsml_message.adoc[leveloffset=+1]

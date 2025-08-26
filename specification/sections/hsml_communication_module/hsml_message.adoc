@@ -1,0 +1,317 @@
+[[comm-message]]
+=== Class: comm:Message
+
+comm:Message models an optional semantic projection of a transported envelope (per HSTP) into HSML. It is used to persist provenance, governance, validation, discovery, and correlation of communications that occur within a chan:Channel and concern an hsml:Activity. Transport framing, headers, and bindings remain the responsibility of HSTP; comm:Message captures the who/what/when/why at the semantic layer.
+
+Messages are not required for all exchanges. Implementations materialize comm:Message only when traceability or auditability is needed.
+
+[[comm-message-class]]
+==== Class Definition
+
+.Class Definition for comm:Message
+[cols="1,3",options="header"]
+|===
+| RDF Class | comm:Message
+| Is Abstract | No
+| Definition | Semantic record of a communicative artifact exchanged within a Channel and about an Activity; optional overlay on HSTP transport.
+| Subclass Of | core:Concept
+| JSON-LD Term | "Message": "comm:Message"
+| Usage Notes | Use to capture provenance (who/when), integrity (hash/sequence), typing (media/profile), and correlation (threads, request/response). Payload may be stored inline or referenced by immutable link.
+|===
+
+[[comm-message-key-reqs]]
+==== Key Requirements (Normative)
+
+. A comm:Message shall be associated with exactly one chan:Channel via comm:inChannel.
+. A comm:Message shall be linked to at least one hsml:Activity via comm:aboutActivity.
+. A comm:Message shall identify at least one comm:sender of type hsml:Agent.
+. A comm:Message shall record a generation timestamp (e.g., prov:generatedAtTime).
+. A comm:Message should declare comm:mediaType and one or more comm:contentSchema to enable validation/routing.
+. A comm:Message may include integrity (comm:contentHash) and ordering (comm:sequenceNumber) metadata, and may correlate to other messages (comm:correlatesWith).
+
+[[comm-message-summary]]
+==== Properties Summary
+
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement
+
+| <<comm-message-property-inChannel,comm:inChannel>>
+| inChannel
+| Channel carrying this message (context).
+| chan:Channel
+| 1..1
+| Mandatory
+
+| <<comm-message-property-aboutActivity,comm:aboutActivity>>
+| aboutActivity
+| Activity that this message concerns.
+| hsml:Activity
+| 1..*
+| Mandatory
+
+| <<comm-message-property-sender,comm:sender>>
+| sender
+| Author/emitter of the message.
+| hsml:Agent
+| 1..*
+| Mandatory
+
+| <<comm-message-property-recipient,comm:recipient>>
+| recipient
+| Intended audience (Agents or Channels).
+| hsml:Agent | chan:Channel
+| 0..*
+| Optional
+
+| <<comm-message-property-mediaType,comm:mediaType>>
+| mediaType
+| IANA media type (align with HSTP header).
+| xsd:anyURI
+| 0..1
+| Recommended
+
+| <<comm-message-property-contentSchema,comm:contentSchema>>
+| contentSchema
+| Schema/profile describing payload (SHACL, JSON Schema, etc.).
+| xsd:anyURI
+| 0..*
+| Recommended
+
+| <<comm-message-property-content,comm:content>>
+| content
+| Embedded payload or immutable link to content.
+| rdf:langString | xsd:string | xsd:base64Binary | xsd:anyURI
+| 0..1
+| Optional
+
+| <<comm-message-property-contentHash,comm:contentHash>>
+| contentHash
+| Integrity hash (e.g., multihash) of payload.
+| xsd:string
+| 0..1
+| Optional
+
+| <<comm-message-property-sequenceNumber,comm:sequenceNumber>>
+| sequenceNumber
+| Monotonic sequence number within the Channel.
+| xsd:integer
+| 0..1
+| Optional
+
+| <<comm-message-property-correlatesWith,comm:correlatesWith>>
+| correlatesWith
+| Correlation to another message (threading, request/response).
+| comm:Message
+| 0..*
+| Optional
+
+| <<comm-message-property-generatedAtTime,prov:generatedAtTime>>
+| generatedAtTime
+| UTC timestamp when produced.
+| xsd:dateTime
+| 1..1
+| Mandatory
+
+| <<comm-message-property-wasAttributedTo,prov:wasAttributedTo>>
+| wasAttributedTo
+| Attribution of authorship (often same as comm:sender).
+| hsml:Agent
+| 1..*
+| Mandatory
+|===
+
+[[comm-message-properties]]
+==== Properties
+
+[[comm-message-property-inChannel]]
+===== Property: inChannel
+.Property Definition: comm:inChannel
+[cols="2,4"]
+|===
+| Property | comm:inChannel
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/comm#inChannel
+| JSON name | inChannel
+| Requirement Level | Mandatory
+| Cardinality | 1..1
+| Domain | comm:Message
+| Range | chan:Channel
+| Definition | Binds the message to its carrying Channel (context).
+| Usage Note | Enables ordered archival, replay, and governance scoping per Channel.
+|===
+
+[[comm-message-property-aboutActivity]]
+===== Property: aboutActivity
+.Property Definition: comm:aboutActivity
+[cols="2,4"]
+|===
+| Property | comm:aboutActivity
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/comm#aboutActivity
+| JSON name | aboutActivity
+| Requirement Level | Mandatory
+| Cardinality | 1..*
+| Domain | comm:Message
+| Range | hsml:Activity
+| Definition | Identifies the Activity that the message concerns.
+| Usage Note | Grounds transient communication in enduring Activity provenance.
+|===
+
+[[comm-message-property-sender]]
+===== Property: sender
+.Property Definition: comm:sender
+[cols="2,4"]
+|===
+| Property | comm:sender
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/comm#sender
+| JSON name | sender
+| Requirement Level | Mandatory
+| Cardinality | 1..*
+| Domain | comm:Message
+| Range | agent:Agent
+| Definition | Agent that authored or emitted the message.
+| Usage Note | Often mirrored with prov:wasAttributedTo for PROV alignment.
+|===
+
+[[comm-message-property-recipient]]
+===== Property: recipient
+.Property Definition: comm:recipient
+[cols="2,4"]
+|===
+| Property | comm:recipient
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/comm#recipient
+| JSON name | recipient
+| Requirement Level | Optional
+| Cardinality | 0..*
+| Domain | comm:Message
+| Range | hsml:Agent | chan:Channel
+| Definition | Intended audience of the message.
+| Usage Note | Use multiple values for broadcast/fan-out. Omit when Channel audience suffices.
+|===
+
+[[comm-message-property-mediaType]]
+===== Property: mediaType
+.Property Definition: comm:mediaType
+[cols="2,4"]
+|===
+| Property | comm:mediaType
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/comm#mediaType
+| JSON name | mediaType
+| Requirement Level | Recommended
+| Cardinality | 0..1
+| Domain | comm:Message
+| Range | xsd:anyURI
+| Definition | IANA media type of the payload (align with HSTP).
+| Usage Note | Use IRI form for media types (e.g., https://iana.org/assignments/media-types/application/json).
+|===
+
+[[comm-message-property-contentSchema]]
+===== Property: contentSchema
+.Property Definition: comm:contentSchema
+[cols="2,4"]
+|===
+| Property | comm:contentSchema
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/comm#contentSchema
+| JSON name | contentSchema
+| Requirement Level | Recommended
+| Cardinality | 0..*
+| Domain | comm:Message
+| Range | xsd:anyURI
+| Definition | Schema/profile describing payload (e.g., SHACL shape IRI, JSON Schema URL).
+| Usage Note | Enables validation and content negotiation by profile.
+|===
+
+[[comm-message-property-content]]
+===== Property: content
+.Property Definition: comm:content
+[cols="2,4"]
+|===
+| Property | comm:content
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/comm#content
+| JSON name | content
+| Requirement Level | Optional
+| Cardinality | 0..1
+| Domain | comm:Message
+| Range | rdf:langString | xsd:string | xsd:base64Binary | xsd:anyURI
+| Definition | The payload itself (inline text/binary) or a canonical, immutable link to it.
+| Usage Note | Prefer immutable links plus comm:contentHash for large or sensitive payloads.
+|===
+
+[[comm-message-property-contentHash]]
+===== Property: contentHash
+.Property Definition: comm:contentHash
+[cols="2,4"]
+|===
+| Property | comm:contentHash
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/comm#contentHash
+| JSON name | contentHash
+| Requirement Level | Optional
+| Cardinality | 0..1
+| Domain | comm:Message
+| Range | xsd:string
+| Definition | Integrity hash of the payload (e.g., multihash, SHA-256).
+| Usage Note | When comm:content is a link, the hash ensures immutability/verifiability.
+|===
+
+[[comm-message-property-sequenceNumber]]
+===== Property: sequenceNumber
+.Property Definition: comm:sequenceNumber
+[cols="2,4"]
+|===
+| Property | comm:sequenceNumber
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/comm#sequenceNumber
+| JSON name | sequenceNumber
+| Requirement Level | Optional
+| Cardinality | 0..1
+| Domain | comm:Message
+| Range | xsd:integer
+| Definition | Monotonic ordering value relative to the Channel.
+| Usage Note | Useful for replay cursors and gap detection.
+|===
+
+[[comm-message-property-correlatesWith]]
+===== Property: correlatesWith
+.Property Definition: comm:correlatesWith
+[cols="2,4"]
+|===
+| Property | comm:correlatesWith
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/comm#correlatesWith
+| JSON name | correlatesWith
+| Requirement Level | Optional
+| Cardinality | 0..*
+| Domain | comm:Message
+| Range | comm:Message
+| Definition | Links to related messages (e.g., request/response, thread, saga).
+| Usage Note | Use multiple values to express multi-message conversations or branches.
+|===
+
+[[comm-message-property-generatedAtTime]]
+===== Property: prov:generatedAtTime
+.Property Definition: prov:generatedAtTime
+[cols="2,4"]
+|===
+| Property | prov:generatedAtTime
+| IRI | http://www.w3.org/ns/prov#generatedAtTime
+| JSON name | generatedAtTime
+| Requirement Level | Mandatory
+| Cardinality | 1..1
+| Domain | comm:Message
+| Range | xsd:dateTime
+| Definition | UTC timestamp when the message was produced.
+| Usage Note | Use Z-suffixed times or explicit offset; recommend millisecond precision.
+|===
+
+[[comm-message-property-wasAttributedTo]]
+===== Property: prov:wasAttributedTo
+.Property Definition: prov:wasAttributedTo
+[cols="2,4"]
+|===
+| Property | prov:wasAttributedTo
+| IRI | http://www.w3.org/ns/prov#wasAttributedTo
+| JSON name | wasAttributedTo
+| Requirement Level | Mandatory
+| Cardinality | 1..*
+| Domain | comm:Message
+| Range | hsml:Agent
+| Definition | Attribution of authorship/agency for the message.
+| Usage Note | Often same individual(s) as comm:sender; keep both for PROV/tooling compatibility.
+|===

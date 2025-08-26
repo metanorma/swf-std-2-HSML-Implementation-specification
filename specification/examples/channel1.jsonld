@@ -1,0 +1,27 @@
+{
+  "@context": "http://spatialwebfoundation.org/context/hsml.jsonld",
+  "@id": "did:swid:channel:metro-hospital-drone-ops",
+  "@type": "Channel",
+  "name": "Metro Hospital Drone Operations",
+  "description": "Coordination channel for all emergency medical supply deliveries in the downtown metro area.",
+  "swid": "did:swid:channel:metro-hospital-drone-ops",
+  "forActivity": "did:swid:activity:med-delivery-ops",
+  "hasParticipant": [
+    "did:swid:agent:drone-7",
+    "did:swid:agent:ops-dashboard"
+  ],
+  "hasSubChannel": [
+    {
+      "@id": "did:swid:channel:drone-7-telemetry",
+      "@type": "Channel",
+      "name": "Drone 7 - Flight Telemetry",
+      "description": "Real-time flight data, battery status, and payload vitals for Drone 7.",
+      "swid": "did:swid:channel:drone-7-telemetry",
+      "forActivity": "did:swid:activity:med-delivery-ops",
+      "hasParticipant": [
+        "did:swid:agent:drone-7"
+      ],
+      "subChannelOf": "did:swid:channel:metro-hospital-drone-ops"
+    }
+  ]
+}
