@@ -120,4 +120,6 @@ This class is a subclass of +hsml:Entity+, inheriting a +hsml:swid+ as its uniqu
 
 .Example of a Channel with a Sub-Channel using DIDs
 [source,jsonl]
+----
 include::../../examples/channel1.jsonld[]
+----
