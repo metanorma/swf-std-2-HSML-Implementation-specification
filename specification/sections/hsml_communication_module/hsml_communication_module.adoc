@@ -1,0 +1,84 @@
+== HSML Communication Module: Normative Specification
+
+=== Architectural Principles and Design Rationale
+
+This clause explains the design choices behind the HSML Communication Module and how they satisfy IEEE P2874’s requirements for **Channels and Message exchange** as described in §6.6.6. The principles are informative (non-normative) but motivate the normative class and property definitions introduced later.
+
+==== Channels as Ephemeral Interaction Contexts
+
+A core principle is that **Channels are not Domains**. While Domains represent enduring identity-bearing contexts (geographic, organizational, or conceptual), Channels are **ad-hoc and transient groupings** of HSML Entities around a purpose or Activity. P2874 defines a Channel as “a stream of HSML ENTITIES that are related to an ACTIVITY of a specific context that does not itself warrant a DOMAIN or hierarchy.” This design ensures that Channels do not alter the permanent domain hierarchy but still allow session-like coordination.
+
+* Channels are modeled as subclass of `hsml:Entity` but declared **disjoint from `hsml:Domain`**.  
+* Membership is flexible: any Entity (Agents, Things, Digital Twins, Activities) may appear in a Channel.  
+* Sub-channels allow hierarchical scoping of collaborative contexts without redefining domain hierarchies.
+
+==== Messages as Optional Semantic Projections
+
+The Communication Module distinguishes **wire messages** (defined by the Hyperspace Transport Protocol, HSTP) from **semantic message entities**. HSTP envelopes move bytes; Channels may choose to **project messages** as HSML `comm:Message` entities when semantic traceability is required (e.g., for provenance, policy, or analytics). This duality prevents duplication of concepts:
+
+* At minimum, Channel membership can simply reference Agents and Activities, with message exchange implicit in HSTP.  
+* When auditing, governance, or discovery are required, each HSTP envelope may be projected into a `comm:Message` entity with semantic annotations (sender, media type, content schema, relation to Channel).  
+* This pattern aligns with W3C PROV-O’s distinction between events (Activities/Agents) and artifacts (Entities).
+
+==== Separation of Concerns: HSTP vs HSML
+
+The Communication Module does **not redefine transport**. HSTP specifies the abstract message envelope, headers, and bindings to HTTP, MQTT, QUIC, etc. The Communication Module only defines how such transported payloads are contextualized in HSML Channels. This ensures:
+
+* **No duplication** of protocol details. Media types, signatures, and routing remain in HSTP.  
+* **Semantic overlay** only when needed: Channels can record provenance of what was exchanged, not how the bytes were framed.  
+* **Extensibility**: new bindings (e.g., WebRTC, QUIC streams) require no changes to HSML—Channels remain abstract contexts.
+
+==== Activity-Linked Communication
+
+Channels are almost always **linked to Activities**. This supports use cases such as:
+
+* Real-time coordination of an Activity (e.g., multiple agents working on a shared task).  
+* Streaming sensor data into a Channel associated with a monitoring Activity.  
+* Collaborative annotation or decision-making during an Activity lifecycle.  
+
+The `hsml:forActivity` property ensures that Channels carry explicit purpose, grounding otherwise transient message streams in the enduring Activity model of HSML.
+
+==== Governance Delegation
+
+Policies and credential checks are not embedded directly in Channels. Instead:
+
+* **Domain-level governance** defines who may create or join Channels.  
+* Channels may include optional hints (e.g., `hsml:allowedAgent`) but **formal credential gates and policy enforcement remain in the Governance Module**.  
+* This simplifies the Channel model while ensuring consistent enforcement across Activities, Domains, and Channels.
+
+==== Interoperability and Extensibility
+
+The design follows Semantic Web and Internet principles:
+
+* Media type declarations in HSTP headers allow arbitrary payloads (JSON-LD, SHACL instance data, binary media).  
+* `comm:Message` entities can reference a `comm:contentSchema` (SHACL or JSON Schema) for validation, similar to how HTTP uses `Content-Type` with a `profile` parameter or `Link rel=describedby`.  
+* Sub-channel structures resemble chat rooms or topic hierarchies in existing systems (MQTT, XMPP), but retain formal semantics.  
+* Alignments with schema.org (`schema:Message`, `schema:CommunicateAction`) are possible for lightweight web interoperability.
+
+==== Summary
+
+The Communication Module provides a lightweight, semantically grounded way to model **Channels and Messages** without duplicating HSTP transport concerns or Domain governance rules. It supports ephemeral, Activity-linked collaboration while leaving transport framing to HSTP and policy enforcement to the Governance Module. This separation yields clarity, reuse, and flexibility across diverse use cases, from ad-hoc collaboration to persistent provenance trails.
+
+
+=== Normative Classes
+
+This clause provides the normative definitions for the classes of the Communication Module.  
+
+==== Summary of Communication Module Classes
+
+[cols="1,3",options="header"]
+|===
+| Class | Description
+
+| <<comm-message,comm:Message>>
+| Optional semantic description of a communicative artifact exchanged via HSTP. Used when provenance, validation, or audit are needed.
+
+| <<chan-channel,chan:Channel>>
+| Ephemeral, non-hierarchical, Domain-hosted context for grouping Entities and exchanging Messages around Activities.
+
+| <<comm-topic,comm:Topic>>
+| Persistent, named stream within a Domain for durable publish/subscribe.
+
+| <<comm-subscription,comm:Subscription>>
+| Declares an Agent’s interest in receiving Messages from a Topic or Channel, optionally with filters and delivery hints.
+|===

@@ -1,7 +1,0 @@
-== HSML Channel Module
-
-=== Normative Classes
-
-This clause provides the normative definitions for all class concepts within the HSML Channel Module. Each class is detailed in a table that specifies its URI, description, JSON-LD context name, usage notes, and relationship to other classes.
-
-include::hsml_channel.adoc
