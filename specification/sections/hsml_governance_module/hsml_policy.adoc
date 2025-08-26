@@ -1,44 +1,32 @@
-[[gov-policy-summary]]
-==== Properties Summary
+[[gov-policy]]
+=== Class: gov:Policy
 
+The class `gov:Policy` is a governance artifact issued by an authority to **declare scope**, **bundle Norms**, and **gate execution** of Activities via credential requirements. A Policy does not itself execute rules; rather, it references executable `core:Condition`s (directly or via `gov:Norm`) and **type‑level** credential requirements expressed as `gov:CredentialProfile`. Policy validity is time‑scoped using `schema:validFrom` and `schema:validThrough`.
+
+**Design Notes**
+
+* **Bundled Norms** Policies collect one or more `gov:Norm` (Obligation/Prohibition/Permission) that apply within the policy’s declared scope.
+* **Credential Gating (Type‑level)** Policies reference one or more reusable `gov:CredentialProfile` via `gov:hasCredentialRequirement`. Each profile specifies an allowed credential **type/class** and the constraints that any presented **credential instance** must satisfy at `gov:Contract` validation time.
+* **Conditions Reuse** Policies MAY also include additional `core:hasCondition` for policy‑level applicability or evaluation (e.g., jurisdictional, temporal, or role constraints) without redefining the Condition class.
+
+[[gov-policy-class]]
+==== Class Definition
+
+.Class Definition for gov:Policy
+[cols="1,3",options="header"]
+|===
+| RDF Class | `gov:Policy`
+| Is Abstract | No
+| Definition | A governance artifact that declares scope, bundles one or more Norms, and specifies credential profiles that authoritatively gate Activity execution.
+| Subclass Of | `core:Entity`
+| Usage Notes | Policies are time‑scoped with `schema:validFrom`/`schema:validThrough`. Credential gates reference `gov:CredentialProfile` (type‑level). Instance‑level credential verification occurs during `gov:Contract` validation.
+|===
+
+[[gov-policy-summary]]
+.Properties Summary for gov:Policy
 [cols="2,2,4,2,1,2",options="header"]
 |===
 | Predicate | JSON-LD name | Description | Range | Cardinality | Requirement
-
-| <<gov-policy-property-appliesTo,`gov:appliesTo`>>
-| `appliesTo`
-| Declares the activity schema(s), domain(s), or actor class(es) governed by this policy.
-| `rdfs:Class` or `hsml:Entity` (incl. `act:ActivitySchema`, `hsml:Domain`)
-| 1..*
-| **Mandatory**
-
-| <<gov-policy-property-rationale,`schema:description`>>
-| `description`
-| Human-readable rationale/summary.
-| `xsd:string`
-| 0..1
-| Optional
-
-| <<gov-policy-property-hasCondition,`core:hasCondition`>>
-| `hasCondition`
-| Additional executable applicability/evaluation conditions.
-| `core:Condition`
-| 0..*
-| Optional
-
-| <<gov-policy-property-hasCredentialRequirement,`gov:hasCredentialRequirement`>>
-| `hasCredentialRequirement`
-| Type-level credential gate(s) expressed as reusable profiles.
-| `gov:CredentialProfile`
-| 0..*
-| Optional
-
-| <<gov-policy-property-hasNorm,`gov:hasNorm`>>
-| `hasNorm`
-| Bundled atomic deontic rules governed by this policy.
-| `gov:Norm`
-| 1..*
-| **Mandatory**
 
 | <<gov-policy-property-issuedBy,`schema:creator`>>
 | `issuedBy`
@@ -46,36 +34,6 @@
 | `hsml:Domain` or `agt:Agent`
 | 1..1
 | **Mandatory**
-
-| <<gov-policy-property-jurisdiction,`schema:spatialCoverage`>>
-| `jurisdiction`
-| Geographic or legal jurisdiction in scope.
-| `schema:Place` or `skos:Concept`
-| 0..*
-| Optional
-
-| <<gov-policy-property-precedence,`gov:precedence`>>
-| `precedence`
-| Policy priority for conflict resolution (higher wins).
-| `xsd:integer`
-| 0..1
-| Optional
-
-
-
-| <<gov-policy-property-relatedPolicy,`gov:relatedPolicy`>>
-| `relatedPolicy`
-| Links to superseding/subordinate/peer policies.
-| `gov:Policy`
-| 0..*
-| Optional
-
-| <<gov-policy-property-status,`gov:policyStatus`>>
-| `policyStatus`
-| Lifecycle status (e.g., Draft, Active, Suspended, Retired).
-| `xsd:string`
-| 0..1
-| Optional
 
 | <<gov-policy-property-validFrom,`schema:validFrom`>>
 | `validFrom`
@@ -86,10 +44,66 @@
 
 | <<gov-policy-property-validThrough,`schema:validThrough`>>
 | `validThrough`
-| End of the policy’s validity window (exclusive). Omit for open-ended.
+| End of the policy’s validity window (exclusive). Omit for open‑ended.
 | `xsd:dateTime`
 | 0..1
 | Recommended
+
+| <<gov-policy-property-appliesToActivitySchema,`gov:appliesToActivitySchema`>>
+| `appliesToActivitySchema`
+| Activity schema(s) governed by this policy.
+| `act:ActivitySchema`
+| 1..*
+| **Mandatory**
+
+| <<gov-policy-property-appliesToDomain,`gov:appliesToDomain`>>
+| `appliesToDomain`
+| Domain(s) (places/orgs/contexts) where the policy applies.
+| `hsml:Domain`
+| 0..*
+| Optional
+
+| <<gov-policy-property-appliesToActorClass,`gov:appliesToActorClass`>>
+| `appliesToActorClass`
+| Actor/role classes targeted (e.g., Pilot, Contractor).
+| `rdfs:Class`
+| 0..*
+| Optional
+
+| <<gov-policy-property-hasNorm,`gov:hasNorm`>>
+| `hasNorm`
+| Bundled atomic deontic rules governed by this policy.
+| `gov:Norm`
+| 1..*
+| **Mandatory**
+
+| <<gov-policy-property-hasCondition,`core:hasCondition`>>
+| `hasCondition`
+| Additional executable applicability/evaluation conditions.
+| `core:Condition`
+| 0..*
+| Optional
+
+| <<gov-policy-property-hasCredentialRequirement,`gov:hasCredentialRequirement`>>
+| `hasCredentialRequirement`
+| Type‑level credential gate(s) expressed as reusable profiles.
+| `gov:CredentialProfile`
+| 0..*
+| Optional
+
+| <<gov-policy-property-precedence,`gov:precedence`>>
+| `precedence`
+| Policy priority for conflict resolution (higher wins).
+| `xsd:integer`
+| 0..1
+| Optional
+
+| <<gov-policy-property-status,`gov:policyStatus`>>
+| `policyStatus`
+| Lifecycle status (e.g., Draft, Active, Suspended, Retired).
+| `xsd:string`
+| 0..1
+| Optional
 
 | <<gov-policy-property-version,`schema:version`>>
 | `version`
@@ -97,90 +111,31 @@
 | `xsd:string`
 | 0..1
 | Optional
+
+| <<gov-policy-property-jurisdiction,`schema:spatialCoverage`>>
+| `jurisdiction`
+| Geographic or legal jurisdiction in scope.
+| `schema:Place` or `skos:Concept`
+| 0..*
+| Optional
+
+| <<gov-policy-property-relatedPolicy,`gov:relatedPolicy`>>
+| `relatedPolicy`
+| Links to superseding/subordinate/peer policies.
+| `gov:Policy`
+| 0..*
+| Optional
+
+| <<gov-policy-property-rationale,`schema:description`>>
+| `rationale`
+| Human‑readable rationale/summary.
+| `xsd:string`
+| 0..1
+| Optional
 |===
 
 [[gov-policy-properties]]
 ==== Properties
-
-[[gov-policy-property-appliesTo]]
-===== Property: appliesTo
-.Property Definition: gov:appliesTo
-[cols="2,4"]
-|===
-| **Property** | `gov:appliesTo`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#appliesTo`
-| **JSON name** | `appliesTo`
-| **Requirement Level** | **Mandatory**
-| **Cardinality** | 1..*
-| **Domain** | `gov:Policy`
-| **Range** | `rdfs:Class` or `hsml:Entity` (incl. `act:ActivitySchema`, `hsml:Domain`)
-| **Definition** | Declares the activity schema(s), domain(s), or actor class(es) governed by the policy.
-| **Usage Note** | Targets may be classes (type-level) or instances (instance-level). Engines *should* expand class targets to instances via `rdfs:subClassOf*`; activity-schema targets apply to activities with `act:activitySchema` equal to the targeted schema.
-|===
-
-[[gov-policy-property-description]]
-===== Property: description
-.Property Definition: schema:description
-[cols="2,4"]
-|===
-| **Property** | `schema:description`
-| **IRI** | `https://schema.org/description`
-| **JSON name** | `rationale`
-| **Requirement Level** | Optional
-| **Cardinality** | 0..1
-| **Domain** | `gov:Policy`
-| **Range** | `xsd:string`
-| **Definition** | Human-readable summary, rationale, or notes.
-| **Usage Note** | Non-normative; do not encode executable constraints here.
-|===
-
-[[gov-policy-property-hasCondition]]
-===== Property: hasCondition
-.Property Definition: core:hasCondition
-[cols="2,4"]
-|===
-| **Property** | `core:hasCondition`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/core#hasCondition`
-| **JSON name** | `hasCondition`
-| **Requirement Level** | Optional
-| **Cardinality** | 0..*
-| **Domain** | `gov:Policy`
-| **Range** | `core:Condition`
-| **Definition** | Executable constraints for applicability/evaluation at policy level.
-| **Usage Note** | Express with SHACL/ASK/CEL and record evaluation artifacts during contract validation.
-|===
-
-[[gov-policy-property-hasCredentialRequirement]]
-===== Property: hasCredentialRequirement
-.Property Definition: gov:hasCredentialRequirement
-[cols="2,4"]
-|===
-| **Property** | `gov:hasCredentialRequirement`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#hasCredentialRequirement`
-| **JSON name** | `hasCredentialRequirement`
-| **Requirement Level** | Optional
-| **Cardinality** | 0..*
-| **Domain** | `gov:Policy`
-| **Range** | `gov:CredentialProfile`
-| **Definition** | References reusable credential profiles that **type-level** define acceptable credential classes and constraints.
-| **Usage Note** | Instance-level verification occurs at `gov:Contract` time by checking presented VCs conform to the referenced profile(s).
-|===
-
-[[gov-policy-property-hasNorm]]
-===== Property: hasNorm
-.Property Definition: gov:hasNorm
-[cols="2,4"]
-|===
-| **Property** | `gov:hasNorm`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#hasNorm`
-| **JSON name** | `hasNorm`
-| **Requirement Level** | **Mandatory**
-| **Cardinality** | 1..*
-| **Domain** | `gov:Policy`
-| **Range** | `gov:Norm`
-| **Definition** | Includes the atomic deontic rules governed by the policy.
-| **Usage Note** | Each `gov:Norm` declares `gov:deonticModality` and one or more executable `core:Condition`.
-|===
 
 [[gov-policy-property-issuedBy]]
 ===== Property: issuedBy
@@ -195,73 +150,7 @@
 | **Domain** | `gov:Policy`
 | **Range** | `hsml:Domain` or `agt:Agent`
 | **Definition** | Identifies the authority that authors and promulgates the policy.
-| **Usage Note** | Prefer the controlling `hsml:Domain` for organizational issuers; use `agt:Agent` for individual signatories.
-|===
-
-[[gov-policy-property-jurisdiction]]
-===== Property: jurisdiction
-.Property Definition: schema:spatialCoverage
-[cols="2,4"]
-|===
-| **Property** | `schema:spatialCoverage`
-| **IRI** | `https://schema.org/spatialCoverage`
-| **JSON name** | `jurisdiction`
-| **Requirement Level** | Optional
-| **Cardinality** | 0..*
-| **Domain** | `gov:Policy`
-| **Range** | `schema:Place` or `skos:Concept`
-| **Definition** | Geographic or legal area covered by the policy.
-| **Usage Note** | May reference controlled vocabularies for regions/jurisdictions.
-|===
-
-[[gov-policy-property-precedence]]
-===== Property: precedence
-.Property Definition: gov:precedence
-[cols="2,4"]
-|===
-| **Property** | `gov:precedence`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#precedence`
-| **JSON name** | `precedence`
-| **Requirement Level** | Optional
-| **Cardinality** | 0..1
-| **Domain** | `gov:Policy`
-| **Range** | `xsd:integer`
-| **Definition** | Numeric priority used in conflict resolution across applicable policies.
-| **Usage Note** | Higher values override lower; tie-break by modality precedence if needed.
-|===
-
-
-
-[[gov-policy-property-relatedPolicy]]
-===== Property: relatedPolicy
-.Property Definition: gov:relatedPolicy
-[cols="2,4"]
-|===
-| **Property** | `gov:relatedPolicy`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#relatedPolicy`
-| **JSON name** | `relatedPolicy`
-| **Requirement Level** | Optional
-| **Cardinality** | 0..*
-| **Domain** | `gov:Policy`
-| **Range** | `gov:Policy`
-| **Definition** | Links to superseding, superseded, parent, or child policies.
-| **Usage Note** | Use subproperties for finer relation typing if required.
-|===
-
-[[gov-policy-property-status]]
-===== Property: policyStatus
-.Property Definition: gov:policyStatus
-[cols="2,4"]
-|===
-| **Property** | `gov:policyStatus`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#policyStatus`
-| **JSON name** | `policyStatus`
-| **Requirement Level** | Optional
-| **Cardinality** | 0..1
-| **Domain** | `gov:Policy`
-| **Range** | `xsd:string`
-| **Definition** | Current lifecycle state (e.g., Draft, Active, Suspended, Retired).
-| **Usage Note** | Evaluators SHOULD ignore policies not in an “Active”-like state.
+| **Usage Note** | Prefer the controlling `hsml:Domain` when the issuer is an organization; use an Agent for individual signatories.
 |===
 
 [[gov-policy-property-validFrom]]
@@ -293,7 +182,135 @@
 | **Domain** | `gov:Policy`
 | **Range** | `xsd:dateTime`
 | **Definition** | End timestamp (exclusive) after which the policy is no longer applicable.
-| **Usage Note** | Omit for open-ended policies; revocation/suspension should update `gov:policyStatus`.
+| **Usage Note** | Omit for open‑ended; revocation/suspension should set `gov:policyStatus`.
+|===
+
+[[gov-policy-property-appliesToActivitySchema]]
+===== Property: appliesToActivitySchema
+.Property Definition: gov:appliesToActivitySchema
+[cols="2,4"]
+|===
+| **Property** | `gov:appliesToActivitySchema`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#appliesToActivitySchema`
+| **JSON name** | `appliesToActivitySchema`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..*
+| **Domain** | `gov:Policy`
+| **Range** | `act:ActivitySchema`
+| **Definition** | Declares the Activity schema(s) governed by the policy.
+| **Usage Note** | Use IRIs of globally reusable schemas to enable cross‑domain interoperability.
+|===
+
+[[gov-policy-property-appliesToDomain]]
+===== Property: appliesToDomain
+.Property Definition: gov:appliesToDomain
+[cols="2,4"]
+|===
+| **Property** | `gov:appliesToDomain`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#appliesToDomain`
+| **JSON name** | `appliesToDomain`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..*
+| **Domain** | `gov:Policy`
+| **Range** | `hsml:Domain`
+| **Definition** | Limits applicability to one or more Domains (e.g., sites, org units).
+| **Usage Note** | If omitted, default scope is the issuer’s Domain and its sub‑domains (implementation‑defined).
+|===
+
+[[gov-policy-property-appliesToActorClass]]
+===== Property: appliesToActorClass
+.Property Definition: gov:appliesToActorClass
+[cols="2,4"]
+|===
+| **Property** | `gov:appliesToActorClass`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#appliesToActorClass`
+| **JSON name** | `appliesToActorClass`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..*
+| **Domain** | `gov:Policy`
+| **Range** | `rdfs:Class`
+| **Definition** | Targets classes/roles of actors (e.g., `org:Role`, `agt:Pilot`).
+| **Usage Note** | Pair with Norm conditions for precise targeting.
+|===
+
+[[gov-policy-property-hasNorm]]
+===== Property: hasNorm
+.Property Definition: gov:hasNorm
+[cols="2,4"]
+|===
+| **Property** | `gov:hasNorm`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#hasNorm`
+| **JSON name** | `hasNorm`
+| **Requirement Level** | **Mandatory**
+| **Cardinality** | 1..*
+| **Domain** | `gov:Policy`
+| **Range** | `gov:Norm`
+| **Definition** | Includes the atomic deontic rules governed by the policy.
+| **Usage Note** | Each Norm declares `gov:deonticModality` and one or more executable `core:Condition`.
+|===
+
+[[gov-policy-property-hasCondition]]
+===== Property: hasCondition
+.Property Definition: core:hasCondition
+[cols="2,4"]
+|===
+| **Property** | `core:hasCondition`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/core#hasCondition`
+| **JSON name** | `hasCondition`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..*
+| **Domain** | `gov:Policy`
+| **Range** | `core:Condition`
+| **Definition** | Executable constraints for applicability/evaluation at policy level.
+| **Usage Note** | Reuse HSML Core. Express with SHACL/ASK/CEL and record evaluation artifacts during contract validation.
+|===
+
+[[gov-policy-property-hasCredentialRequirement]]
+===== Property: hasCredentialRequirement
+.Property Definition: gov:hasCredentialRequirement
+[cols="2,4"]
+|===
+| **Property** | `gov:hasCredentialRequirement`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#hasCredentialRequirement`
+| **JSON name** | `hasCredentialRequirement`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..*
+| **Domain** | `gov:Policy`
+| **Range** | `gov:CredentialProfile`
+| **Definition** | References reusable credential profiles that **type‑level** define acceptable credential classes and constraints.
+| **Usage Note** | Instance‑level verification occurs at `gov:Contract` time by checking presented VCs **conform to** the referenced `gov:CredentialProfile`(s) (type match, issuer/trust, status, proof suite, freshness, subject binding, shapes/conditions).
+|===
+
+[[gov-policy-property-precedence]]
+===== Property: precedence
+.Property Definition: gov:precedence
+[cols="2,4"]
+|===
+| **Property** | `gov:precedence`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#precedence`
+| **JSON name** | `precedence`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..1
+| **Domain** | `gov:Policy`
+| **Range** | `xsd:integer`
+| **Definition** | Numeric priority used in conflict resolution across applicable policies.
+| **Usage Note** | Higher values override lower; tie‑break by modality precedence if needed.
+|===
+
+[[gov-policy-property-status]]
+===== Property: policyStatus
+.Property Definition: gov:policyStatus
+[cols="2,4"]
+|===
+| **Property** | `gov:policyStatus`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#policyStatus`
+| **JSON name** | `policyStatus`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..1
+| **Domain** | `gov:Policy`
+| **Range** | `xsd:string`
+| **Definition** | Current lifecycle state (e.g., Draft, Active, Suspended, Retired).
+| **Usage Note** | Evaluators SHOULD ignore policies not in an “Active”‑like state.
 |===
 
 [[gov-policy-property-version]]
@@ -310,4 +327,52 @@
 | **Range** | `xsd:string`
 | **Definition** | Version label for change control and auditability.
 | **Usage Note** | Use semantic versioning where practical.
+|===
+
+[[gov-policy-property-jurisdiction]]
+===== Property: jurisdiction
+.Property Definition: schema:spatialCoverage
+[cols="2,4"]
+|===
+| **Property** | `schema:spatialCoverage`
+| **IRI** | `https://schema.org/spatialCoverage`
+| **JSON name** | `jurisdiction`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..*
+| **Domain** | `gov:Policy`
+| **Range** | `schema:Place` or `skos:Concept`
+| **Definition** | Geographic or legal area covered by the policy.
+| **Usage Note** | May reference controlled vocabularies for regions/jurisdictions.
+|===
+
+[[gov-policy-property-relatedPolicy]]
+===== Property: relatedPolicy
+.Property Definition: gov:relatedPolicy
+[cols="2,4"]
+|===
+| **Property** | `gov:relatedPolicy`
+| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/governance#relatedPolicy`
+| **JSON name** | `relatedPolicy`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..*
+| **Domain** | `gov:Policy`
+| **Range** | `gov:Policy`
+| **Definition** | Links to superseding, superseded, parent, or child policies.
+| **Usage Note** | Use `gov:relatedPolicy` with subproperties if finer relation typing is required.
+|===
+
+[[gov-policy-property-rationale]]
+===== Property: rationale
+.Property Definition: schema:description
+[cols="2,4"]
+|===
+| **Property** | `schema:description`
+| **IRI** | `https://schema.org/description`
+| **JSON name** | `rationale`
+| **Requirement Level** | Optional
+| **Cardinality** | 0..1
+| **Domain** | `gov:Policy`
+| **Range** | `xsd:string`
+| **Definition** | Human‑readable summary, rationale, or notes.
+| **Usage Note** | Non‑normative; do not encode executable constraints here.
 |===

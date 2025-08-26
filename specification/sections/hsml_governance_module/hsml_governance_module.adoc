@@ -63,7 +63,7 @@ The namespace prefix gov: refers to https://www.spatialwebfoundation.org/ns/hsml
 | <<gov-credential,gov:Credential>>
 | A tamper-evident, cryptographically verifiable set of claims, as defined by the W3C VC standard, used for authentication and authorization.
 
-| <<gov-credential-profileProfile,gov:Credential>>
+| <<gov-credential-profile,gov:CredentialProfile>>
  |A reusable bundle of constraints describing what a Verifiable Credential instance MUST satisfy (type, issuer/trust, subject binding, attribute constraints, proof, freshness)
 | <<gov-norm,gov:Norm>>
 | An atomic deontic rule (Obligation, Prohibition, Permission) governing behavior in a Domain, expressed as one or more executable Conditions.
