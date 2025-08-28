@@ -1,3 +1,148 @@
 == HSML Hyperspace Module
 
+=== Introduction
+
+
+The Hyperspace Module defines the structural foundation for representing spatial relationships in HSML.  
+It realizes the **HYPERSPACE** concept of IEEE P2874 (§ 6.2.1), which defines a hyperspace as:
+
+“A set whose elements are related by a formal notion of path, satisfying identity and composition laws.  
+Paths may be abstract, as long as they can be ‘traversed’ in a fashion akin to the paths between points 
+in familiar spaces.” 
+
+The purpose of this generalization is to capture not only Euclidean and geographic spaces, but also 
+more abstract domains where entities are organized by structural relationships. A hyperspace therefore 
+provides a **uniform abstraction** for expressing adjacency, connectivity, distance, ordering, or 
+other relationships that allow elements of a Domain to be navigated.
+
+In the context of the Spatial Web, this abstraction is critical. Domains contain entities, but it is 
+their **relationships within a hyperspace** that enable reasoning, coordination, and navigation.  
+For example:  
+
+* In **Agent, Person, and Organization Domains**, hyperspaces describe social and organizational networks.  
+* In **Geographic Domains**, hyperspaces describe spatial structure through geometries, grids, and metrics.  
+* In **Concept Domains**, hyperspaces describe semantic or datatype structures (taxonomies, codes, numbers, strings, colors, tensors).  
+* In **Thing Domains**, hyperspaces describe assemblies, dependencies, or placements.  
+
+Without hyperspaces, Domains would be mere collections of entities. With hyperspaces, they become 
+**structured spaces** that can be queried, validated, and traversed. This makes the Hyperspace Module 
+an essential component of HSML and of the Spatial Web as a whole.
+
+=== Architectural Principles and Design Rationale
+
+The Hyperspace Module defines the structural foundation for representing spatial relationships in HSML.  
+It provides a universal abstraction that applies across multiple domains, while committing only to the 
+minimum semantics required for interoperability. This design ensures that the model remains lightweight, 
+flexible, and extensible, as required by IEEE P2874.
+
+==== Minimum Ontological Commitment
+
+The first principle is **minimum ontological commitment**. The core Hyperspace does not attempt to prescribe 
+a single way of representing space. Instead, it declares only the most universal concepts:
+
+* **Elements** — the points or objects of the space.  
+* **Arrows** — the atomic, one-step relations between elements.  
+* **Paths** — finite compositions of arrows that support identity and concatenation.  
+* **Core Properties** — a small set of universally valid relations (`hyperspace:stepTo`, 
+  `hyperspace:neighborOf`, `hyperspace:reachable`, `hyperspace:onPath`).  
+
+This restraint allows domains to adopt HSML without being forced into a single representation of space.  
+Geometries may be encoded as literals, cells may be represented by indices, and graphs may be modeled 
+with object properties or reified edges. All of these are equally valid within the core abstraction.
+
+==== Separation of Domain and Hyperspace
+
+A **Domain** defines the context in which entities exist. A **Hyperspace** attached to that Domain specifies 
+how those entities are spatially related. This separation of concerns allows:
+
+* A Domain to be reinterpreted under different spatial logics (e.g., a road network can be modeled as a 
+  graph space or as a metric space).  
+* Multiple Hyperspaces to coexist, enabling federation across heterogeneous systems.  
+* Governance and identity to be scoped cleanly, since each Hyperspace is addressable in its own right.  
+
+==== Arrows and Paths
+
+The Hyperspace distinguishes between **arrows** (atomic steps) and **paths** (compositions of steps).  
+This distinction generalizes across many spatial models:
+
+* In a graph, arrows are edges and paths are walks.  
+* In a grid, arrows are adjacencies and paths are chains of cells.  
+* In a vector space, arrows are line segments and paths are polylines.  
+* In a state machine, arrows are transitions and paths are traces of execution.  
+
+By modeling arrows and paths separately, the core supports both fine-grained reasoning and higher-level 
+encodings (such as a `LINESTRING` geometry). This categorical foundation guarantees closure under 
+composition and predictable semantics for navigation.
+
+==== Lightweight and Rich Edge Modeling
+
+Edges can be modeled in two complementary ways:
+
+* **Lightweight property edges** — direct object properties asserting adjacency (e.g., `:a connectsTo :b`).  
+* **Reified edges** — explicit resources (`hyperspace:Arrow`) with `hyperspace:source` and `hyperspace:target`, 
+  capable of carrying attributes such as weight, cost, or provenance.  
+
+The Hyperspace Module does not mandate one approach. Instead, it provides bridging properties so that 
+implementations can interoperate across both representations.
+
+==== Operations as Declared Capabilities
+
+A Hyperspace is not only a structure; it is also the set of **operations** that may be applied to that structure.  
+The module treats operations as explicit, discoverable entities. Each Hyperspace may declare supported 
+operations via `hyperspace:hasOperation`, referencing instances of `hyperspace:Operation` with defined 
+identifiers, input constraints, and output types.  
+
+This explicit declaration ensures that capabilities such as reachability, shortest path, clustering, or 
+buffering are machine-readable and testable, rather than assumed.
+
+==== Specialized Hyperspaces (Overview)
+
+The core Hyperspace remains abstract and minimal. When additional semantics are required, they are introduced 
+through **specialized modules** under dedicated namespaces. Examples include:
+
+* **GraphSpace** (`hyperspace/graph`) — emphasizes connectivity (nodes, edges, routes).  
+* **CellularSpace** (`hyperspace/cell`) — emphasizes adjacency in grids and tessellations (cells, neighborhoods).  
+* **VectorSpace** (`hyperspace/vector`) — emphasizes coordinates and geometry encodings (CRS, geometries).  
+* **MetricSpace** (`hyperspace/metric`) — emphasizes distance and similarity functions (metrics, clustering).  
+
+Other extensions are possible, such as higher-order Hyperspaces (Hyperspaces of Hyperspaces), 
+spatio-temporal Hyperspaces, or state-machine Hyperspaces.  
+
+Detailed normative definitions for each specialization are provided in their respective module specifications.  
+The core module only requires that specialized properties align back to universal ones, such as 
+`hyperspace:stepTo`, `hyperspace:neighborOf`, and `hyperspace:reachable`.
+
+==== Handling of Time
+
+Time is an essential dimension in many real-world spaces, but not all Hyperspaces require it.  
+To preserve minimality, time is not built into the core. Instead, it is introduced via annotations and 
+extensions, using established vocabularies such as OWL-Time. Arrows and paths may carry properties 
+such as `time:validDuring`, `time:hasDuration`, or `time:hasBeginning`/`time:hasEnd`.  
+
+This approach allows temporal reasoning where needed — for example, time-dependent road networks, 
+trajectories, or evolving grids — without burdening every Hyperspace.
+
+==== Identity and Governance
+
+Every Hyperspace is identified by a **Spatial Web Identifier (SWID)**, which conforms to W3C DID Core.  
+This ensures that Hyperspaces are resolvable, governable, and referenceable across domains.  
+While the Hyperspace Module itself does not embed governance logic, the SWID provides the anchor for 
+policies, credentials, and trust frameworks defined elsewhere in HSML.
+
+==== Validation Through Profiles
+
+Validation is expressed through **SHACL profiles**, not rigid OWL cardinalities.  
+This allows the ontology to stay flexible, while profiles can enforce strict constraints in specific contexts.  
+For example, a profile may require that a Hyperspace use `geo:Geometry` as its element type, or that 
+a particular adjacency property be used for its arrows.  
+
+This design enables lightweight interoperability at the core and precise validation in domain-specific deployments.
+
+
+In summary, the Hyperspace Module commits only to what is universal: elements, arrows, paths, and a handful of 
+generic properties. All other semantics are layered in specialized modules or enforced through profiles.  
+This ensures that HSML provides a single unifying abstraction for spatial reasoning while remaining 
+modular, extensible, and adaptable to the diverse structures of the Spatial Web.
+
+
 include::hsml_hyperspace.adoc[]

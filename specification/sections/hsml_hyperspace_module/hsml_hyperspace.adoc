@@ -1,24 +1,25 @@
 [[hsml-hyperspace]]
-=== Class: hsml:Hyperspace
+=== Class: hspace:Hyperspace
 
-The class hsml:Hyperspace realises the HYPERSPACE concept in IEEE P2874 § 6.6.3 and Hyperspace Modeling principles:
+The class hspace:Hyperspace realises the HYPERSPACE concept in IEEE P2874 § 6.6.3 and Hyperspace Modeling principles:
 
 “A HYPERSPACE is a spatial structure that specifies relationships among elements (points) in a DOMAIN, including notions such as adjacency, distance, connectivity, or metric, enabling spatial reasoning and operations within the Spatial Web.”
 
-hsml:Hyperspace provides the formal structure for expressing the spatial logic that governs how entities in a Domain relate to each other. It generalizes topology, metric spaces, graphs, cellular grids, and vector spaces into a unified model, supporting composable and navigable relationships across Domains.
+hspace:Hyperspace provides the formal structure for expressing the spatial logic that governs how entities in a Domain relate to each other. It generalizes topology, metric spaces, graphs, cellular grids, vector spaces, and datatype spaces into a unified model, supporting composable and navigable relationships across Domains.
 
+In addition to declaring element, arrow, and path *types*, a Hyperspace may declare **mapping properties** that bind those types to concrete RDF encodings (e.g., which property carries the element’s value, which predicate represents an atomic step, how explicit paths are reified). These mappings enable portable queries, validation, and tooling.
 
 [[hsml-hyperspace-class]]
 ==== Class Definition
 
 [cols="1,3"]
 |===
-| RDF Class | +hsml:Hyperspace+
+| RDF Class | +hspace:Hyperspace+
 | Is Abstract | No
 | Definition | A spatial structure attached to a Domain that defines relationships among its elements, supporting spatial reasoning, navigation, and operations.
-| Subclass Of | hsml:Entity
-| Usage Note | Hyperspaces specify how elements in a Domain relate (e.g., adjacency, distance) and drive spatial queries, validation, and tooling.
-| Rationale | Provides a formal, flexible mechanism to encode spatial structure (graph, cellular, metric) that underpins Spatial Web reasoning.
+| Subclass Of | hspace:Entity
+| Usage Note | Hyperspaces specify *how* elements in a Domain relate (e.g., adjacency, distance) and drive spatial queries, validation, and tooling. Mapping properties bind these semantics to concrete RDF encodings for elements, arrows, and paths.
+| Rationale | Provides a formal, flexible mechanism to encode spatial structure (graph, cellular, vector, metric, datatype) that underpins Spatial Web reasoning and interoperable navigation.
 |===
 
 [[hsml-hyperspace-properties-summary]]
@@ -28,58 +29,425 @@ hsml:Hyperspace provides the formal structure for expressing the spatial logic t
 |===
 | Predicate | JSON(-LD) name | Description | Cardinality
 
-| <<property-hyperspace-type,rdf:type>> | @type | Declares the resource as an instance of +hsml:Hyperspace+. | 1..n
+| <<property-hyperspace-type,rdf:type>> | @type | Declares the resource as an instance of +hspace:Hyperspace+. | 1..n
+| <<property-hyperspace-swid,hspace:swid>> | swid | Spatial Web Identifier conformant with W3C DID Core. | 1
 
-| <<property-hyperspace-swid,hsml:swid>> | swid | Spatial Web Identifier conformant with W3C DID Core. | 1
+| <<property-hyperspace-hasElementType,hspace:hasElementType>> | hasElementType | Type of elements (points/objects or literal datatype) in the Hyperspace. | 1
+| <<property-hyperspace-hasArrowType,hspace:hasArrowType>> | hasArrowType | Type of atomic one-step relations (“arrows”) in the Hyperspace. | 1
+| <<property-hyperspace-hasPathType,hspace:hasPathType>> | hasPathType | Type(s) of composed paths recognised in the Hyperspace. | 0..n
 
-| <<property-hyperspace-hasElementType,hsml:hasElementType>>| hasElementType | Specifies the type of elements (points) represented in the Hyperspace. | 1
+| <<property-hyperspace-spatialProperty,hspace:spatialProperty>> | spatialProperty | Property on Domain entities/element nodes that carries the concrete element value/reference (e.g., geometry, cell index, embedding). | 0..1
+| <<property-hyperspace-elementValue,hspace:elementValue>> | elementValue | Datatype property on *element nodes* that carries the element’s literal value when +hasElementType+ is a class. | 0..1
 
-| <<property-hyperspace-hasPathType,hsml:hasPathType>> | hasPathType | Specifies the type of paths (relationships) in the Hyperspace. | 1
+| <<property-hyperspace-arrowProperty,hspace:arrowProperty>> | arrowProperty | RDF predicate used for atomic steps (direct edges). | 0..1
+| <<property-hyperspace-arrowClass,hspace:arrowClass>> | arrowClass | Class used to represent reified edges as resources. | 0..1
+| <<property-hyperspace-arrowSource,hspace:arrowSource>> | arrowSource | With +arrowClass+, property denoting the edge’s source **element node**. | 0..1
+| <<property-hyperspace-arrowTarget,hspace:arrowTarget>> | arrowTarget | With +arrowClass+, property denoting the edge’s target **element node**. | 0..1
+| <<property-hyperspace-arrowSourceValue,hspace:arrowSourceValue>> | arrowSourceValue | With literal elements, datatype property on a reified edge giving the **source literal**. | 0..1
+| <<property-hyperspace-arrowTargetValue,hspace:arrowTargetValue>> | arrowTargetValue | With literal elements, datatype property on a reified edge giving the **target literal**. | 0..1
+| <<property-hyperspace-arrowAnnotationProperty,hspace:arrowAnnotationProperty>> | arrowAnnotationProperty | Edge annotation properties (weights, labels, probabilities). | 0..n
 
-| <<property-hyperspace-hasOperation,hsml:hasOperation>> | hasOperation | Declares supported operations or transformations for the Hyperspace. | 0..n
+| <<property-hyperspace-pathClass,hspace:pathClass>> | pathClass | Class used to represent explicit paths as first-class resources. | 0..n
+| <<property-hyperspace-pathStep,hspace:pathStep>> | pathStep | With +pathClass+, ordered property listing the steps of a path (elements or edges per profile). | 0..1
+| <<property-hyperspace-startsAt,hspace:startsAt>> | startsAt | With +pathClass+, links a path to its start **element node**. | 0..1
+| <<property-hyperspace-endsAt,hspace:endsAt>> | endsAt | With +pathClass+, links a path to its end **element node**. | 0..1
+| <<property-hyperspace-onPath,hspace:onPath>> | onPath | Membership predicate indicating that an element node lies on a given path instance. | 0..1
+| <<property-hyperspace-startsAtValue,hspace:startsAtValue>> | startsAtValue | With literal elements, datatype property on a path resource giving the start literal. | 0..1
+| <<property-hyperspace-endsAtValue,hspace:endsAtValue>> | endsAtValue | With literal elements, datatype property on a path resource giving the end literal. | 0..1
+| <<property-hyperspace-stepList,hspace:stepList>> | stepList | With literal elements, object property to an +rdf:List+ of ordered **literals** forming the path. | 0..1
+| <<property-hyperspace-pathLiteral,hspace:pathLiteral>> | pathLiteral | Serialized whole-path literal (e.g., JSON array, WKT LINESTRING). | 0..1
+| <<property-hyperspace-pathValueProperty,hspace:pathValueProperty>> | pathValueProperty | Datatype property that carries the serialized *path geometry/value* on the path resource (e.g., +geo:asWKT+, +geo:asGeoJSON+). | 0..1
+
+| <<property-hyperspace-elementShape,hspace:elementShape>> | elementShape | SHACL shape selecting/validating elements for this Hyperspace. | 0..n
+| <<property-hyperspace-pathShape,hspace:pathShape>> | pathShape | SHACL shape validating arrows/paths for this Hyperspace. | 0..n
+
+| <<property-hyperspace-hasOperation,hspace:hasOperation>> | hasOperation | Declares supported operations/transformations for the Hyperspace. | 0..n
+|===
+
+[[property-hyperspace-type]]
+===== Property: rdf:type
+[cols="2,4"]
+|===
+| Property | rdf:type
+| IRI | http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+| JSON name | @type
+| Requirement Level | Mandatory
+| Cardinality | 1..n
+| Domain | hspace:Hyperspace
+| Range | hspace:Hyperspace
+| Definition | Declares the resource as an instance of +hspace:Hyperspace+.
+|===
+
+[[property-hyperspace-swid]]
+===== Property: swid
+[cols="2,4"]
+|===
+| Property | hspace:swid
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#swid
+| JSON name | swid
+| Requirement Level | Mandatory
+| Cardinality | 1
+| Domain | hspace:Hyperspace
+| Range | xsd:string (W3C DID)
+| Definition | Spatial Web Identifier conformant with W3C DID Core.
 |===
 
 [[property-hyperspace-hasElementType]]
 ===== Property: hasElementType
 [cols="2,4"]
 |===
-| Property | hsml:hasElementType
-| IRI | https://schema.spatialwebfoundation.org/hsml#hasElementType
+| Property | hspace:hasElementType
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#hasElementType
 | JSON name | hasElementType
 | Requirement Level | Mandatory
 | Cardinality | 1
-| Domain | hsml:Hyperspace
+| Domain | hspace:Hyperspace
 | Range | rdfs:Class or datatype IRI
 | Definition | Identifies the type of elements (points) comprising the Hyperspace.
-| Usage Note | Examples: geo:Geometry, hsml:Cell, geo:Intersection, WKT literals.
+| Usage Note | Examples: +geo:Geometry+, +hspace:Cell+, +xsd:integer+, +geo:wktLiteral+, +ex:TensorLiteral+.
+|===
+
+[[property-hyperspace-hasArrowType]]
+===== Property: hasArrowType
+[cols="2,4"]
+|===
+| Property | hspace:hasArrowType
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#hasArrowType
+| JSON name | hasArrowType
+| Requirement Level | Mandatory
+| Cardinality | 1
+| Domain | hspace:Hyperspace
+| Range | owl:ObjectProperty IRI or rdfs:Class
+| Definition | Identifies the atomic one-step relation (“arrow”) between elements.
+| Usage Note | Use an object property IRI for direct triples (e.g., +ex:connect+); use a class IRI for reified edges (e.g., +ex:Edge+ with +hspace:arrowSource+/+hspace:arrowTarget+ or +hspace:arrowSourceValue+/+hspace:arrowTargetValue+).
 |===
 
 [[property-hyperspace-hasPathType]]
 ===== Property: hasPathType
 [cols="2,4"]
 |===
-| Property | hsml:hasPathType
-| IRI | https://schema.spatialwebfoundation.org/hsml#hasPathType
+| Property | hspace:hasPathType
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#hasPathType
 | JSON name | hasPathType
-| Requirement Level | Mandatory
-| Cardinality | 1
-| Domain | hsml:Hyperspace
-| Range | rdfs:Class or ObjectProperty IRI
-| Definition | Identifies the type of paths or relationships between elements in the Hyperspace.
-| Usage Note | Examples: hsml:adjacentTo, ex:connectsTo, ex:routeSegment.
+| Requirement Level | Optional
+| Cardinality | 0..n
+| Domain | hspace:Hyperspace
+| Range | rdfs:Class or datatype IRI
+| Definition | Identifies the type(s) of composed paths (finite compositions of arrows) recognised in the Hyperspace.
+| Usage Note | Examples: +hspace:Path+, +ex:Route+, +vector:LineString+, +geo:wktLiteral+ (LINESTRING).
+|===
+
+[[property-hyperspace-spatialProperty]]
+===== Property: spatialProperty
+[cols="2,4"]
+|===
+| Property | hspace:spatialProperty
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#spatialProperty
+| JSON name | spatialProperty
+| Requirement Level | Recommended (Mandatory when +hasElementType+ is a datatype or value must be dereferenced)
+| Cardinality | 0..1
+| Domain | hspace:Hyperspace
+| Range | rdf:Property IRI
+| Definition | Declares the RDF property on Domain entities/element nodes that carries the concrete element value/reference.
+| Usage Note | Examples: +geo:hasGeometry+ / +geo:asWKT+ (vector), +hspace:cell+ (DGGS index), +ex:embedding+ (tensor literal).
+|===
+
+[[property-hyperspace-elementValue]]
+===== Property: elementValue
+[cols="2,4"]
+|===
+| Property | hspace:elementValue
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#elementValue
+| JSON name | elementValue
+| Requirement Level | Optional (RECOMMENDED when +hasElementType+ is a class and element nodes carry a literal)
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:hasElementType+ (when class)
+| Range | rdfs:Literal (typed with the Hyperspace’s element datatype)
+| Definition | Carries the literal value on an element node, enabling arrows between resources instead of literals.
+|===
+
+[[property-hyperspace-arrowProperty]]
+===== Property: arrowProperty
+[cols="2,4"]
+|===
+| Property | hspace:arrowProperty
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#arrowProperty
+| JSON name | arrowProperty
+| Requirement Level | Optional
+| Cardinality | 0..1
+| Domain | hspace:Hyperspace
+| Range | owl:ObjectProperty IRI
+| Definition | Declares the RDF predicate used to encode atomic steps (arrows) as direct edges.
+| Usage Note | Enables reachability via SPARQL property paths, e.g., +( ?arrow )+.
+|===
+
+[[property-hyperspace-arrowClass]]
+===== Property: arrowClass
+[cols="2,4"]
+|===
+| Property | hspace:arrowClass
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#arrowClass
+| JSON name | arrowClass
+| Requirement Level | Optional
+| Cardinality | 0..1
+| Domain | hspace:Hyperspace
+| Range | rdfs:Class
+| Definition | Declares the class used to represent reified edges (arrows-as-resources).
+| Usage Note | Pair with +hspace:arrowSource+/+hspace:arrowTarget+ (resource endpoints) or +hspace:arrowSourceValue+/+hspace:arrowTargetValue+ (literal endpoints).
+|===
+
+[[property-hyperspace-arrowSource]]
+===== Property: arrowSource
+[cols="2,4"]
+|===
+| Property | hspace:arrowSource
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#arrowSource
+| JSON name | arrowSource
+| Requirement Level | Optional (Required when +arrowClass+ with resource endpoints)
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:arrowClass+
+| Range | owl:ObjectProperty IRI
+| Definition | Property whose object is the **source element node** of a reified edge.
+|===
+
+[[property-hyperspace-arrowTarget]]
+===== Property: arrowTarget
+[cols="2,4"]
+|===
+| Property | hspace:arrowTarget
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#arrowTarget
+| JSON name | arrowTarget
+| Requirement Level | Optional (Required when +arrowClass+ with resource endpoints)
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:arrowClass+
+| Range | owl:ObjectProperty IRI
+| Definition | Property whose object is the **target element node** of a reified edge.
+|===
+
+[[property-hyperspace-arrowSourceValue]]
+===== Property: arrowSourceValue
+[cols="2,4"]
+|===
+| Property | hspace:arrowSourceValue
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#arrowSourceValue
+| JSON name | arrowSourceValue
+| Requirement Level | Optional (Required when +arrowClass+ with literal endpoints)
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:arrowClass+
+| Range | rdfs:Literal (typed with +hspace:hasElementType+)
+| Definition | The source endpoint literal of a reified edge when elements remain literals.
+|===
+
+[[property-hyperspace-arrowTargetValue]]
+===== Property: arrowTargetValue
+[cols="2,4"]
+|===
+| Property | hspace:arrowTargetValue
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#arrowTargetValue
+| JSON name | arrowTargetValue
+| Requirement Level | Optional (Required when +arrowClass+ with literal endpoints)
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:arrowClass+
+| Range | rdfs:Literal (typed with +hspace:hasElementType+)
+| Definition | The target endpoint literal of a reified edge when elements remain literals.
+|===
+
+[[property-hyperspace-arrowAnnotationProperty]]
+===== Property: arrowAnnotationProperty
+[cols="2,4"]
+|===
+| Property | hspace:arrowAnnotationProperty
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#arrowAnnotationProperty
+| JSON name | arrowAnnotationProperty
+| Requirement Level | Optional
+| Cardinality | 0..n
+| Domain | hspace:Hyperspace
+| Range | rdf:Property IRI
+| Definition | Lists properties expected as edge annotations (e.g., weight, cost, label, probability).
+|===
+
+[[property-hyperspace-pathClass]]
+===== Property: pathClass
+[cols="2,4"]
+|===
+| Property | hspace:pathClass
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#pathClass
+| JSON name | pathClass
+| Requirement Level | Optional
+| Cardinality | 0..n
+| Domain | hspace:Hyperspace
+| Range | rdfs:Class
+| Definition | Declares the class used to represent explicit paths as first-class resources.
+| Usage Note | Examples: +ex:Route+, +cell:CellChain+, +vector:Trajectory+, +vector:LineString+.
+|===
+
+[[property-hyperspace-pathStep]]
+===== Property: pathStep
+[cols="2,4"]
+|===
+| Property | hspace:pathStep
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#pathStep
+| JSON name | pathStep
+| Requirement Level | Optional (Required when explicit steps are enumerated)
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:pathClass+
+| Range | owl:ObjectProperty IRI
+| Definition | Ordered property listing the steps of a path. Steps MAY reference elements, edges, or step nodes per profile.
+|===
+
+[[property-hyperspace-startsAt]]
+===== Property: startsAt
+[cols="2,4"]
+|===
+| Property | hspace:startsAt
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#startsAt
+| JSON name | startsAt
+| Requirement Level | Optional (Recommended for explicit paths)
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:pathClass+
+| Range | owl:ObjectProperty IRI
+| Definition | Links an explicit path to its start **element node** (L1).
+|===
+
+[[property-hyperspace-endsAt]]
+===== Property: endsAt
+[cols="2,4"]
+|===
+| Property | hspace:endsAt
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#endsAt
+| JSON name | endsAt
+| Requirement Level | Optional (Recommended for explicit paths)
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:pathClass+
+| Range | owl:ObjectProperty IRI
+| Definition | Links an explicit path to its end **element node** (L1).
+|===
+
+[[property-hyperspace-onPath]]
+===== Property: onPath
+[cols="2,4"]
+|===
+| Property | hspace:onPath
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#onPath
+| JSON name | onPath
+| Requirement Level | Optional
+| Cardinality | 0..1
+| Domain | hspace:Hyperspace
+| Range | owl:ObjectProperty IRI
+| Definition | Membership predicate indicating that an element node lies on a given explicit path.
+|===
+
+[[property-hyperspace-startsAtValue]]
+===== Property: startsAtValue
+[cols="2,4"]
+|===
+| Property | hspace:startsAtValue
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#startsAtValue
+| JSON name | startsAtValue
+| Requirement Level | Optional (Required for literal-end paths)
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:pathClass+
+| Range | rdfs:Literal (typed with +hspace:hasElementType+)
+| Definition | Start literal of a path resource when elements are literals (L2).
+|===
+
+[[property-hyperspace-endsAtValue]]
+===== Property: endsAtValue
+[cols="2,4"]
+|===
+| Property | hspace:endsAtValue
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#endsAtValue
+| JSON name | endsAtValue
+| Requirement Level | Optional (Required for literal-end paths)
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:pathClass+
+| Range | rdfs:Literal (typed with +hspace:hasElementType+)
+| Definition | End literal of a path resource when elements are literals (L2).
+|===
+
+[[property-hyperspace-stepList]]
+===== Property: stepList
+[cols="2,4"]
+|===
+| Property | hspace:stepList
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#stepList
+| JSON name | stepList
+| Requirement Level | Optional (RECOMMENDED for L2 when explicit steps are needed)
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:pathClass+
+| Range | rdf:List
+| Definition | Points to an RDF Collection whose items are ordered **literals** typed with the Hyperspace’s element datatype (L2).
+|===
+
+[[property-hyperspace-pathLiteral]]
+===== Property: pathLiteral
+[cols="2,4"]
+|===
+| Property | hspace:pathLiteral
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#pathLiteral
+| JSON name | pathLiteral
+| Requirement Level | Optional
+| Cardinality | 0..1
+| Domain | Class declared via +hspace:pathClass+
+| Range | rdfs:Literal
+| Definition | Single serialized literal encoding the entire path (e.g., JSON array, WKT LINESTRING, polyline).
+|===
+
+[[property-hyperspace-pathValueProperty]]
+===== Property: pathValueProperty
+[cols="2,4"]
+|===
+| Property | hspace:pathValueProperty
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#pathValueProperty
+| JSON name | pathValueProperty
+| Requirement Level | Optional
+| Cardinality | 0..1
+| Domain | hspace:Hyperspace
+| Range | rdf:Property IRI
+| Definition | Declares the datatype property that carries the serialized *path geometry/value* on a path resource.
+| Usage Note | Typical values: +geo:asWKT+, +geo:asGeoJSON+, +ex:asJSON+.
+|===
+
+[[property-hyperspace-elementShape]]
+===== Property: elementShape
+[cols="2,4"]
+|===
+| Property | hspace:elementShape
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#elementShape
+| JSON name | elementShape
+| Requirement Level | Optional
+| Cardinality | 0..n
+| Domain | hspace:Hyperspace
+| Range | sh:NodeShape
+| Definition | References a SHACL shape that selects/validates which entities qualify as elements under this Hyperspace.
+|===
+
+[[property-hyperspace-pathShape]]
+===== Property: pathShape
+[cols="2,4"]
+|===
+| Property | hspace:pathShape
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#pathShape
+| JSON name | pathShape
+| Requirement Level | Optional
+| Cardinality | 0..n
+| Domain | hspace:Hyperspace
+| Range | sh:NodeShape or sh:PropertyShape
+| Definition | References a SHACL shape that validates arrows/paths (e.g., endpoint classes, step coherence, allowed adjacency).
 |===
 
 [[property-hyperspace-hasOperation]]
 ===== Property: hasOperation
 [cols="2,4"]
 |===
-| Property | hsml:hasOperation
-| IRI | https://schema.spatialwebfoundation.org/hsml#hasOperation
+| Property | hspace:hasOperation
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#hasOperation
 | JSON name | hasOperation
 | Requirement Level | Optional
 | Cardinality | 0..n
-| Domain | hsml:Hyperspace
-| Range | hsml:Operation
-| Definition | Declares supported operations (e.g., subspace extraction, routing) for the Hyperspace.
-| Usage Note | Allows formal declaration of operations for validation, queries, or tooling.
+| Domain | hspace:Hyperspace
+| Range | hspace:Operation
+| Definition | Declares supported operations (e.g., reachability, subspace extraction, routing, metric evaluation) for the Hyperspace.
+| Usage Note | Each operation SHOULD reference which mappings it consumes (e.g., +hspace:arrowProperty+, +hspace:pathClass+).
 |===
+
