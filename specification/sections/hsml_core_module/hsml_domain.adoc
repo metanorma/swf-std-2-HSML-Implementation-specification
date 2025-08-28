@@ -1,181 +1,116 @@
-[[hspace-hyperspace]]
-=== Class: hspace:Hyperspace
+[[core-domain]]
+=== Class: core:Domain
 
-The class +hspace:Hyperspace+ realizes the HYPERSPACE concept in IEEE P2874 as a Domain-attached spatial structure
-that declares **element**, **arrow**, and optionally **path** types, enabling navigation (adjacency, connectivity),
-reasoning, and operations across heterogeneous Domains (graph, cellular, vector, metric, datatype spaces).
+The class core:Domain realizes the DOMAIN concept, defined in the Spatial Web ontology as an ENTITY with identity through time endowed with rights and credentials. It represents a sphere of knowledge, influence, or ACTIVITY.
+
+As a foundational element, core:Domain provides the structure for all entities that have a persistent identity as their defining essence. It serves as a distinct container for people, places, things, and concepts, allowing reality to be described from multiple perspectives and through correlated hierarchies. Domains are hierarchical in nature, allowing for parent, child, and sibling relationships, and can be nested within one another to maintain coherence. They form a holarchy, where each domain is a self-contained whole (a holon) that can also be a constituent part of a larger domain.
 
 .Key Requirements
-* *Identity:* Every +hspace:Hyperspace+ SHALL possess a Spatial Web Identifier (+hspace:swid+).
-* *Element Typing:* Every +hspace:Hyperspace+ SHALL declare +hspace:hasElementType+.
-* *Arrow Typing:* Every +hspace:Hyperspace+ SHALL declare +hspace:hasArrowType+ (direct predicate or reified edge class).
-* *Path Typing:* A +hspace:Hyperspace+ MAY declare +hspace:hasPathType+ for explicit/serialized paths.
-* *Navigation Mapping:* A +hspace:Hyperspace+ MAY declare +hspace:arrowProperty+ when arrows are direct RDF edges.
 
-[[hspace-hyperspace-class]]
+* *Identity:* Every core:Domain SHALL possess a Spatial Web Identifier (core:swid).
+* *Typing:* Every core:Domain SHALL have a domainType attribute specifying its classification (e.g., Geographic, Concept, Agent, etc.).
+* *Authority:* Every core:Domain SHALL have a Domain Authority that governs its norms, terms, and contracts.
+* *Spatial Context:* A core:Domain MAY reference a HYPERSPACE to define its location, boundaries, or paths.
+* *Holonic Structure:* A core:Domain MAY be part of a parent domain via a holonic (part-whole) link to create nested and hierarchical structures.
+
+[[core-domain-class]]
 ==== Class Definition
 
-.Class Definition for hspace:Hyperspace
+.Class Definition for core:Domain
 [cols="1,3",options="header"]
 |===
-| RDF Class | hspace:Hyperspace
+| RDF Class | core:Domain
 | Is Abstract | No
-| Definition | A spatial structure attached to a Domain that defines relationships among its elements, supporting spatial reasoning, navigation, and operations.
-| Subclass Of | hspace:Entity
-| Usage Note | The Hyperspace declares the minimal algebra for navigation (elements, arrows, optional paths). Specialized modules (graph, vector, metric, cellular, datatype) extend semantics without altering the core.
-| Rationale | Provides a unified, interoperable abstraction for spatial/logical relations that underpins querying, validation, and cross-Domain composition in the Spatial Web.
+| Definition | An ENTITY with identity through time endowed with rights and credentials, representing a sphere of knowledge, influence, or ACTIVITY.
+| Subclass Of | core:Entity
+| Usage Note | Domains are used to partition the Spatial Web into manageable regions. For example, a "Metropolis Digital Twin" is a geographic Domain, while the "Regional Energy Grid" is a concept Domain. An AGENT is also a type of Domain.
+| Rationale | Provides a foundational, general-purpose mechanism for grouping entities. This enables the creation of scalable, hierarchical, and nested structures necessary for contextual awareness, governance, and decentralized administration in the Spatial Web.
 |===
 
-.Properties Summary for hspace:Hyperspace
+.Properties Summary for core:Domain
 [cols="2,2,4,2,1,2",options="header"]
 |===
-| Predicate (anchor) | JSON name | Description | Range | Card. | Req.
 
-| <<hspace-hyperspace-property-swid,hspace:swid>>
-| swid
-| Spatial Web Identifier conformant with W3C DID Core.
-| xsd:string
-| 1
-| Mandatory
-
-| <<hspace-hyperspace-property-hasElementType,hspace:hasElementType>>
-| hasElementType
-| Declares the type of elements (class or literal datatype) in the Hyperspace.
-| rdfs:Class or Datatype IRI
-| 1
-| Mandatory
-
-| <<hspace-hyperspace-property-hasArrowType,hspace:hasArrowType>>
-| hasArrowType
-| Declares the atomic one-step relation (“arrow”), either as a predicate IRI or a reified edge class.
-| owl:ObjectProperty IRI or rdfs:Class
-| 1
-| Mandatory
-
-| <<hspace-hyperspace-property-hasPathType,hspace:hasPathType>>
-| hasPathType
-| Declares recognized composed path type(s) (class or serialized datatype, e.g., LineString).
-| rdfs:Class or Datatype IRI
+| <<core-domain-property-hasSpace,core:hasSpace>>
+| hasSpace
+| Links the domain to the Hyperspace in which it applies or is located.
+| space:Hyperspace
 | 0..*
 | Optional
 
-| <<hspace-hyperspace-property-arrowProperty,hspace:arrowProperty>>
-| arrowProperty
-| When using direct RDF edges, identifies the predicate used for atomic steps.
-| owl:ObjectProperty IRI
+
+| <<core-domain-property-managedBy,core:managedBy>>
+| managedBy
+| Identifies the Domain Authority credentialed to define norms and govern the domain.
+| agent:Agent
+| 1..1
+| Mandatory
+
+| <<core-domain-property-partOf,rdfh:partOf>>
+| partOf
+| Establishes a holonic link, indicating this domain is a constituent part of a parent domain.
+| core:Domain
 | 0..1
 | Optional
-
-| <<hspace-hyperspace-property-hasOperation,hspace:hasOperation>>
-| hasOperation
-| Declares supported operations bound to this Hyperspace (e.g., reachability, routing).
-| hspace:Operation
-| 0..*
-| Optional
 |===
 
-[[hspace-hyperspace-properties]]
+[[core-domain-properties]]
 ==== Properties
 
-This section provides the detailed normative definitions for the properties of the +hspace:Hyperspace+ class.
-(Properties inherited from +hspace:Entity+ such as common labels are not redefined here.)
+This section provides the detailed normative definitions for the properties of the core:Domain class. (Properties inherited from core:Entity such as core:swid and schema:name are not redefined here).
 
-[[hspace-hyperspace-property-swid]]
-===== Property: swid
+[[core-domain-property-domainType]]
+===== Property: domainType
 
-.Property Definition: hspace:swid
+
+[[core-domain-property-hasSpace]]
+===== Property: hasSpace
+
+.Property Definition: core:hasSpace
 [cols="2,4"]
 |===
-| Property | hspace:swid
-| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#swid
-| JSON name | swid
+| Property | core:hasSpace
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/core#hasSpace
+| JSON name | hasSpace
+| Requirement Level| Optional
+| Cardinality| 0..*
+| Domain| core:Domain
+| Range| space:Hyperspace
+| Definition| Associates the domain with a HYPERSPACE, indicating the spatial boundary, location, or context in which the domain's rules and membership apply.
+| Usage Note| Essential for location-aware governance. For example, a geographic Domain is implicitly or explicitly associated with a location. The HYPERSPACE can be a geometry in Cartesian space or a range of values.
+|===
+
+
+[[core-domain-property-managedBy]]
+===== Property: managedBy
+
+.Property Definition: core:managedBy
+[cols="2,4"]
+|===
+| Property | core:managedBy
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/core#managedBy
+| JSON name | managedBy
 | Requirement Level | Mandatory
-| Cardinality | 1
-| Domain | hspace:Hyperspace
-| Range | xsd:string (W3C DID)
-| Definition | Spatial Web Identifier conformant with W3C DID Core.
+| Cardinality | 1..1
+| Domain | core:Domain
+| Range | agent:Agent
+| Definition | Identifies the Domain Authority: an entity credentialed to define the norms and terms under which contracts are created for AGENTS, ACTIVITIES, and CREDENTIALS within that Domain.
+| Usage Note| Every Spatial Web Domain SHALL have a Domain Authority. The managing agent is responsible for defining domain policies and governing the entities and activities within it.
 |===
 
-[[hspace-hyperspace-property-hasElementType]]
-===== Property: hasElementType
+[[core-domain-property-partOf]]
+===== Property: partOf
 
-.Property Definition: hspace:hasElementType
+.Property Definition: rdfh:partOf
 [cols="2,4"]
 |===
-| Property | hspace:hasElementType
-| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#hasElementType
-| JSON name | hasElementType
-| Requirement Level | Mandatory
-| Cardinality | 1
-| Domain | hspace:Hyperspace
-| Range | rdfs:Class or Datatype IRI
-| Definition | Identifies the type of elements comprising the Hyperspace.
-| Usage Note | Examples include +geo:Geometry+, +hspace:Cell+, +xsd:string+, +geo:wktLiteral+. If a datatype is used, paths/arrows may require reified mappings in profiles.
-|===
-
-[[hspace-hyperspace-property-hasArrowType]]
-===== Property: hasArrowType
-
-.Property Definition: hspace:hasArrowType
-[cols="2,4"]
-|===
-| Property | hspace:hasArrowType
-| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#hasArrowType
-| JSON name | hasArrowType
-| Requirement Level | Mandatory
-| Cardinality | 1
-| Domain | hspace:Hyperspace
-| Range | owl:ObjectProperty IRI or rdfs:Class
-| Definition | Declares the atomic one-step relation (“arrow”) connecting elements.
-| Usage Note | Use an object property IRI for direct edges (pair with +hspace:arrowProperty+). Use a class IRI for reified edges (paired with source/target predicates defined by the profile).
-|===
-
-[[hspace-hyperspace-property-hasPathType]]
-===== Property: hasPathType
-
-.Property Definition: hspace:hasPathType
-[cols="2,4"]
-|===
-| Property | hspace:hasPathType
-| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#hasPathType
-| JSON name | hasPathType
-| Requirement Level | Optional
-| Cardinality | 0..*
-| Domain | hspace:Hyperspace
-| Range | rdfs:Class or Datatype IRI
-| Definition | Identifies recognized composed path types (finite compositions of arrows), either as classes (e.g., +hspace:Path+, +ex:Route+) or serialized datatypes (e.g., +geo:wktLiteral+ LINESTRING).
-| Usage Note | When a datatype is used, the profile SHALL specify where the serialized value resides (e.g., a path value property on a carrier resource).
-|===
-
-[[hspace-hyperspace-property-arrowProperty]]
-===== Property: arrowProperty
-
-.Property Definition: hspace:arrowProperty
-[cols="2,4"]
-|===
-| Property | hspace:arrowProperty
-| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#arrowProperty
-| JSON name | arrowProperty
+| Property | rdfh:partOf
+| IRI | http://purl.org/rdfh/partOf
+| JSON name | partOf
 | Requirement Level | Optional
 | Cardinality | 0..1
-| Domain | hspace:Hyperspace
-| Range | owl:ObjectProperty IRI
-| Definition | Predicate used to encode atomic steps as direct RDF edges, enabling property-path navigation (e.g., +( ?arrow )+).
-| Usage Note | Omit when using reified edge classes; operations will bind to the declared edge class instead.
-|===
-
-[[hspace-hyperspace-property-hasOperation]]
-===== Property: hasOperation
-
-.Property Definition: hspace:hasOperation
-[cols="2,4"]
-|===
-| Property | hspace:hasOperation
-| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#hasOperation
-| JSON name | hasOperation
-| Requirement Level | Optional
-| Cardinality | 0..*
-| Domain | hspace:Hyperspace
-| Range | hspace:Operation
-| Definition | Declares supported operations or transformations (e.g., reachability, subspace extraction, routing) for this Hyperspace.
+| Domain | core:Domain
+| Range | core:Domain
+| Definition | Establishes a holonic or mereological (part-whole) link, indicating this domain is a constituent part of a parent domain.
+| Usage Note | This property is used to create nested and hierarchical domain structures. It allows for parent, child, and sibling relationships, enabling domains to maintain coherence while being contained within other domains.
 |===

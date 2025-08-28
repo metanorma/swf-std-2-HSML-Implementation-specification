@@ -173,3 +173,7 @@ serialize a concrete realization (e.g., a LineString or JSON sequence), without 
 ====
 *Conformance.* A profile that names a class in +hspace:hasPathType+ MAY use +hspace:Path+ directly or a subclass thereof (e.g., +ex:Route+, +vector:LineString+), applying the properties above as appropriate to the element representation (resource-based or literal-based).
 ====
+
+
+
+
