@@ -1,5 +1,5 @@
 [[core-concept]]
-=== core:Concept
+=== Class: core:Concept
 
 The class core:Concept realises the CONCEPT DOMAIN type as described in IEEE P2874 § 6.3.2.1.3:
 

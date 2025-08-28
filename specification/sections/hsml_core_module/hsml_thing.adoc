@@ -1,5 +1,5 @@
 [[core-thing]]
-=== core:Thing
+=== Class: core:Thing
 
 The class core:Thing realises the THING DOMAIN type defined in IEEE P2874 § 6.3.2.1.7:
 

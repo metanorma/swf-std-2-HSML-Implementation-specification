@@ -1,5 +1,5 @@
 [[core-spatialfeature]]
-==== core:SpatialFeature
+=== Class:  core:SpatialFeature
 
 The class core:SpatialFeature realises the SPATIAL FEATURE concept, corresponding to the GEOGRAPHIC DOMAIN type described in IEEE P2874 § 6.3.2.1.2:
 
@@ -14,7 +14,7 @@ The class core:SpatialFeature realises the SPATIAL FEATURE concept, correspondin
 * Geometry: A core:SpatialFeature SHOULD have at least one geometric representation linked via the geosparql:hasGeometry property.
 
 [[core-spatialfeature-class]]
-===== Class Definition
+==== Class Definition
 
 .Class Definition for core:SpatialFeature
 [cols="1,3",options="header"]

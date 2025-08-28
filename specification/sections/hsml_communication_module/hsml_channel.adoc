@@ -114,7 +114,7 @@ This class is a subclass of +hsml:Entity+, inheriting a +hsml:swid+ as its uniqu
 | *Usage Note* | This property allows for efficient upward traversal of the Channel hierarchy. The `0..1` cardinality enforces a strict tree structure, preventing a single channel from having multiple parents.
 |===
 
-=== Example 
+==== Example 
 
 .Example of a Channel with a Sub-Channel using DIDs
 [source,jsonl]

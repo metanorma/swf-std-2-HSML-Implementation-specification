@@ -1,5 +1,5 @@
 [[core-shaclcondition]]
-=== core:SHACLCondition
+=== Class:  core:SHACLCondition
 
 The class core:SHACLCondition is a concrete implementation of core:Condition that uses a SHACL shape for validation. It provides a standardized way to express constraints on the structure and values of RDF data.
 

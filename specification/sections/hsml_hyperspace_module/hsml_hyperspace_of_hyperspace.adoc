@@ -1,0 +1,86 @@
+[[hspace-hyperspace-of-hyperspace]]
+=== Class: hspace:HyperspaceOfHyperspace
+
++hspace:HyperspaceOfHyperspace+ is a **higher-order Hyperspace** whose **elements are themselves Hyperspaces**.
+It enables composition, federation, and holarchic organization of spaces (systems-of-systems), allowing navigation
+and operations to traverse relationships among multiple constituent Hyperspaces without collapsing their internal structure.
+
+[[hspace-hyperspace-of-hyperspace-class]]
+==== Class Definition
+
+[cols="1,3"]
+|===
+| RDF Class | +hspace:HyperspaceOfHyperspace+
+| Is Abstract | No
+| Definition | A Hyperspace whose element type is +hspace:Hyperspace+, supporting relations and composed paths among Hyperspaces (e.g., containment, interoperability, federation).
+| Subclass Of | hspace:Hyperspace
+| Usage Note | Use when modeling networks or hierarchies of Hyperspaces (e.g., regional grids aggregated into a national grid; organizational spaces federated into a sector space). Internal structures of member Hyperspaces remain intact and navigable via their own declarations.
+| Rationale | Provides a principled way to build **holarchies** and **federations** in the Spatial Web: spaces as elements of larger spaces, with clear separation of concerns and reusable navigation semantics.
+|===
+
+[[hspace-hyperspace-of-hyperspace-constraints]]
+==== Specialization Constraints (Normative)
+
+* **Element Type.** +hspace:hasElementType+ **MUST** be +hspace:Hyperspace+.
+* **Arrow Type.** +hspace:hasArrowType+ **MAY** denote relations **between Hyperspaces** (e.g., interoperability, containment, dependency).  
+  The specific predicate (if using direct edges) is given by +hspace:arrowProperty+; if using reified edges, profiles SHALL provide the edge class and endpoint predicates.
+* **Path Type.** +hspace:hasPathType+ **MAY** be declared to represent composed relations across multiple Hyperspaces (e.g., federation traversal).  
+  Path instances (if used) employ the standard **Path-class properties** (+hspace:startsAt+, +hspace:endsAt+, +hspace:pathStep+, etc.).
+
+[NOTE]
+====
+This class **reuses the same Hyperspace-level, Element-class, and Path-class property model** defined for +hspace:Hyperspace+.  
+The only additional constraint is that **elements are Hyperspaces**. Consequently, any path over this space is a chain of Hyperspaces, and any arrow relates one Hyperspace to another.
+====
+
+[[example-holarchy]]
+==== Example: Holarchy (Hyperspace of Hyperspaces)
+
+This example models a **higher-order Hyperspace** whose **elements are themselves Hyperspaces** (holons).  
+It preserves each member Hyperspace’s internal logic while expressing **whole–part** links across scales.
+
+* **What is modeled.** `ex:Holarchy` contains `ex:RoomSpace`, `ex:BuildingSpace`, `ex:DistrictSpace`, `ex:CitySpace`—each a `hspace:Hyperspace`.
+* **Arrow semantics.** `ex:containsHolon` is the **atomic arrow** (one step) relating Hyperspace → Hyperspace (Room → Building → District → City).  
+  Connectivity across levels is computed by arrow composition, e.g., `(ex:containsHolon)+`.
+* **Explicit path (optional).** `hspace:Path` records a composed traversal (with identity and lightweight metadata).  
+  It **complements** arrow-based navigation; arrows remain authoritative for reachability.
+
+[NOTE]
+====
+Conformance reminders:
+- The enclosing space sets `hspace:hasElementType = hspace:Hyperspace`.
+- The arrow mapping relates Hyperspace → Hyperspace (`hspace:hasArrowType` / `hspace:arrowProperty`).
+- If used, `hspace:Path` endpoints target Hyperspace instances.
+====
+
+[source,turtle]
+----
+@prefix hspace: <https://www.spatialwebfoundation.org/ns/hsml/hyperspace#> .
+@prefix ex:     <https://example.org/ns/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# Enclosing higher-order hyperspace: elements are Hyperspaces (holons)
+ex:Holarchy a hspace:HyperspaceOfHyperspace ;
+  hspace:hasElementType hspace:Hyperspace ;
+  hspace:hasArrowType   ex:containsHolon ;     # whole–part relation among hyperspaces
+  hspace:arrowProperty  ex:containsHolon ;
+  hspace:hasPathType    hspace:Path .
+
+# Member hyperspaces at different scales (each is a whole/part)
+ex:RoomSpace      a hspace:Hyperspace .
+ex:BuildingSpace  a hspace:Hyperspace .
+ex:DistrictSpace  a hspace:Hyperspace .
+ex:CitySpace      a hspace:Hyperspace .
+
+# Holarchic containment (arrows): Room ⟶ Building ⟶ District ⟶ City
+ex:RoomSpace     ex:containsHolon ex:BuildingSpace .
+ex:BuildingSpace ex:containsHolon ex:DistrictSpace .
+ex:DistrictSpace ex:containsHolon ex:CitySpace .
+
+# Optional explicit path: aggregation from Room to City through the holarchy
+ex:upwardAggregation a hspace:Path ;
+  hspace:startsAt ex:RoomSpace ;
+  hspace:endsAt   ex:CitySpace ;
+  hspace:pathStep ( ex:RoomSpace ex:BuildingSpace ex:DistrictSpace ex:CitySpace ) ;
+  ex:levelCount "4"^^xsd:integer .
+----

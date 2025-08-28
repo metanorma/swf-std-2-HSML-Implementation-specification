@@ -1,5 +1,5 @@
 [[core-condition]]
-=== core:Condition
+=== Class: core:Condition
 
 A core:Condition is an abstract class representing a logical condition that can be evaluated to be true or false.
 
