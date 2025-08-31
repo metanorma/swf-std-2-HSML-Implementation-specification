@@ -1,0 +1,176 @@
+[[metric-measure]]
+=== Class: metric:Measure (Optional)
+
+
+[[metric-measure-intro]]
+==== Introduction (Informative)
+
+<<metric-measure,metric:Measure>> represents the computed outcome of applying a specific <<metric-metric,metric:Metric>> to an ordered pair of elements: <<metric-measure-property-from,metric:from>> and <<metric-measure-property-to,metric:to>>. It is deliberately structure-neutral (works with vectors, geometries, strings, graphs, etc.) and polarity-neutral (covers both distances and similarities). The how of measurement (function, axioms, operands, units) lives in <<metric-metric,metric:Metric>>; the what (the numeric result and its context) lives in <<metric-measure,metric:Measure>>. This separation keeps declarations portable and engine-independent while making results easy to cache, audit, exchange, and reason over.
+
+===== Why a first-class metric:Measure?
+
+* Caching & performance. Persist kNN/range results or expensive pairwise evaluations to avoid recomputation across queries and sessions.
+
+* Audit & reproducibility. Record the value (<<metric-measure-property-value,metric:value>>), the metric used (<<metric-measure-property-wrtMetric,metric:wrtMetric>>), and optional unit (<<metric-measure-property-unit,metric:unit>>); link to provenance (e.g., prov:wasGeneratedBy) and implementation version (<<metric-metric-property-version,metric:functionVersion>>) for traceable, repeatable analytics.
+
+* Interchange & federation. Share precomputed measures between heterogeneous engines and domains without leaking internal encodings or storage choices.
+
+* Governance & evidence. Attach quantitative evidence to decisions/contracts in policy evaluation pipelines.
+
+* Evaluation & ML. Store gold standards or inferred pairs for model training, validation, active learning, and drift monitoring.
+
+===== Usage semantics
+
+* Operands. <<metric-measure-property-from,metric:from>> and <<metric-measure-property-to,metric:to>> may be resources or literals. When elements are resources, the metric can declare <<metric-metric-property-operandProperty,metric:operandProperty>> to extract the value it operates on (e.g., embeddings, WKT). When elements are literals, the literal itself is the operand and <<metric-metric-property-onType,metric:onType>> SHOULD be a datatype IRI.
+
+* Polarity & transforms. Polarity is determined by the referenced metric (<<metric-metric-property-polarity,metric:polarity>> = metric:Distance or metric:Similarity). Engines MAY normalize for ranking via <<metric-metric-property-monotoneTransform,metric:monotoneTransform>> (e.g., similarity→distance). Unless stated otherwise, the stored <<metric-measure-property-value,metric:value>> SHOULD be the native output of the metric prior to any downstream normalization.*
+
+* Typing & units. Prefer a numeric datatype consistent with the metric’s <<metric-metric-property-valueType,metric:valueType>> (e.g., xsd:double, xsd:decimal). Provide <<metric-measure-property-unit,metric:unit>> when the quantity is dimensional (e.g., meters, seconds) and consider <<metric-metric-property-scaleKind,metric:scaleKind>> / <<metric-metric-property-rangeMin,metric:rangeMin>> / <<metric-metric-property-rangeMax,metric:rangeMax>> for UI and validation hints.
+
+* Identity & lifecycle. Ephemeral results can be blank nodes. Persisted results SHOULD mint stable IRIs (e.g., a content hash over {metric, from, to, functionVersion, params} with a timestamp). Capture provenance (prov:*) when reproducibility or explainability matters.
+
+* Paths & aggregation. <<metric-measure,metric:Measure>> is pairwise by design. Path-level outcomes can be represented as additional metric:Measure instances whose endpoints denote the path start/end, with provenance pointing to the path and its <<metric-aggregator,metric:Aggregator>> (e.g., metric:Sum, metric:Max). Engines MAY also introduce a domain-specific path result class if needed.
+
+===== Interoperability notes
+
+* Works uniformly with any Hyperspace that declares metrics (see <<metric-metricspace,metric:MetricSpace>> and <<metric-metricspace-property-hasMetric,metric:hasMetric>> / <<metric-metricspace-property-defaultMetric,metric:defaultMetric>>).
+
+* Compatible with operation planning and evaluation (e.g., kNN, radius search, clustering, shortest path) without binding to a specific data model or algorithm.
+
+* Encourages consistent cross-system semantics through explicit references to functions (<<metric-metric-property-function,metric:function>>), versions (<<metric-metric-property-version,metric:functionVersion>>), units (<<metric-measure-property-unit,metric:unit>>), and axioms (<<metric-metric-property-kind,metric:kind>>).
+
+[[metric-measure-class]]
+==== Class Definition
+
+.Class Definition for metric:Measure
+[cols="1,3",options="header"]
+|===
+| RDF Class | metric:Measure
+| Is Abstract | No
+| Definition | A first-class pairwise measure (distance or similarity) computed under a specific metric:Metric.
+| Subclass Of | hspace:Entity
+| Usage Note | Useful for caching, provenance, audit, or exchanging computed distances/similarities. Use prov:wasGeneratedBy to link computation runs if desired.
+|===
+
+.Properties Summary for metric:Measure
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate (anchor) | JSON name | Description | Range | Card. | Req.
+
+| <<metric-measure-property-wrtMetric,metric:usingMetric>>
+| usingMetric
+| Links the measurement to the metric used.
+| metric:Metric
+| 1
+| Mandatory
+
+| <<metric-measure-property-from,metric:from>>
+| from
+| First element (resource or literal).
+| rdfs:Resource or rdfs:Literal
+| 1
+| Mandatory
+
+| <<metric-measure-property-to,metric:to>>
+| to
+| Second element (resource or literal).
+| rdfs:Resource or rdfs:Literal
+| 1
+| Mandatory
+
+| <<metric-measure-property-value,metric:value>>
+| value
+| Numeric value of the measure (datatype SHOULD match the metric’s metric:valueType when provided).
+| rdfs:Literal
+| 1
+| Mandatory
+
+| <<metric-measure-property-unit,metric:unit>>
+| unit
+| Unit of the measure value (if any).
+| IRI
+| 0..1
+| Optional
+
+| <<metric-measure-property-confidence,metric:confidence>>
+| confidence
+| Optional confidence in the computed value, in [0,1].
+| xsd:decimal
+| 0..1
+| Optional
+|===
+
+[[metric-measure-properties]]
+==== Properties (Measure)
+
+[[metric-measure-property-usingMetric]]
+===== Property: usingMetric
+[cols="2,4"]
+|===
+| Property | metric:usingMetric
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#usingMetric
+
+| Domain | metric:Measure
+| Range | metric:Metric
+| Definition | Associates the measurement with the metric definition used.
+|===
+
+[[metric-measure-property-from]]
+===== Property: from
+[cols="2,4"]
+|===
+| Property | metric:from
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#from
+
+| Domain | metric:Measure
+| Range | rdfs:Resource or rdfs:Literal
+| Definition | First element of the ordered pair.
+|===
+
+[[metric-measure-property-to]]
+===== Property: to
+[cols="2,4"]
+|===
+| Property | metric:to
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#to
+
+| Domain | metric:Measure
+| Range | rdfs:Resource or rdfs:Literal
+| Definition | Second element of the ordered pair.
+|===
+
+[[metric-measure-property-value]]
+===== Property: value
+[cols="2,4"]
+|===
+| Property | metric:value
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#value
+
+| Domain | metric:Measure
+| Range | rdfs:Literal (numeric)
+| Definition | Numeric value of the measurement.
+|===
+
+[[metric-measure-property-unit]]
+===== Property: unit (Optional)
+[cols="2,4"]
+|===
+| Property | metric:unit
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#unit
+
+| Domain | metric:Measure
+| Range | IRI
+| Definition | Unit for the reported value (when applicable).
+|===
+
+[[metric-measure-property-confidence]]
+===== Property: confidence (Optional)
+[cols="2,4"]
+|===
+| Property | metric:confidence
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#confidence
+
+| Domain | metric:Measure
+| Range | xsd:decimal
+| Definition | Confidence in [0,1] for the computed value (if provided by the engine).
+|===

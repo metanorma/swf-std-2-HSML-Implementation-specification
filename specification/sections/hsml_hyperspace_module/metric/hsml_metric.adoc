@@ -1,0 +1,439 @@
+[[metric-metric]]
+=== Class: metric:Metric
+
+Metrics are the backbone of quantitative reasoning in a Hyperspace.  
+They declare *how closeness, likeness, or difference is measured* between elements of a domain, enabling engines to evaluate k-nearest neighbor queries, range filters, clustering, and other operations consistently across heterogeneous data types.
+
+Unlike raw functions, a `metric:Metric` is a **declarative description**: it specifies the polarity (distance vs similarity), expected operand type, optional units and scale, theoretical bounds, and a reference to the computation plan.  
+This separation of *semantics* from *implementation* allows a metric definition to be portable across engines, reproducible across versions, and validatable via SHACL.
+
+Key design principles:
+
+* **Declarative, not imperative** — the ontology does not encode formulas but points to plans or algorithms while capturing semantic guarantees (e.g., symmetry, triangle inequality).
+* **Polarity-aware** — every metric must declare whether values are interpreted as distances (lower is better) or similarities (higher is better), ensuring uniform ranking and threshold semantics.
+* **Context-bound** — a metric may be attached to a Hyperspace (via `metric:hasMetric` or `metric:defaultMetric`) to make its applicability explicit.
+* **Extensible** — additional properties such as `metric:unit`, `metric:scaleKind`, `metric:monotoneTransform`, and `metric:aggregator` provide optional but powerful hints for engines, user interfaces, and interoperability.
+
+By elevating metrics to first-class declarative entities, HSML enables **predictable**, **portable**, and **semantically rich** measurement across the Spatial Web.
+
+[[metric-axioms]]
+==== Mathematical Guarantees (The Four Axioms)
+
+The boolean properties `nonNegative`, `identityOfIndiscernibles`, `symmetric`, and `triangleInequality` are more than just metadata; they are formal mathematical guarantees. When all four are true, the function is a true *metric*, which allows query engines and algorithms to make powerful assumptions and drastic optimizations. Declaring these guarantees enables a system to validate data, select the most efficient algorithms, and ensure logically consistent results.
+
+===== Non-Negativity
+:anchor: metric-metric-property-nonNegative
+_Property: `metric:nonNegative`_
+
+*Axiom:* The distance between two points is never negative. latexmath:[d(x, y) \ge 0].
+
+*Why it's needed:* This is a fundamental sanity check. It establishes a baseline where the minimum possible distance is zero. Algorithms that find shortest paths, like Dijkstra's, rely on this, as a negative distance would imply that traversing a path could somehow "reduce" the total cost, creating nonsensical loops.
+
+*Example -- Physical Distance:* The distance between two cities is always a positive number of miles or kilometers. The distance is 0 only if they are the same location.
+
+*When it's false:* A function measuring financial "distance" as `cost - revenue`. Traveling from A to B might cost $50 in fuel but generate $80 in profit, yielding a "distance" of -$30. This is a gain/loss function, not a metric.
+
+===== Identity of Indiscernibles
+:anchor: metric-metric-property-identity
+_Property: `metric:identityOfIndiscernibles`_
+
+*Axiom:* The distance between two points is zero *if and only if* they are the same point. latexmath:[d(x, y) = 0 \iff x = y].
+
+*Why it's needed:* This axiom guarantees that every element is unique. It ensures that if two items are indistinguishable (zero distance apart), they are identical. This is crucial for search, deduplication, and clustering, as it prevents distinct items from being treated as the same.
+
+*Example -- Hamming Distance:* For strings of equal length, this is the number of positions at which the characters are different. `d("apple", "apply")` is 1, but `d("apple", "apple")` is 0. The distance is only zero if the strings are identical.
+
+*When it's false (Pseudometric):* A function measuring the distance between two people as 0 if they live in the same city. Alice and Bob might have a distance of 0, but they are clearly not the same person.
+
+===== Symmetry
+:anchor: metric-metric-property-symmetric
+_Property: `metric:symmetric`_
+
+*Axiom:* The distance from x to y is the same as the distance from y to x. latexmath:[d(x, y) = d(y, x)].
+
+*Why it's needed:* Symmetry allows algorithms to assume reciprocity. This dramatically simplifies problems in routing, graph analysis, and indexing. For example, a query engine only needs to compute or store a distance matrix in one direction, cutting storage requirements nearly in half.
+
+*Example -- Euclidean Distance:* The straight-line distance between your home and the library is the same as the distance from the library back to your home.
+
+*When it's false (Quasimetric):* Driving time in a city with one-way streets. The route from the office to the gym might be 10 minutes, but the return trip could be 20 minutes due to different required paths.
+
+===== Triangle Inequality
+:anchor: metric-metric-property-triangle
+_Property: `metric:triangleInequality`_
+
+*Axiom:* The direct path between two points is always the shortest. latexmath:[d(x, z) \le d(x, y) + d(y, z)].
+
+*Why it's needed:* This is the most powerful axiom for *optimization*. It guarantees that there are no "wormholes" or unexpected shortcuts. Search algorithms (like A*) and indexing structures (like M-trees) rely on this principle to prune massive portions of the search space.
+
+*Example -- Geographic Distance:* The direct flight distance from New York to Tokyo is never greater than the distance of flying from New York to London and then from London to Tokyo.
+
+*When it's false (Semimetric):* Airline ticket pricing. A flight from New York to London might be $500, and a flight from London to Tokyo might be $600. However, a direct flight from New York to Tokyo could cost $1800, which is far greater than the sum of the two legs ($1100).
+
+
+
+[[metric-metric-class]]
+==== Class Definition
+
+.Class Definition for metric:Metric
+[cols="1,3",options="header"]
+|===
+| RDF Class | metric:Metric
+| Is Abstract | No
+| Definition | A reusable definition of a distance or similarity function over elements (or their operand values) of a Hyperspace.
+| Subclass Of | owl:Thing
+| Usage Note | Bind to a Hyperspace via metric:hasMetric / metric:defaultMetric. Operations (e.g., kNN) consume this declaration to evaluate measures.
+| Rationale | Enables portable, implementation-independent metric evaluation across engines and data encodings.
+|===
+
+.Properties Summary for metric:Metric
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate (anchor) | JSON name | Description | Range | Card. | Req.
+
+| <<metric-metric-property-kind,metric:kind>>
+| kind
+| Axiom flavor of the measure (Metric, Pseudometric, Quasimetric, Semimetric, Dissimilarity).
+| metric:MetricKind
+| 1
+| Mandatory
+
+| <<metric-metric-property-polarity,metric:polarity>>
+| polarity
+| Declares whether values are distance (lower is better) or similarity (higher is better).
+| metric:Polarity
+| 1
+| Mandatory
+
+| <<metric-metric-property-onType,metric:onType>>
+| onType
+| Declares the element type (class) or literal datatype the metric expects.
+| rdfs:Class or Datatype (IRI)
+| 1
+| Mandatory
+
+| <<metric-metric-property-operandProperty,metric:operandProperty>>
+| operandProperty
+| Property from a resource element to its operand value (e.g., embedding vector, WKT, color triple).
+| rdf:Property (IRI)
+| 0..1
+| Optional
+
+| <<metric-metric-property-valueType,metric:valueType>>
+| valueType
+| Datatype of operand and/or measure values used by the metric (e.g., xsd:decimal, xsd:double, rdf:JSON).
+| rdfs:Datatype
+| 0..1
+| Optional
+
+| <<metric-metric-property-unit,metric:unit>>
+| unit
+| Unit of the measure (e.g., a QUDT/UCUM IRI).
+| IRI
+| 0..1
+| Optional
+
+| <<metric-metric-property-scaleKind,metric:scaleKind>>
+| scaleKind
+| Optional measurement scale hint (Ratio, Interval, Ordinal, UnitInterval).
+| metric:ScaleKind
+| 0..1
+| Optional
+
+| <<metric-metric-property-rangeMin,metric:rangeMin>>
+| rangeMin
+| Minimum attainable value (e.g., 0).
+| xsd:decimal
+| 0..1
+| Optional
+
+| <<metric-metric-property-rangeMax,metric:rangeMax>>
+| rangeMax
+| Maximum attainable value (e.g., 1 for normalized similarity).
+| xsd:decimal
+| 0..1
+| Optional
+
+| <<metric-metric-property-function,metric:function>>
+| function
+| IRI of an algorithm/function/plan that computes the measure (e.g., prov:Plan, code/service IRI).
+| IRI
+| 0..*
+| Optional
+
+| <<metric-metric-property-version,metric:functionVersion>>
+| functionVersion
+| Version tag for the referenced function/plan to ensure reproducibility.
+| xsd:string
+| 0..1
+| Optional
+
+| <<metric-metric-property-aggregator,metric:aggregator>>
+| aggregator
+| Default path aggregation for step-wise costs (e.g., metric:Sum, metric:Max).
+| metric:Aggregator
+| 0..1
+| Optional
+
+| <<metric-metric-property-edgeWeightProperty,metric:edgeWeightProperty>>
+| edgeWeightProperty
+| Edge/step property to read precomputed weights for this metric (overrides metric:weightProperty on the space).
+| rdf:Property (IRI)
+| 0..1
+| Optional
+
+| <<metric-metric-property-monotoneTransform,metric:monotoneTransform>>
+| monotoneTransform
+| Monotone mapping (IRI) to convert distance↔similarity or re-scale (e.g., f(d)=1/(1+d), f(s)=1−s).
+| IRI
+| 0..1
+| Optional
+
+| <<metric-metric-property-symmetric,metric:symmetric>>
+| symmetric
+| Whether d(x,y)=d(y,x). Defaults TRUE for metrics.
+| xsd:boolean
+| 0..1
+| Optional
+
+| <<metric-metric-property-identity,metric:identityOfIndiscernibles>>
+| identityOfIndiscernibles
+| Whether d(x,y)=0 ⇒ x=y. Defaults TRUE for metrics.
+| xsd:boolean
+| 0..1
+| Optional
+
+| <<metric-metric-property-triangle,metric:triangleInequality>>
+| triangleInequality
+| Whether d(x,z) ≤ d(x,y)+d(y,z). Defaults TRUE for metrics.
+| xsd:boolean
+| 0..1
+| Optional
+
+| <<metric-metric-property-nonNegative,metric:nonNegative>>
+| nonNegative
+| Whether values are guaranteed ≥ 0. Defaults TRUE.
+| xsd:boolean
+| 0..1
+| Optional
+|===
+
+[[metric-metric-properties]]
+==== Properties (Metric)
+
+[[metric-metric-property-kind]]
+===== Property: kind
+[cols="2,4"]
+|===
+| Property | metric:kind
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#kind
+
+| Domain | metric:Metric
+| Range | metric:MetricKind
+| Definition | Tags the axiom flavor (e.g., metric:Metric, metric:Pseudometric).
+|===
+
+[[metric-metric-property-polarity]]
+===== Property: polarity
+[cols="2,4"]
+|===
+| Property | metric:polarity
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#polarity
+
+| Domain | metric:Metric
+| Range | metric:Polarity
+| Definition | Declares whether the metric yields distance (lower is better) or similarity (higher is better).
+|===
+
+[[metric-metric-property-onType]]
+===== Property: onType
+[cols="2,4"]
+|===
+| Property | metric:onType
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#onType
+
+| Domain | metric:Metric
+| Range | rdfs:Class or Datatype (IRI)
+| Definition | Declares the expected element class (resource elements) or literal datatype (literal elements) over which the metric operates.
+|===
+
+[[metric-metric-property-operandProperty]]
+===== Property: operandProperty (Optional)
+[cols="2,4"]
+|===
+| Property | metric:operandProperty
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#operandProperty
+
+| Domain | metric:Metric
+| Range | rdf:Property (IRI)
+| Definition | If elements are resources, names the property that yields the operand value used by the metric (e.g., ex:embedding, geo:asWKT, vector:asArray).
+| Usage Note | Omit when elements are literals of the declared metric:onType; the literal itself is the operand.
+|===
+
+[[metric-metric-property-valueType]]
+===== Property: valueType (Optional)
+[cols="2,4"]
+|===
+| Property | metric:valueType
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#valueType
+
+| Domain | metric:Metric
+| Range | rdfs:Datatype
+| Definition | Datatype of operands and/or distance/similarity values used by the metric (e.g., xsd:decimal, xsd:double, rdf:JSON).
+|===
+
+[[metric-metric-property-unit]]
+===== Property: unit (Optional)
+[cols="2,4"]
+|===
+| Property | metric:unit
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#unit
+
+| Domain | metric:Metric
+| Range | IRI (e.g., QUDT/OM/UCUM)
+| Definition | Unit associated with the measure values (when applicable).
+|===
+
+[[metric-metric-property-scaleKind]]
+===== Property: scaleKind (Optional)
+[cols="2,4"]
+|===
+| Property | metric:scaleKind
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#scaleKind
+
+| Domain | metric:Metric
+| Range | metric:ScaleKind
+| Definition | Optional hint about the measurement scale (e.g., Ratio for distances; UnitInterval for normalized similarities).
+|===
+
+[[metric-metric-property-rangeMin]]
+===== Property: rangeMin (Optional)
+[cols="2,4"]
+|===
+| Property | metric:rangeMin
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#rangeMin
+
+| Domain | metric:Metric
+| Range | xsd:decimal
+| Definition | Theoretical or enforced minimum of the measure domain.
+|===
+
+[[metric-metric-property-rangeMax]]
+===== Property: rangeMax (Optional)
+[cols="2,4"]
+|===
+| Property | metric:rangeMax
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#rangeMax
+
+| Domain | metric:Metric
+| Range | xsd:decimal
+| Definition | Theoretical or enforced maximum of the measure domain (e.g., 1.0 for normalized similarity).
+|===
+
+[[metric-metric-property-function]]
+===== Property: function (Optional)
+[cols="2,4"]
+|===
+| Property | metric:function
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#function
+
+| Domain | metric:Metric
+| Range | IRI
+| Definition | Identifies an algorithm, plan, or service endpoint that evaluates the metric (e.g., prov:Plan, API/operation IRI).
+|===
+
+[[metric-metric-property-version]]
+===== Property: functionVersion (Optional)
+[cols="2,4"]
+|===
+| Property | metric:functionVersion
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#functionVersion
+
+| Domain | metric:Metric
+| Range | xsd:string
+| Definition | Version string for the referenced function/plan (for reproducibility).
+|===
+
+[[metric-metric-property-aggregator]]
+===== Property: aggregator (Optional)
+[cols="2,4"]
+|===
+| Property | metric:aggregator
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#aggregator
+
+| Domain | metric:Metric
+| Range | metric:Aggregator
+| Definition | Default aggregator for composing step costs into a path cost (e.g., sum, max). Engines MAY override at operation time.
+|===
+
+[[metric-metric-property-edgeWeightProperty]]
+===== Property: edgeWeightProperty (Optional)
+[cols="2,4"]
+|===
+| Property | metric:edgeWeightProperty
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#edgeWeightProperty
+
+| Domain | metric:Metric
+| Range | rdf:Property (IRI)
+| Definition | Names a property on edges/steps that carries precomputed weights for this metric (overrides space-level metric:weightProperty).
+|===
+
+[[metric-metric-property-monotoneTransform]]
+===== Property: monotoneTransform (Optional)
+[cols="2,4"]
+|===
+| Property | metric:monotoneTransform
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#monotoneTransform
+
+| Domain | metric:Metric
+| Range | IRI
+| Definition | Identifies a monotone mapping to invert polarity or re-scale results (e.g., distance→similarity via f(d)=1/(1+d); similarity→distance via f(s)=1−s)).
+| Usage Note | The target of this IRI MAY be a prov:Plan, code function, or math expression resource.
+|===
+
+[[metric-metric-property-symmetric]]
+===== Property: symmetric (Optional)
+[cols="2,4"]
+|===
+| Property | metric:symmetric
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#symmetric
+
+| Domain | metric:Metric
+| Range | xsd:boolean
+| Definition | Indicates whether the measure is symmetric.
+|===
+
+[[metric-metric-property-identity]]
+===== Property: identityOfIndiscernibles (Optional)
+[cols="2,4"]
+|===
+| Property | metric:identityOfIndiscernibles
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#identityOfIndiscernibles
+
+| Domain | metric:Metric
+| Range | xsd:boolean
+| Definition | Indicates whether d(x,y)=0 implies x=y.
+|===
+
+[[metric-metric-property-triangle]]
+===== Property: triangleInequality (Optional)
+[cols="2,4"]
+|===
+| Property | metric:triangleInequality
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#triangleInequality
+
+| Domain | metric:Metric
+| Range | xsd:boolean
+| Definition | Indicates whether the triangle inequality holds.
+|===
+
+[[metric-metric-property-nonNegative]]
+===== Property: nonNegative (Optional)
+[cols="2,4"]
+|===
+| Property | metric:nonNegative
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#nonNegative
+
+| Domain | metric:Metric
+| Range | xsd:boolean
+| Definition | Indicates whether values are guaranteed to be non-negative (typical for distances).
+|===

@@ -1,0 +1,26 @@
+[[vector-vectorspace]]
+=== Class: vector:VectorSpace
+
+The class `vector:VectorSpace` realizes the **VECTOR SPACE** concept in HSML Hyperspace,  
+defined as a set of elements (vectors/points) that can be linearly combined using scalar coefficients over a field.  
+
+Vector spaces generalize geometric spaces and serve as the mathematical foundation for metric, normed, and inner product spaces.  
+They are essential for modeling positions, transformations, embeddings, and higher-dimensional structures in the Spatial Web.
+
+==== Characteristics
+
+* A Vector Space is a **Hyperspace** — it inherits composable paths and element types.  
+* It is also a **MetricSpace** — since vector spaces can be equipped with norms or inner products that induce metrics.  
+* Elements are vectors (points) that may be represented by coordinates in a basis.  
+* Paths correspond to vector shifts or linear combinations.  
+* A Vector Space always has a distinguished origin (zero vector). (Affine spaces lack this property and are not subclasses of VectorSpace.)
+
+==== Design Principles
+
+* **Abstraction** — The definition applies independently of dimension or coordinate system.  
+* **Extensibility** — Subclasses refine additional structures:  
+  - `vector:NormedVectorSpace` (adds length/norm)  
+  - `vector:InnerProductSpace` (adds dot product, angles)  
+  - `vector:EuclideanSpace` (a finite-dimensional inner product space with standard norm).  
+* **Compatibility** — Vector Spaces integrate seamlessly with GeoSPARQL geometries, embeddings, and CRS-defined coordinates.  
+* **Semantic Portability** — Engines can reason about dimension, basis, and operations independently of storage format.

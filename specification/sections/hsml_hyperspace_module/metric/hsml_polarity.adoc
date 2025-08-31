@@ -1,0 +1,105 @@
+
+[[metric-polarity]]
+=== Class: metric:Polarity
+
+<<metric-polarity,metric:Polarity>> captures the ordering semantics of measures produced by a <<metric-metric,metric:Metric>>. It tells engines whether lower values are better (<<metric-distance,metric:Distance>>) or higher values are better (<<metric-similarity,metric:Similarity>>). Polarity is attached to a metric via <<metric-metric-property-polarity,metric:polarity>> and is intentionally decoupled from both metric axioms (see <<metric-metrickind,metric:MetricKind>>) and the computation plan (see <<metric-metric-property-function,metric:function>>). This separation lets systems perform uniform ranking, thresholding, pruning, and planning across heterogeneous metrics without knowing the metric’s internal math.
+
+Polarity also coordinates with optional scale hints and bounds declared on the metric (see <<metric-metric-property-scaleKind,metric:scaleKind>>, <<metric-metric-property-rangeMin,metric:rangeMin>>, <<metric-metric-property-rangeMax,metric:rangeMax>>) so UIs and algorithms can choose consistent comparators, normalize scores, and validate thresholds. When conversions are needed—such as consuming a similarity where a distance is expected or vice-versa—engines may apply the declared monotone transform (see <<metric-metric-property-monotoneTransform,metric:monotoneTransform>>) while preserving order.
+
+Polarity is mandatory for metrics (enforced by SHACL), ensuring that operations like kNN, range queries, and top-k selection behave predictably. Note that <<metric-measure,metric:Measure>> remains polarity-neutral: the interpretation of a stored measurement is taken from its associated metric via <<metric-measure-property-usingMetric,metric:usingMetric>>.
+
+[[metric-polarity-class]]
+==== Class Definition
+
+.Class Definition for metric:Polarity
+[cols="1,3",options="header"]
+|===
+| RDF Class | metric:Polarity
+| Is Abstract | No
+| Definition | Vocabulary class whose instances tag whether a measure behaves as a distance (lower-is-better) or a similarity (higher-is-better).
+| Subclass Of | owl:Thing
+| Usage Note | Used as the range of <<metric-metric-property-polarity,metric:polarity>> on <<metric-metric,metric:Metric>> to declare the intended ordering of values and to guide ranking, thresholding, and conversion via <<metric-metric-property-monotoneTransform,metric:monotoneTransform>>.
+| Rationale | Separates numeric ordering semantics from metric axioms (see <<metric-metrickind,metric:MetricKind>>) and from the computation plan (see <<metric-metric-property-function,metric:function>>), enabling uniform treatment of distances and similarities.
+|===
+
+[[metric-polarity-instances]]
+==== Instances
+
+[cols="1,3",options="header"]
+|===
+| Individual | Description
+
+| <<metric-distance,metric:Distance>>
+| Polarity tag indicating distance semantics: lower values indicate greater closeness; typical domains are ratio-scaled and non-negative. Often paired with aggregators such as <<metric-aggregator,metric:Aggregator>> = <<metric-sum,metric:Sum>>.
+
+| <<metric-similarity,metric:Similarity>>
+| Polarity tag indicating similarity semantics: higher values indicate greater likeness; often normalized to <<metric-scalekind,metric:UnitInterval>> with optional bounds supplied via <<metric-metric-property-rangeMin,metric:rangeMin>> / <<metric-metric-property-rangeMax,metric:rangeMax>>.
+|===
+
+[[metric-distance]]
+===== Individual: metric:Distance
+
+[cols="1,3",options="header"]
+|===
+| RDF Individual | metric:Distance
+| Type | metric:Polarity
+| Definition | Declares that measurements produced by a metric are interpreted as distances (lower is better).
+|===
+
+[[metric-similarity]]
+===== Individual: metric:Similarity
+
+[cols="1,3",options="header"]
+|===
+| RDF Individual | metric:Similarity
+| Type | metric:Polarity
+| Definition | Declares that measurements produced by a metric are interpreted as similarities (higher is better).
+|===
+
+[[metric-polarity-class]]
+==== Class Definition
+
+.Class Definition for metric:Polarity
+[cols="1,3",options="header"]
+|===
+| RDF Class | metric:Polarity
+| Is Abstract | No
+| Definition | Vocabulary class whose instances tag whether a measure behaves as a distance (lower-is-better) or a similarity (higher-is-better).
+| Subclass Of | owl:Thing
+| Usage Note | Used as the range of <<metric-metric-property-polarity,metric:polarity>> on <<metric-metric,metric:Metric>> to declare the intended ordering of values and to guide ranking, thresholding, and conversion via <<metric-metric-property-monotoneTransform,metric:monotoneTransform>>.
+| Rationale | Separates numeric ordering semantics from metric axioms (see <<metric-metrickind,metric:MetricKind>>) and from the computation plan (see <<metric-metric-property-function,metric:function>>), enabling uniform treatment of distances and similarities.
+|===
+
+[[metric-polarity-instances]]
+==== Instances
+
+[cols="1,3",options="header"]
+|===
+| Individual | Description
+
+| <<metric-distance,metric:Distance>>
+| Polarity tag indicating distance semantics: lower values indicate greater closeness; typical domains are ratio-scaled and non-negative. Often paired with aggregators such as <<metric-aggregator,metric:Aggregator>> = <<metric-sum,metric:Sum>>.
+
+| <<metric-similarity,metric:Similarity>>
+| Polarity tag indicating similarity semantics: higher values indicate greater likeness; often normalized to <<metric-scalekind,metric:UnitInterval>> with optional bounds supplied via <<metric-metric-property-rangeMin,metric:rangeMin>> / <<metric-metric-property-rangeMax,metric:rangeMax>>.
+|===
+
+[[metric-distance]]
+===== Individual: metric:Distance
+
+[cols="1,3",options="header"]
+|===
+| RDF Individual | metric:Distance
+| Type | metric:Polarity
+| Definition | Declares that measurements produced by a metric are interpreted as distances (lower is better).
+|===
+
+[[metric-similarity]]
+===== Individual: metric:Similarity
+
+[cols="1,3",options="header"]
+|===
+| RDF Individual | metric:Similarity
+| Type | metric:Polarity
+| Definition | Declares that measurements produced by a metric are interpreted as similarities (higher is better).
+|===
