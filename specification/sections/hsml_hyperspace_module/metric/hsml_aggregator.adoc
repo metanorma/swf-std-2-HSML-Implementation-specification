@@ -1,0 +1,99 @@
+[[metric-aggregator]]
+=== Class: metric:Aggregator
+
+A `metric:Aggregator` defines **how step-level measures are combined into a path-level measure**.  
+In HSML Hyperspaces (graphs, cellular spaces, vector paths), a path consists of multiple segments. To evaluate the overall cost, distance, or similarity of a path, step measures must be aggregated.
+
+The `metric:Aggregator` provides a declarative, machine-readable way to specify:
+* **Operation** (`metric:op`) – associative binary operator (sum, max, product, lexicographic).
+* **Identity** (`metric:identity`) – neutral element for the operation.
+* **Commutativity** (`metric:commutative`) – whether operands can be reordered.
+* **Parameters** (`metric:parameter`) – structured bindings (e.g., `p` for Lp norms, `weights` for weighted sums).
+
+This ensures **interoperability, optimization, and validation** across engines.
+
+
+[[metric-aggregator-class]]
+==== Class Definition
+
+.Class Definition for metric:Aggregator
+[cols="1,3",options="header"]
+|===
+| RDF Class | metric:Aggregator
+| Is Abstract | No
+| Definition | Declarative monoid for composing step measures into a path measure.
+| Subclass Of | hspace:Entity
+| Usage Note | Hyperspatial Engines may provide optimized implementations for standard aggregators.
+|===
+
+
+[[metric-aggregator-properties]]
+==== Properties Summary (Aggregator)
+
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON name | Description | Range | Card. | Req.
+
+| <<metric-aggregator-op,metric:op>> | op
+| Operation IRI (associative binary operator). | IRI | 1 | Mandatory
+
+| <<metric-aggregator-identity,metric:identity>> | identity
+| Identity element (neutral value for the operation). | rdfs:Literal | 0..1 | Optional
+
+| <<metric-aggregator-commutative,metric:commutative>> | commutative
+| Whether the operation is commutative. | xsd:boolean | 0..1 | Optional
+
+| <<metric-aggregator-parameter,metric:parameter>> | parameter
+| One or more structured parameters configuring the op. | metric:Parameter | 0..* | Optional
+|===
+
+
+
+[[metric-aggregator-op]]
+===== Property: op
+[cols="1,3",options="header"]
+|===
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#op
+| Domain | metric:Aggregator
+| Range | IRI
+| Definition | Identifies the associative binary operation used for aggregation.
+| Why it matters | Engines require the algebraic operation to compute path measures deterministically.
+| Examples | `sw:sum`, `sw:max`, `sw:product`, `sw:lexicographic`
+|===
+
+[[metric-aggregator-identity]]
+===== Property: identity
+[cols="1,3",options="header"]
+|===
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#identity
+| Domain | metric:Aggregator
+| Range | rdfs:Literal
+| Definition | Neutral element for the operation.
+| Why it matters | Enables valid evaluation of zero-length paths and ensures algebraic closure.
+| Examples | Sum → `0`; Product → `1`; Max → `-INF`
+|===
+
+[[metric-aggregator-commutative]]
+===== Property: commutative
+[cols="1,3",options="header"]
+|===
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#commutative
+| Domain | metric:Aggregator
+| Range | xsd:boolean
+| Definition | Indicates if operand order affects the result.
+| Why it matters | Guides algorithmic optimization (parallelism, reordering).
+| Examples | Sum → `true`; Max → `true`; Lexicographic → `false`
+|===
+
+[[metric-aggregator-parameter]]
+===== Property: parameter
+[cols="1,3",options="header"]
+|===
+| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#parameter
+| Domain | metric:Aggregator
+| Range | metric:Parameter
+| Definition | Associates the aggregator with one or more structured parameters.
+| Why it matters | Makes configuration machine-readable, disambiguating free-form literals.
+| Examples | Lp norm (`p=2`); Weighted sum (`weights=[0.3,0.7]`)
+|===
+

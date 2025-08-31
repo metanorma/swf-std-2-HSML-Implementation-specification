@@ -1,6 +1,17 @@
 [[metric-metricspace]]
 === Class: metric:MetricSpace
 
+A `metric:MetricSpace` is a specialization of `hspace:Hyperspace` that **equips a domain with quantitative semantics**.  
+While a Hyperspace already defines elements, paths, and their connectivity, a MetricSpace adds the notion of **distance or similarity functions**.  
+
+This enables:
+* **Quantitative reasoning** – e.g., nearest neighbor search, clustering, radius queries.  
+* **Comparative analysis** – measuring similarity between embeddings, geometries, or categorical features.  
+* **Path evaluation** – computing shortest paths, least-cost routes, or similarity-based traversals.  
+
+By separating **structural relationships** (adjacency, connectivity) from **metric semantics**, HSML supports **portable and engine-independent computations** across graphs, cellular grids, and vector spaces.  In IEEE P2874 terms, this corresponds to the requirement that a Hyperspace may declare one or more **Metrics** to enable interoperable spatial and similarity-based operations.  
+
+
 [[metric-metricspace-class]]
 ==== Class Definition
 

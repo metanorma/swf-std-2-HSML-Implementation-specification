@@ -103,5 +103,5 @@ TopologicalSpaces are not limited to geometry — they capture **adjacency and c
 
 
 
-The TopologicalSpace Module captures **adjacency and neighborhood semantics** without relying on coordinates or metrics.  
+To summarize, the TopologicalSpace Module captures **adjacency and neighborhood semantics** without relying on coordinates or metrics.  
 It provides the structural foundation for representing **Polygons, LineStrings, Spheres, and beyond** as elements, enabling **qualitative reasoning, boundary logic, and region-based navigation** in HSML.

@@ -49,3 +49,11 @@ Prefix. metric:
 | <<metric-scalekind,metric:ScaleKind>> (Vocabulary)
 | Optional measurement scale hint: metric:Ratio, metric:Interval, metric:Ordinal, metric:UnitInterval.
 |===
+
+include::hsml_metric_space.adoc[leveloffset=+1]
+
+include::hsml_metric.adoc[leveloffset=+1]
+include::hsml_measure.adoc[leveloffset=+1]
+include::hsml_aggregator.adoc[leveloffset=+1]
+include::hsml_polarity.adoc[leveloffset=+1]
+
