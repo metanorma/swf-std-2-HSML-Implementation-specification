@@ -55,7 +55,7 @@ discovered, and governed across contexts.
 [.text-center]
 --
 [[fig-hyperspace-domain]]
-.Figure – Hyperspace and Domain in the Spatial Web
+.Hyperspace and Domain in the Spatial Web
 image::../images/domain-hyperspace.png[width=600]
 --
 
