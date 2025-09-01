@@ -103,7 +103,7 @@ This modular architecture enables **plug-and-play deployment**: implementers can
 --
 [[fig-hsml-core-modules]]
 .HSML Core Model and Modules with Hyperspace Submodules
-image::../images/hsml_core_modules.png[width=800,align=center]
+image::../images/hsml_core_modules.png[width=600,align=center]
 --
 
 === Extension Mechanisms
