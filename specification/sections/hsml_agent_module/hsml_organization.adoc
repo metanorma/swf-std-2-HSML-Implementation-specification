@@ -12,22 +12,14 @@ hsml:Organization represents collective actors—such as companies, institutions
 [[hsml-organization-class]]
 ==== Class Definition
 
+.Class Definition for +hsml:Organization+
 [cols="1,3"]
 |===
 | RDF Class | +hsml:Organization+
 | Is Abstract | No
 | Definition | A collective group comprising Agents and/or Person under common governance, capable of issuing Contracts, Credentials, and norms.
-| Subclass Of | hsml:Agent
+| Subclass Of | agt:Agent
 | Usage Note | Organizations model collective entities that issue norms, govern Agents, and manage subordinate domains.
 | Rationale | Provides the framework for representing legal entities, institutions, or other collective actors essential to polycentric governance and domain hierarchy in the Spatial Web.
 |===
 
-[[hsml-organization-props]]
-==== Properties
-
-[cols="1,1,3,1",options="header"]
-|===
-| Predicate             | IRI                                                             | Description                                                                                           | Cardinality
-
-
-|===

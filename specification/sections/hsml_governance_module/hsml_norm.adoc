@@ -34,6 +34,7 @@ Policies must reference one or more Norms via `gov:hasNorm`.
 [[gov-norm-summary]]
 ==== Properties Summary
 
+.Properties Summary for `gov:Norm`
 [cols="2,2,4,2,1,2",options="header"]
 |===
 | Predicate | JSON-LD name | Description | Range | Cardinality | Requirement

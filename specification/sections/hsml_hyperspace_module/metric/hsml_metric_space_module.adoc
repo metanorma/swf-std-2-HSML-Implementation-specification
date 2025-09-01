@@ -1,5 +1,5 @@
 [[metric-module]]
-=== Metric Space Submodule (metric:)
+=== Metric Space Submodule
 
 The Metric Space Submodule provides metric-aware, format-agnostic hooks that work with any element or path encoding chosen via the core hspace: mappings. It adds distance/similarity semantics without imposing a particular geometry, graph model, or storage format, and integrates cleanly with Vector, Graph, Cellular, Concept, or custom domains.
 
@@ -24,6 +24,7 @@ Prefix. metric:
 [[metric-normative-classes]]
 ==== Normative Classes
 
+.Class Summary for Metric Module
 [cols="1,3",options="header"]
 |===
 | Class | Description
