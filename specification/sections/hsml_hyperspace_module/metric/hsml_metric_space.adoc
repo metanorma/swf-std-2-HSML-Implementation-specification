@@ -58,6 +58,8 @@ By separating **structural relationships** (adjacency, connectivity) from **metr
 
 [[metric-metricspace-property-hasMetric]]
 ===== Property: hasMetric
+
+.Property Definition: metric:hasMetric
 [cols="2,4"]
 |===
 | Property | metric:hasMetric
@@ -70,6 +72,8 @@ By separating **structural relationships** (adjacency, connectivity) from **metr
 
 [[metric-metricspace-property-defaultMetric]]
 ===== Property: defaultMetric
+
+.Property Definition: metric:defaultMetric
 [cols="2,4"]
 |===
 | Property | metric:defaultMetric
@@ -82,6 +86,8 @@ By separating **structural relationships** (adjacency, connectivity) from **metr
 
 [[metric-metricspace-property-weightProperty]]
 ===== Property: weightProperty (Optional)
+
+.Property Definition: metric:weightProperty
 [cols="2,4"]
 |===
 | Property | metric:weightProperty

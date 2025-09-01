@@ -20,7 +20,7 @@ These requirements ensure that activities based on schemas are machine-checkable
 [[act-activityschema-class]]
 ==== Class Definition
 
-.Class Definition for `act:ActivitySchema```
+.Class Definition for `act:ActivitySchema`
 [cols="1,3",options="header"]
 |===
 | RDF Class | `act:ActivitySchema`

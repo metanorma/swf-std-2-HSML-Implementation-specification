@@ -24,6 +24,7 @@ https://www.spatialwebfoundation.org/ns/hsml
 Each module extends this base by declaring its own sub-namespace.
 Hyperspace modules form a hierarchy: `hyperspace` is the root, and its specializations (metric, topo, vector, cell,...) extend from it.
 
+.HSML Normative Namespaces
 [options="header"]
 |===
 |Prefix |Namespace IRI |Module
@@ -42,6 +43,7 @@ Hyperspace modules form a hierarchy: `hyperspace` is the root, and its specializ
 
 ==== External Referenced Namespaces
 
+.External Referenced Namespaces
 [options="header"]
 |===
 |Prefix |Namespace IRI |Source

@@ -101,6 +101,8 @@
 
 [[metric-measure-property-usingMetric]]
 ===== Property: usingMetric
+
+.Property Definition: metric:usingMetric
 [cols="2,4"]
 |===
 | Property | metric:usingMetric
@@ -113,6 +115,8 @@
 
 [[metric-measure-property-from]]
 ===== Property: from
+
+.Property Definition: metric:from
 [cols="2,4"]
 |===
 | Property | metric:from
@@ -125,6 +129,8 @@
 
 [[metric-measure-property-to]]
 ===== Property: to
+
+.Property Definition: metric:to
 [cols="2,4"]
 |===
 | Property | metric:to
@@ -137,6 +143,8 @@
 
 [[metric-measure-property-value]]
 ===== Property: value
+
+.Property Definition: metric:value
 [cols="2,4"]
 |===
 | Property | metric:value
@@ -149,6 +157,8 @@
 
 [[metric-measure-property-unit]]
 ===== Property: unit (Optional)
+
+.Property Definition: metric:unit
 [cols="2,4"]
 |===
 | Property | metric:unit
@@ -161,6 +171,8 @@
 
 [[metric-measure-property-confidence]]
 ===== Property: confidence (Optional)
+
+.Property Definition: metric:confidence
 [cols="2,4"]
 |===
 | Property | metric:confidence

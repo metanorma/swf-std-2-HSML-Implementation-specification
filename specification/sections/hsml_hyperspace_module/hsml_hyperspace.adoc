@@ -13,9 +13,11 @@ This specification separates:
 * **Element-class properties** — properties used *on the element instances* (when elements are resources).
 * **Path-class properties** — properties used *on path instances* (explicit paths), including variants for literal-based elements.
 
+
 [[hsml-hyperspace-class]]
 ==== Class Definition
 
+.Class Definition for hspace:Hyperspace
 [cols="1,3"]
 |===
 | RDF Class | +hspace:Hyperspace+
@@ -29,6 +31,7 @@ This specification separates:
 [[hsml-hyperspace-properties-summary]]
 ==== Hyperspace Properties (Summary)
 
+.Properties Summary for +hspace:Hyperspace+
 [cols="1,1,3,1",options="header"]
 |===
 | Predicate | JSON(-LD) name | Description | Cardinality
@@ -47,6 +50,7 @@ This specification separates:
 
 [[property-hyperspace-type]]
 ===== Property: rdf:type
+.Property Definition: `rdf:type`
 [cols="2,4"]
 |===
 | Property | rdf:type
@@ -59,22 +63,12 @@ This specification separates:
 | Definition | Declares the resource as an instance of +hspace:Hyperspace+.
 |===
 
-[[property-hyperspace-swid]]
-===== Property: swid
-[cols="2,4"]
-|===
-| Property | hspace:swid
-| IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace#swid
-| JSON name | swid
-| Requirement Level | Mandatory
-| Cardinality | 1
-| Domain | hspace:Hyperspace
-| Range | xsd:string (W3C DID)
-| Definition | Spatial Web Identifier conformant with W3C DID Core.
-|===
+
 
 [[property-hyperspace-hasElementType]]
 ===== Property: hasElementType
+
+.Property Definition: hspace:hasElementType
 [cols="2,4"]
 |===
 | Property | hspace:hasElementType
@@ -90,6 +84,8 @@ This specification separates:
 
 [[property-hyperspace-hasArrowType]]
 ===== Property: hasArrowType
+
+.Property Definition: hspace:hasArrowType
 [cols="2,4"]
 |===
 | Property | hspace:hasArrowType
@@ -105,6 +101,7 @@ This specification separates:
 
 [[property-hyperspace-hasPathType]]
 ===== Property: hasPathType
+.Property Definition: hspace:hasPathType
 [cols="2,4"]
 |===
 | Property | hspace:hasPathType
@@ -120,6 +117,8 @@ This specification separates:
 
 [[property-hyperspace-arrowProperty]]
 ===== Property: arrowProperty
+
+.Property Definition: hspace:arrowProperty
 [cols="2,4"]
 |===
 | Property | hspace:arrowProperty
@@ -135,6 +134,8 @@ This specification separates:
 
 [[property-hyperspace-hasOperation]]
 ===== Property: hasOperation
+
+.Property Definition: hspace:hasOperation
 [cols="2,4"]
 |===
 | Property | hspace:hasOperation
@@ -162,6 +163,7 @@ They are not properties of the `hspace:Hyperspace` resource itself.
 [[hspace-elementclass-properties-summary]]
 ==== Summary
 
+.Properties Summary for Element-Class
 [cols="1,1,3,1",options="header"]
 |===
 | Predicate | JSON(-LD) name | Description | Cardinality
@@ -171,6 +173,8 @@ They are not properties of the `hspace:Hyperspace` resource itself.
 
 [[hspace-elementclass-property-elementValue]]
 ===== Property: elementValue
+
+.Property Definition: hspace:elementValue
 [cols="2,4"]
 |===
 | Property | hspace:elementValue
@@ -193,6 +197,7 @@ They are not properties of the `hspace:Hyperspace` resource itself.
 [[hspace-pathclass-properties-summary]]
 ==== Summary
 
+.Properties Summary for Path-Class
 [cols="1,1,3,1",options="header"]
 |===
 | Predicate | JSON(-LD) name | Description | Cardinality
@@ -210,6 +215,7 @@ They are not properties of the `hspace:Hyperspace` resource itself.
 
 [[hspace-pathclass-property-startsAt]]
 ===== Property: startsAt
+.Property Definition: hspace:startsAt
 [cols="2,4"]
 |===
 | Property | hspace:startsAt
@@ -224,6 +230,7 @@ They are not properties of the `hspace:Hyperspace` resource itself.
 
 [[hspace-pathclass-property-endsAt]]
 ===== Property: endsAt
+.Property Definition: hspace:endsAt
 [cols="2,4"]
 |===
 | Property | hspace:endsAt
@@ -238,6 +245,7 @@ They are not properties of the `hspace:Hyperspace` resource itself.
 
 [[hspace-pathclass-property-pathStep]]
 ===== Property: pathStep
+.Property Definition: hspace:pathStep
 [cols="2,4"]
 |===
 | Property | hspace:pathStep
@@ -252,6 +260,7 @@ They are not properties of the `hspace:Hyperspace` resource itself.
 
 [[hspace-pathclass-property-onPath]]
 ===== Property: onPath
+.Property Definition: hspace:onPath
 [cols="2,4"]
 |===
 | Property | hspace:onPath
@@ -266,6 +275,7 @@ They are not properties of the `hspace:Hyperspace` resource itself.
 
 [[hspace-pathclass-property-startsAtValue]]
 ===== Property: startsAtValue
+.Property Definition: hspace:startsAtValue
 [cols="2,4"]
 |===
 | Property | hspace:startsAtValue
@@ -280,6 +290,7 @@ They are not properties of the `hspace:Hyperspace` resource itself.
 
 [[hspace-pathclass-property-endsAtValue]]
 ===== Property: endsAtValue
+.Property Definition: hspace:endsAtValue
 [cols="2,4"]
 |===
 | Property | hspace:endsAtValue
@@ -294,6 +305,7 @@ They are not properties of the `hspace:Hyperspace` resource itself.
 
 [[hspace-pathclass-property-stepList]]
 ===== Property: stepList
+.Property Definition: hspace:stepList
 [cols="2,4"]
 |===
 | Property | hspace:stepList
@@ -308,6 +320,7 @@ They are not properties of the `hspace:Hyperspace` resource itself.
 
 [[hspace-pathclass-property-pathValue]]
 ===== Property: pathValue
+.Property Definition: hspace:pathValue
 [cols="2,4"]
 |===
 | Property | hspace:pathValue

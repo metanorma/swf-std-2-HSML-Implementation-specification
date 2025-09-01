@@ -222,6 +222,7 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-kind]]
 ===== Property: kind
+.Property Definition: metric:kind
 [cols="2,4"]
 |===
 | Property | metric:kind
@@ -234,6 +235,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-polarity]]
 ===== Property: polarity
+
+.Property Definition: metric:polarity
 [cols="2,4"]
 |===
 | Property | metric:polarity
@@ -246,6 +249,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-onType]]
 ===== Property: onType
+
+.Property Definition: metric:onType
 [cols="2,4"]
 |===
 | Property | metric:onType
@@ -258,6 +263,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-operandProperty]]
 ===== Property: operandProperty (Optional)
+
+.Property Definition: metric:operandProperty
 [cols="2,4"]
 |===
 | Property | metric:operandProperty
@@ -271,6 +278,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-valueType]]
 ===== Property: valueType (Optional)
+
+.Property Definition: metric:valueType
 [cols="2,4"]
 |===
 | Property | metric:valueType
@@ -283,6 +292,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-unit]]
 ===== Property: unit (Optional)
+
+.Property Definition: metric:unit
 [cols="2,4"]
 |===
 | Property | metric:unit
@@ -295,6 +306,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-scaleKind]]
 ===== Property: scaleKind (Optional)
+
+.Property Definition: metric:scaleKind
 [cols="2,4"]
 |===
 | Property | metric:scaleKind
@@ -307,6 +320,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-rangeMin]]
 ===== Property: rangeMin (Optional)
+
+.Property Definition: metric:rangeMin
 [cols="2,4"]
 |===
 | Property | metric:rangeMin
@@ -319,6 +334,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-rangeMax]]
 ===== Property: rangeMax (Optional)
+
+.Property Definition: metric:rangeMax
 [cols="2,4"]
 |===
 | Property | metric:rangeMax
@@ -331,6 +348,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-function]]
 ===== Property: function (Optional)
+
+.Property Definition: metric:function
 [cols="2,4"]
 |===
 | Property | metric:function
@@ -343,6 +362,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-version]]
 ===== Property: functionVersion (Optional)
+
+.Property Definition: metric:functionVersion
 [cols="2,4"]
 |===
 | Property | metric:functionVersion
@@ -355,6 +376,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-aggregator]]
 ===== Property: aggregator (Optional)
+
+.Property Definition: metric:aggregator
 [cols="2,4"]
 |===
 | Property | metric:aggregator
@@ -367,6 +390,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-edgeWeightProperty]]
 ===== Property: edgeWeightProperty (Optional)
+
+.Property Definition: metric:edgeWeightProperty
 [cols="2,4"]
 |===
 | Property | metric:edgeWeightProperty
@@ -379,6 +404,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-monotoneTransform]]
 ===== Property: monotoneTransform (Optional)
+
+.Property Definition: metric:monotoneTransform
 [cols="2,4"]
 |===
 | Property | metric:monotoneTransform
@@ -392,6 +419,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-symmetric]]
 ===== Property: symmetric (Optional)
+
+.Property Definition: metric:symmetric
 [cols="2,4"]
 |===
 | Property | metric:symmetric
@@ -404,6 +433,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-identity]]
 ===== Property: identityOfIndiscernibles (Optional)
+
+.Property Definition: metric:identityOfIndiscernibles
 [cols="2,4"]
 |===
 | Property | metric:identityOfIndiscernibles
@@ -416,6 +447,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-triangle]]
 ===== Property: triangleInequality (Optional)
+
+.Property Definition: metric:triangleInequality
 [cols="2,4"]
 |===
 | Property | metric:triangleInequality
@@ -428,6 +461,8 @@ _Property: `metric:triangleInequality`_
 
 [[metric-metric-property-nonNegative]]
 ===== Property: nonNegative (Optional)
+
+.Property Definition: metric:nonNegative
 [cols="2,4"]
 |===
 | Property | metric:nonNegative

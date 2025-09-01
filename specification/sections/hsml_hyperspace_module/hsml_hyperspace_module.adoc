@@ -191,6 +191,7 @@ This clause provides the normative definitions for the classes of the **Hyperspa
 
 ==== Summary of Hyperspace Module Classes
 
+.Summary of Hyperspace Module Classes
 [cols="1,3",options="header"]
 |===
 | Class | Description

@@ -25,6 +25,7 @@ Polarity is mandatory for metrics (enforced by SHACL), ensuring that operations 
 [[metric-polarity-instances]]
 ==== Instances
 
+.Instances for metric:Polarity
 [cols="1,3",options="header"]
 |===
 | Individual | Description
@@ -39,6 +40,7 @@ Polarity is mandatory for metrics (enforced by SHACL), ensuring that operations 
 [[metric-distance]]
 ===== Individual: metric:Distance
 
+.Instance Definition: metric:Distance
 [cols="1,3",options="header"]
 |===
 | RDF Individual | metric:Distance
@@ -49,6 +51,7 @@ Polarity is mandatory for metrics (enforced by SHACL), ensuring that operations 
 [[metric-similarity]]
 ===== Individual: metric:Similarity
 
+.Instance Definition: metric:Similarity
 [cols="1,3",options="header"]
 |===
 | RDF Individual | metric:Similarity

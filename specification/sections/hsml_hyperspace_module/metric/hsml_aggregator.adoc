@@ -30,6 +30,7 @@ This ensures **interoperability, optimization, and validation** across engines.
 [[metric-aggregator-properties]]
 ==== Properties Summary (Aggregator)
 
+.Property Summary for metric:Aggregator
 [cols="2,2,4,2,1,2",options="header"]
 |===
 | Predicate | JSON name | Description | Range | Card. | Req.
@@ -51,6 +52,8 @@ This ensures **interoperability, optimization, and validation** across engines.
 
 [[metric-aggregator-op]]
 ===== Property: op
+
+.Property Definition: metric:op
 [cols="1,3",options="header"]
 |===
 | IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#op
@@ -63,6 +66,8 @@ This ensures **interoperability, optimization, and validation** across engines.
 
 [[metric-aggregator-identity]]
 ===== Property: identity
+
+.Property Definition: metric:identity
 [cols="1,3",options="header"]
 |===
 | IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#identity
@@ -75,6 +80,8 @@ This ensures **interoperability, optimization, and validation** across engines.
 
 [[metric-aggregator-commutative]]
 ===== Property: commutative
+
+.Property Definition: metric:commutative
 [cols="1,3",options="header"]
 |===
 | IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#commutative
@@ -87,6 +94,8 @@ This ensures **interoperability, optimization, and validation** across engines.
 
 [[metric-aggregator-parameter]]
 ===== Property: parameter
+
+.Property Definition: metric:parameter
 [cols="1,3",options="header"]
 |===
 | IRI | https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#parameter
