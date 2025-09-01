@@ -1,4 +1,4 @@
-== HSML TopologicalSpace Module: Normative Specification
+== HSML TopologicalSpace SubModule
 
 === Introduction
 

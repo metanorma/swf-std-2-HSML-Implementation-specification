@@ -48,6 +48,9 @@ include::sections/hsml_governance_module/hsml_governance_module.adoc[]
 
 include::sections/hsml_agent_module/hsml_agent_module.adoc[]
 
+include::sections/hsml_communication_module/hsml_communication_module.adoc[]
+
+
 include::sections/hsml_hyperspace_module/hsml_hyperspace_module.adoc[]
 
 include::sections/hsml_hyperspace_module/topological/hsml_topological_space_module.adoc[]
@@ -56,7 +59,6 @@ include::sections/hsml_hyperspace_module/metric/hsml_metric_space_module.adoc[]
 
 include::sections/hsml_hyperspace_module/vector/hsml_vector_space_module.adoc[]
 
-include::sections/hsml_communication_module/hsml_communication_module.adoc[]
 
 include::sections/hsml_extensions_and_profiles.adoc[]
 

@@ -1,4 +1,20 @@
-== HSML Communication Module: Normative Specification
+
+
+== HSML Communication Module
+
+The HSML Communication Module realizes the **CHANNEL** concept of IEEE P2874 (§6.6.6), providing a semantic framework for modeling communication contexts and message exchange in the Spatial Web.  
+
+Where the **Governance Module** addresses rules and the **Activity Module** defines purposeful processes, the Communication Module focuses on how **entities interact during the execution of Activities**.  
+It provides a minimal but extensible set of classes to represent **Channels, Messages, and Subscriptions** in a way that is compatible with both the Hyperspace Transaction Protocol (HSTP) and external communication systems.  
+
+The design follows three guiding intentions:
+
+* To distinguish **ephemeral communication contexts** (Channels) from persistent identity contexts (Domains).  
+* To allow **semantic projection of messages** when provenance, traceability, or validation are required, without redefining HSTP transport.  
+* To ensure that **communication remains Activity-linked**, keeping transient exchanges grounded in HSML’s enduring models of entities and processes.  
+
+The Communication Module thereby acts as the “conversation layer” of HSML: lightweight enough to support ad-hoc collaboration, yet formally defined so that message flows can participate in governance, provenance, and discovery across the Spatial Web.
+
 
 === Architectural Principles and Design Rationale
 

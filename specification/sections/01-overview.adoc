@@ -3,8 +3,6 @@
 This document provides a high-level overview of the Hyperspace Modeling Language (HSML) specification. HSML is the **semantic foundation of the Spatial Web**, enabling consistent representation of entities, domains, activities, spaces, and governance across distributed systems. It describes the modeling paradigm, guiding principles, modular structure, and formal extension mechanisms needed to support diverse domains while ensuring interoperability and compliance with IEEE P2874.
 
 
-=== The HSML Modeling Paradigm
-
 === HSML Modeling Paradigm
 
 The Spatial Web is founded on eight interdependent dimensions that, together, distinguish it from the conventional Semantic Web. HSML integrates these dimensions into a coherent modeling paradigm.

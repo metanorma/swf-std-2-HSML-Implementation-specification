@@ -1,4 +1,4 @@
-== HSML Governance Module: Normative Specification
+== HSML Governance Module
 
 === Architectural Principles and Design Rationale
 
