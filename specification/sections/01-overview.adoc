@@ -88,9 +88,12 @@ To manage complexity and support broad adoption, the HSML specification is organ
   Building on the Core Model, HSML defines a set of modules that introduce specialized constructs for particular functional areas. Each module adds only the minimum commitments necessary to support its scope, ensuring extensibility and reuse:
   ** *Agent Module* – defines persons, organizations, and autonomous systems as domains with agency, goals, and capabilities.
   ** *Activity Module* – defines structured processes, schemas, instances, and execution lifecycles that domains can perform.
-** *Hyperspace Module* – defines the spatial and structural contexts where entities relate.
+  ** *Hyperspace Module* – defines the spatial and structural contexts where entities relate.
      – The Hyperspace Module is itself **composed of submodules** for different space types: *Topological Space*, *Metric Space*, *Vector Space*, *Cellular Space*, *Graph Space*, and *Datatype Space*.
-  ** *Channel Module* – defines transient groupings of entities and data streams bound to activities for communication and coordination.
+  ** *Communication Module* – defines **Channels** as the semantic construct for communication and coordination.
+   – A Channel is a stream of HSML entities bound to a specific Activity, enabling message exchange, data flow, and coordination among participants.
+   – Channels are **transient**: unlike Domains, they do not carry persistent holonic identity but exist in relation to an Activity context.
+   – The module provides constructs for sub-channels, membership, and message traceability, aligning with HSTP message envelopes for interoperable communication.
   ** *Governance Module* – defines credentials, contracts, norms, and policies that domains declare and enforce.
 
 This modular architecture enables **plug-and-play deployment**: implementers can select the subset of modules required for their application, while remaining compatible with the broader HSML ecosystem and the IEEE P2874 Spatial Web standard (see <<fig-hsml-core-modules>>).
