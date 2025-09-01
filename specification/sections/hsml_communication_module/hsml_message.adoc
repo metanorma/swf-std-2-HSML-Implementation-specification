@@ -33,6 +33,7 @@ Messages are not required for all exchanges. Implementations materialize comm:Me
 [[comm-message-summary]]
 ==== Properties Summary
 
+.Properties Summary for comm:Message
 [cols="2,2,4,2,1,2",options="header"]
 |===
 | Predicate | JSON-LD name | Description | Range | Cardinality | Requirement
@@ -61,7 +62,7 @@ Messages are not required for all exchanges. Implementations materialize comm:Me
 | <<comm-message-property-recipient,comm:recipient>>
 | recipient
 | Intended audience (Agents or Channels).
-| hsml:Agent | chan:Channel
+| hsml:Agent or chan:Channel
 | 0..*
 | Optional
 
@@ -82,7 +83,7 @@ Messages are not required for all exchanges. Implementations materialize comm:Me
 | <<comm-message-property-content,comm:content>>
 | content
 | Embedded payload or immutable link to content.
-| rdf:langString | xsd:string | xsd:base64Binary | xsd:anyURI
+| rdf:langString  or xsd:string or xsd:base64Binary or xsd:anyURI
 | 0..1
 | Optional
 
@@ -184,7 +185,7 @@ Messages are not required for all exchanges. Implementations materialize comm:Me
 | Requirement Level | Optional
 | Cardinality | 0..*
 | Domain | comm:Message
-| Range | hsml:Agent | chan:Channel
+| Range | hsml:Agent or chan:Channel
 | Definition | Intended audience of the message.
 | Usage Note | Use multiple values for broadcast/fan-out. Omit when Channel audience suffices.
 |===
@@ -232,7 +233,7 @@ Messages are not required for all exchanges. Implementations materialize comm:Me
 | Requirement Level | Optional
 | Cardinality | 0..1
 | Domain | comm:Message
-| Range | rdf:langString | xsd:string | xsd:base64Binary | xsd:anyURI
+| Range | rdf:langString or xsd:string or  xsd:base64Binary or xsd:anyURI
 | Definition | The payload itself (inline text/binary) or a canonical, immutable link to it.
 | Usage Note | Prefer immutable links plus comm:contentHash for large or sensitive payloads.
 |===
