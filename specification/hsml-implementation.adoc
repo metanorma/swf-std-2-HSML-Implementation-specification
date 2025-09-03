@@ -1,20 +1,20 @@
 = Spatial Web Implementation Specification -- HSML Implementation
-:docnumber: 2874.X
+:docnumber: SWF-2
 :doctype: standard
 :docstage: draft
-:draft: 1
-:revdate: 2024-05-01
-:copyright-year: 2024
+:draft: 0.2
+:revdate: 2025-09-03
+:copyright-year: 2025
 :language: en
 :edition: 1
-:society: Computer Society
-:committee: C/AISC - Artificial Intelligence Standards Committee
+:society: Spatial Web Foundation
+//:committee: C/AISC - Artificial Intelligence Standards Committee
 :working-group: Spatial Web Working Group
 :keywords: Hyperspace Transaction Protocol, HSTP, Spatial Web, Hyperspace Modelling Language, HSML, Universal Domain Graph, UDG, Spatial Web Identifier, SWID, W3C Decentralized Identifier (DID), Verifiable Credentials
 :isbn-pdf: 978-0-XXXX-XXXX-X STDXXXXX
 :isbn-print: 978-0-XXXX-XXXX-X STDPDXXXXX
 :imagesdir: images
-:mn-document-class: ieee
+:mn-document-class: generic
 :mn-output-extensions: xml,html,doc,rxl,pdf
 :local-cache-only:
 :toc-figures: true
@@ -22,7 +22,7 @@
 :toclevels: 3
 
 // Approval date
-//:confirmation-date: 2022-05-01
+//:confirmation-date: 2025-09-03
 
 include::sections/00-participants.adoc[]
 
