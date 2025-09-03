@@ -20,7 +20,9 @@
 :toc-figures: true
 :toc-tables: true
 :toclevels: 3
-
+:copyright-year: 2025
+:copyright-holder: Spatial Web Foundation
+:license: All rights reserved.
 // Approval date
 //:confirmation-date: 2025-09-03
 
