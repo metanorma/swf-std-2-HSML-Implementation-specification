@@ -1,4 +1,4 @@
-== HSML Hyperspace Module: Normative Specification
+== HSML Hyperspace Module
 
 === Introduction
 
