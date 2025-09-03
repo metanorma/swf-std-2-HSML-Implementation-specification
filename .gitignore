@@ -1,0 +1,4 @@
+# Metanorma build artifacts
+_site/
+iev/
+*.asciidoc.log.txt
