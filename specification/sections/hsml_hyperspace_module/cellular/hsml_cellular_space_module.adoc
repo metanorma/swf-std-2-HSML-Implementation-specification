@@ -1,0 +1,98 @@
+[[hsml-cellularspace]]
+== HSML CellularSpace Module
+
+=== Introduction
+
+The CellularSpace Module defines the HSML specialization of Hyperspace for **discrete partitioned structures**.
+It realizes the *CELLULAR SPACE* concept of IEEE P2874 (§ 6.2.1), which states:
+
+____
+“A space partitioned into finite, discrete units (cells) such that adjacency between units is explicitly defined
+by shared boundaries, vertices, or faces. Cells may be uniform or hierarchical, and together they form
+a covering of the domain.”
+____
+
+This definition allows HSML to treat diverse gridded or tiled representations—raster images,
+Discrete Global Grid Systems (DGGS), and voxel volumes—under one unifying abstraction.
+
+CellularSpaces make it possible to reason over **adjacency, clustering, and coverage** in contexts where
+continuous metrics or coordinates are less important than **discrete neighborhood relationships**.
+
+Crucially, CellularSpaces are **modular extensions** of Hyperspace:
+they inherit the universal notions of elements, arrows, and paths, and specialize them for tessellations.
+This means that a Domain can seamlessly switch between a VectorSpace view (coordinates),
+a MetricSpace view (distances), or a CellularSpace view (discrete tilings) without losing identity or consistency.
+
+=== Architectural Principles and Design Rationale
+
+==== The Partitioned View of Space: cell:Cell
+
+A CellularSpace is built upon the concept of the `cell:Cell`, a discrete unit that partitions a continuous region into finite, indivisible elements.
+Unlike vector coordinates (continuous) or topological sets (abstract neighborhoods), a cell represents a **bounded piece of space** with an identifier, optional geometry, and adjacency relations.
+
+This reflects IEEE P2874’s notion that spatial reasoning must sometimes operate at the **granularity of discrete tiles**—pixels, hexagons, voxels—rather than continuous measures.
+Cells form the foundation for scalable computations such as tiling the Earth with DGGS codes, pathfinding in grid-based simulations, and aggregating spatial statistics.
+
+==== Adjacency as the Fundamental Relation: cell:CellAdjacency
+
+In a CellularSpace, connectivity is determined not by metric distance but by **adjacency rules**.
+The `cell:CellAdjacency` class provides the scaffolding to model these rules explicitly:
+
+* Von Neumann adjacency (sharing an edge, 4-neighbor).
+* Moore adjacency (sharing edge or corner, 8-neighbor).
+* Hexagonal adjacency (sharing sides in a hex grid).
+* Voxel adjacencies (6-, 18-, or 26-neighbor in 3D).
+
+Adjacency may be undirected (“touches”) or weighted (cost, travel time).
+By modeling adjacency as a first-class construct, HSML enables **region formation, boundary detection, and pathfinding** independent of geometry.
+
+==== Hierarchy and Indexing
+
+A key design principle is **hierarchical decomposition**. CellularSpaces may be recursive: a DGGS cell contains children at finer resolutions, while raster tiles can be subdivided into pixels.
+Each cell SHALL have a unique index, such as a DGGS code, Morton/Hilbert code, or `(row, col)` coordinate. This provides stable identity for referencing, linking, and computation.
+
+==== Profiles and Extensibility
+
+The CellularSpace Module defines a **minimal contract**: elements (cells) and arrows (adjacencies).
+Domain-specific profiles can extend this for raster, DGGS, or voxel models. Examples:
+
+* **Raster Profile**: Cells as `(row, col)` indices with 4- or 8-adjacency.
+* **DGGS Profile**: Hierarchical hex cells identified by DGGS addresses.
+* **Voxel Profile**: Integer `(x, y, z)` indices with 6-, 18-, or 26-neighbor rules.
+
+This ensures HSML provides both **generic interoperability** and **domain-specific fidelity**.
+
+==== Modularity and Namespaces
+
+The CellularSpace vocabulary resides under its own namespace:
+
+* `https://www.spatialwebfoundation.org/ns/hsml/hyperspace/cell#`
+
+This aligns with the modular namespace strategy of HSML, ensuring clarity, extensibility, and best practices in ontology design.
+
+=== Normative Classes
+
+This clause provides the normative definitions for all class concepts within the CellularSpace Module.
+The namespace prefix `cell:` refers to `https://www.spatialwebfoundation.org/ns/hsml/hyperspace/cell#`.
+
+.Summary of CellularSpace Module Classes
+[cols="1,3",options="header"]
+|===
+| Class | Description
+
+| <<hsml-cellularspace,hsml:CellularSpace>>
+| A specialization of hsml:Hyperspace where elements are discrete cells and paths are defined by adjacency relations.
+
+| <<hsml-cell,cell:Cell>>
+| A convenience class representing a discrete unit of space (pixel, hexagon, voxel). Each cell SHALL have a unique identifier and MAY carry a geometry and attributes.
+
+| <<hsml-celladjacency,cell:CellAdjacency>>
+| A convenience class representing an adjacency relation between two cells, optionally weighted by cost or distance.
+
+| <<hsml-cellchain,cell:CellChain>>
+| An explicit path class representing an ordered sequence of adjacent cells.
+
+| <<hsml-cellcluster,cell:CellCluster>>
+| A class representing a connected region formed by a collection of adjacent cells.
+|===
+
