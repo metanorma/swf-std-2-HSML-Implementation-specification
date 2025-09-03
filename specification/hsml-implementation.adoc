@@ -15,7 +15,7 @@
 :isbn-print: 978-0-XXXX-XXXX-X STDPDXXXXX
 :imagesdir: images
 :mn-document-class: generic
-:mn-output-extensions: xml,html,doc,rxl,pdf
+:mn-output-extensions: xml,html,doc,rxl
 :local-cache-only:
 :toc-figures: true
 :toc-tables: true
