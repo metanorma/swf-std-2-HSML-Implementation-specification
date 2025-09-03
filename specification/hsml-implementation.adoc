@@ -14,8 +14,8 @@
 :isbn-pdf: 978-0-XXXX-XXXX-X STDXXXXX
 :isbn-print: 978-0-XXXX-XXXX-X STDPDXXXXX
 :imagesdir: images
-:mn-document-class: generic
-:mn-output-extensions: xml,html,doc,rxl
+:mn-document-class: standoc
+:mn-output-extensions: xml,html,doc,pdf,rxl
 :local-cache-only:
 :toc-figures: true
 :toc-tables: true
