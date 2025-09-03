@@ -59,6 +59,7 @@ include::sections/hsml_hyperspace_module/metric/hsml_metric_space_module.adoc[]
 
 include::sections/hsml_hyperspace_module/vector/hsml_vector_space_module.adoc[]
 
+include::sections/hsml_hyperspace_module/cellular/hsml_cellular_space_module.adoc[]
 
 include::sections/hsml_extensions_and_profiles.adoc[]
 
