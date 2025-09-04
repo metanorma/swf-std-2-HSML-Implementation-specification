@@ -16,6 +16,7 @@
 :imagesdir: images
 :mn-document-class: ieee
 :mn-output-extensions: xml,html,doc,pdf,rxl
+:boilerplate-authority: ./overrides/boilerplate.adoc
 :local-cache-only:
 :toc-figures: true
 :toc-tables: true
