@@ -3,12 +3,9 @@ Copyright © 2025 Spatial Web Foundation. All rights reserved.
 
 == license-statement
 
-Test license
 
 == legal-statement
 
-Test legal
+
 
 == feedback-statement
-
-Test feedback

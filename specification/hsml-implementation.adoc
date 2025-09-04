@@ -1,4 +1,5 @@
-= Spatial Web Implementation Specification -- HSML Implementation
+= Spatial Web Implementation Specification -- HSML Implementation - SWF-2 Version 0.2
+:docidentifier: SWF-2: 2025-09-03
 :docnumber: SWF-2
 :doctype: standard
 :docstage: draft
