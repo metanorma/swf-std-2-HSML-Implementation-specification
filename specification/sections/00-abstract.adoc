@@ -1,3 +1,4 @@
+[abstract]
 == Abstract
 
 The Hyperspace Modeling Language (HSML) Implementation Specification, a core compliance target of IEEE P2874™ *Standard for Spatial Web Protocol, Architecture, and Governance*, defines a human- and machine-readable semantic modeling language and ontology for the Spatial Web. It establishes a shared vocabulary for **Entities, Domains, Agents, Activities, Credentials, Channels, Hyperspaces, and Governance**, providing a unifying framework for modeling structure, behavior, and trust.
