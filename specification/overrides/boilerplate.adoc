@@ -2,10 +2,13 @@
 Copyright © 2025 Spatial Web Foundation. All rights reserved.
 
 == license-statement
+Document for review
 
 
 == legal-statement
-
+Not applicable.
 
 
 == feedback-statement
+Please provide your comments using <public.review@spatialwebfoundation.org>
+Mention the document topic in the subject, ie. 'HSML'
