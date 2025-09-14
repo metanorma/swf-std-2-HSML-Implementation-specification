@@ -1,10 +1,10 @@
 = HSML Modeling Language
 
-The Spatial Web, as defined by the IEEE P2874 standard, envisions a globally interoperable, socio-technical fabric connecting humans, autonomous systems, and the Internet of Things (IoT). Its goal is to create a unified digital-physical reality where information is contextual, interactions are secure, and governance is an intrinsic part of the architecture. Realizing this vision requires a data model capable of representing complex, compositional systems with semantic precision and web-scale interoperability. This document analyzes the capabilities and limitations of the two dominant graph data paradigms—Labeled Property Graphs (LPGs) and the Resource Description Framework (RDF)—in meeting this challenge. We argue that while both offer valuable features, neither is sufficient in its standard form. The inherently holonic nature of Spatial Web `DOMAIN`s necessitates a conservative but fundamental extension to the RDF standard, introducing structural containment as a first-class primitive.
+The Spatial Web, as defined by the <<ieee-p2874>> standard, envisions a globally interoperable, socio-technical fabric connecting humans, autonomous systems, and the Internet of Things (IoT). Its goal is to create a unified digital-physical reality where information is contextual, interactions are secure, and governance is an intrinsic part of the architecture. Realizing this vision requires a data model capable of representing complex, compositional systems with semantic precision and web-scale interoperability. This document analyzes the capabilities and limitations of the two dominant graph data paradigms—Labeled Property Graphs (LPGs) and the Resource Description Framework (RDF)—in meeting this challenge. We argue that while both offer valuable features, neither is sufficient in its standard form. The inherently holonic nature of Spatial Web `DOMAIN`s necessitates a conservative but fundamental extension to the RDF standard, introducing structural containment as a first-class primitive.
 
 == The Core Challenge: Modeling Holonic `DOMAIN`s
 
-The foundational concept of the Spatial Web is the `DOMAIN`. The IEEE P2874 standard defines a `DOMAIN` as a "sphere of knowledge, influence, or ACTIVITY." This is an intentionally broad definition, encompassing everything from physical spaces (a warehouse, a city), to conceptual systems (a supply chain, a legal framework), to active agents (a person, a robot).
+The foundational concept of the Spatial Web is the `DOMAIN`. The <<ieee-p2874>> standard defines a `DOMAIN` as a "sphere of knowledge, influence, or ACTIVITY." This is an intentionally broad definition, encompassing everything from physical spaces (a warehouse, a city), to conceptual systems (a supply chain, a legal framework), to active agents (a person, a robot).
 
 A critical insight from the standard is that these `DOMAIN`s are inherently **holonic**. A holon is an entity that is simultaneously a whole in itself and a part of a larger whole. This compositional, nested structure is ubiquitous in the systems the Spatial Web aims to model:
 
@@ -82,9 +82,9 @@ The logical path forward is not to choose one over the other, but to synthesize 
 
 This is the purpose of **RDF 2.0 with Holon Extensions**. It addresses the limitations of standard RDF by introducing two new constructs:
 
-1.  **The `h:Holon` Primitive:** A formal declaration (`rdf:type h:Holon`) that a resource can act as a container. This directly maps to the Spatial Web `DOMAIN` concept, giving it a concrete, machine-understandable type.
+. **The `h:Holon` Primitive:** A formal declaration (`rdf:type h:Holon`) that a resource can act as a container. This directly maps to the Spatial Web `DOMAIN` concept, giving it a concrete, machine-understandable type.
 
-2.  **The Primitive Containment Relation (`⊂`):** This is the core innovation. Containment is no longer just a predicate represented by an IRI; it is a fundamental part of the data model's structure, like a triple itself. It has built-in, processor-enforced semantics based on mereology: it is **transitive, irreflexive, and acyclic**.
+. **The Primitive Containment Relation (`⊂`):** This is the core innovation. Containment is no longer just a predicate represented by an IRI; it is a fundamental part of the data model's structure, like a triple itself. It has built-in, processor-enforced semantics based on mereology: it is **transitive, irreflexive, and acyclic**.
 
 This extension resolves the issues identified above:
 

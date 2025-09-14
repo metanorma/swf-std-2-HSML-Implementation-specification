@@ -4,12 +4,13 @@
 === Introduction
 
 The CellularSpace Module defines the HSML specialization of Hyperspace for **discrete partitioned structures**.
-It realizes the *CELLULAR SPACE* concept of IEEE P2874 (§ 6.2.1), which states:
+It realizes the *CELLULAR SPACE* concept of <<ieee-p2874,clause="6.2.1">>, which states:
 
+[quote]
 ____
-“A space partitioned into finite, discrete units (cells) such that adjacency between units is explicitly defined
+A space partitioned into finite, discrete units (cells) such that adjacency between units is explicitly defined
 by shared boundaries, vertices, or faces. Cells may be uniform or hierarchical, and together they form
-a covering of the domain.”
+a covering of the domain.
 ____
 
 This definition allows HSML to treat diverse gridded or tiled representations—raster images,
@@ -30,7 +31,7 @@ a MetricSpace view (distances), or a CellularSpace view (discrete tilings) witho
 A CellularSpace is built upon the concept of the `cell:Cell`, a discrete unit that partitions a continuous region into finite, indivisible elements.
 Unlike vector coordinates (continuous) or topological sets (abstract neighborhoods), a cell represents a **bounded piece of space** with an identifier, optional geometry, and adjacency relations.
 
-This reflects IEEE P2874’s notion that spatial reasoning must sometimes operate at the **granularity of discrete tiles**—pixels, hexagons, voxels—rather than continuous measures.
+This reflects <<ieee-p2874>>’s notion that spatial reasoning must sometimes operate at the **granularity of discrete tiles**—pixels, hexagons, voxels—rather than continuous measures.
 Cells form the foundation for scalable computations such as tiling the Earth with DGGS codes, pathfinding in grid-based simulations, and aggregating spatial statistics.
 
 ==== Adjacency as the Fundamental Relation: cell:CellAdjacency
@@ -66,14 +67,15 @@ This ensures HSML provides both **generic interoperability** and **domain-specif
 
 The CellularSpace vocabulary resides under its own namespace:
 
-* `https://www.spatialwebfoundation.org/ns/hsml/hyperspace/cell#`
+* identifier:[https://www.spatialwebfoundation.org/ns/hsml/hyperspace/cell#]
 
 This aligns with the modular namespace strategy of HSML, ensuring clarity, extensibility, and best practices in ontology design.
 
 === Normative Classes
 
 This clause provides the normative definitions for all class concepts within the CellularSpace Module.
-The namespace prefix `cell:` refers to `https://www.spatialwebfoundation.org/ns/hsml/hyperspace/cell#`.
+
+The namespace prefix `cell:` refers to identifier:[https://www.spatialwebfoundation.org/ns/hsml/hyperspace/cell#].
 
 .Summary of CellularSpace Module Classes
 [cols="1,3",options="header"]

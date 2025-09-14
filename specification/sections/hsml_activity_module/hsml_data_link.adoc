@@ -1,9 +1,12 @@
 [[act-datalink]]
 === Class: act:DataLink
 
-The class `act:DataLink` realizes the **DATA LINK** concept as part of a `act:CompositeActivitySchema` in IEEE P2874 § 6.6.3.
+The class `act:DataLink` realizes the **DATA LINK** concept as part of a `act:CompositeActivitySchema` in <<ieee-p2874,clause="6.6.3">>.
 
-“A DATA LINK is a construct for connecting the data flow between steps in a composite activity.”
+[quote]
+____
+A DATA LINK is a construct for connecting the data flow between steps in a composite activity.
+____
 
 `act:DataLink` is a structural entity that explicitly models the "wiring" of data within a complex workflow. It connects the output of one step to the input of another, or links the inputs and outputs of the composite schema to its internal steps. By modeling data flow as a first-class entity, the standard makes it addressable, auditable, and governable.
 
@@ -87,7 +90,7 @@ This section provides the detailed normative definitions for the properties of t
 [cols="2,4"]
 |===
 | **Property** | `schema:name`
-| **IRI** | `https://schema.org/name`
+| **IRI** | identifier:[https://schema.org/name]
 | **JSON name** | `name`
 | **Requirement Level** | Optional
 | **Cardinality** | 0..1
@@ -103,7 +106,7 @@ This section provides the detailed normative definitions for the properties of t
 [cols="2,4"]
 |===
 | **Property** | `schema:description`
-| **IRI** | `https://schema.org/description`
+| **IRI** | identifier:[https://schema.org/description]
 | **JSON name** | `description`
 | **Requirement Level** | Optional
 | **Cardinality** | 0..1
@@ -119,7 +122,7 @@ This section provides the detailed normative definitions for the properties of t
 [cols="2,4"]
 |===
 | **Property** | `act:sourceStep`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#sourceStep`
+| **IRI** | identifier:[https://www.spatialwebfoundation.org/ns/hsml/activity#sourceStep]
 | **JSON name** | `sourceStep`
 | **Requirement Level** | Conditional
 | **Cardinality** | 0..1
@@ -135,7 +138,7 @@ This section provides the detailed normative definitions for the properties of t
 [cols="2,4"]
 |===
 | **Property** | `act:targetStep`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#targetStep`
+| **IRI** | identifier:[https://www.spatialwebfoundation.org/ns/hsml/activity#targetStep]
 | **JSON name** | `targetStep`
 | **Requirement Level** | Conditional
 | **Cardinality** | 0..1
@@ -151,7 +154,7 @@ This section provides the detailed normative definitions for the properties of t
 [cols="2,4"]
 |===
 | **Property** | `act:sourceVariable`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#sourceVariable`
+| **IRI** | identifier:[https://www.spatialwebfoundation.org/ns/hsml/activity#sourceVariable]
 | **JSON name** | `sourceVariable`
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..1
@@ -167,7 +170,7 @@ This section provides the detailed normative definitions for the properties of t
 [cols="2,4"]
 |===
 | **Property** | `act:targetVariable`
-| **IRI** | `https://www.spatialwebfoundation.org/ns/hsml/activity#targetVariable`
+| **IRI** | identifier:[https://www.spatialwebfoundation.org/ns/hsml/activity#targetVariable]
 | **JSON name** | `targetVariable`
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..1
