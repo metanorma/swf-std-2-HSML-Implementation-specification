@@ -39,8 +39,8 @@ This class is a subclass of `hsml:Entity`, inheriting a `hsml:swid` as its uniqu
 |===
 | Predicate | JSON(-LD) Name | Description | Cardinality
 
-| <<property-channel-type,rdf:type>> | `@type` | Declares the resource as an instance of `comm:Channel`. | 1..n
-| <<property-channel-swid,hsml:swid>> | `swid` | The Spatial Web Identifier (SWID) inherited from `hsml:Entity`. | 1
+| <<core-entity-property-type,rdf:type>> | `@type` | Declares the resource as an instance of `comm:Channel`. | 1..n
+| <<core-entity-property-swid,core:swid>> | `swid` | The Spatial Web Identifier (SWID) inherited from `hsml:Entity`. | 1
 | <<property-channel-hasParticipant,core:hasParticipant>> | `hasParticipant` | Identifies the entities participating in the Channel. | 1..n
 | <<property-channel-forActivity,comm:forActivity>> | `forActivity` | Links the Channel to the Activity it supports. | 1..n
 | <<property-channel-hasSubChannel,comm:hasSubChannel>> | `hasSubChannel` | Links to a nested sub-channel. | 0..n

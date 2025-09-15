@@ -40,7 +40,7 @@ This specification separates:
 | Predicate | JSON(-LD) name | Description | Cardinality
 
 | <<property-hyperspace-type,rdf:type>> | @type | Declares the resource as an instance of `hspace:Hyperspace`. | 1..n
-| <<property-hyperspace-swid,hspace:swid>> | swid | Spatial Web Identifier conformant with W3C DID Core. | 1
+| <<core-entity-property-swid,core:swid>> | swid | Spatial Web Identifier conformant with W3C DID Core. | 1
 
 | <<property-hyperspace-hasElementType,hspace:hasElementType>> | hasElementType | Type of elements (class or datatype) represented in the Hyperspace. | 1
 | <<property-hyperspace-hasArrowType,hspace:hasArrowType>> | hasArrowType | Type of atomic one-step relations (“arrows”) between elements. | 1
@@ -57,13 +57,13 @@ This specification separates:
 [cols="2,4"]
 |===
 | Property | rdf:type
-| IRI | http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+| IRI | identifier:[http://www.w3.org/1999/02/22-rdf-syntax-ns#type]
 | JSON name | @type
 | Requirement Level | Mandatory
 | Cardinality | 1..n
 | Domain | hspace:Hyperspace
-| Range | hspace:Hyperspace
-| Definition | Declares the resource as an instance of `hspace:Hyperspace`.
+| Range | rdfs:Class
+| Definition | Declares the resource as an instance of subclass of `hspace:Hyperspace`.
 |===
 
 

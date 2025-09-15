@@ -96,8 +96,8 @@ This clause provides the normative definitions for the classes of the Communicat
 | Optional semantic description of a communicative artifact exchanged via HSTP. Used when provenance, validation, or audit are needed.
 
 
-| <<comm-subscription,comm:Subscription>>
-| Declares an Agent’s interest in receiving Messages from a Topic or Channel, optionally with filters and delivery hints.
+// | <<comm-subscription,comm:Subscription>>
+// | Declares an Agent’s interest in receiving Messages from a Topic or Channel, optionally with filters and delivery hints.
 |===
 
 include::hsml_channel.adoc[leveloffset=+1]
