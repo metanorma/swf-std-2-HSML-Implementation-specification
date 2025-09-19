@@ -103,4 +103,3 @@ include::sections/annex-system_requirements.adoc[]
 
 include::sections/annex-bibliography.adoc[]
 
-include::sections/annex-swf_authors.adoc[]
