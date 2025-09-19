@@ -1,10 +1,10 @@
 = HSML Implementation
-:title-intro-en: Spatial Web Implementation
-:title-main-en: HSML Implementation
-:docnumber: 2
+:title-intro-en: The Spatial Web 
+:title-main-en: Hyperspace Modeling Language (HSML) Implementation Specification
+:docnumber: STD-002
 :doctype: standard
 :docstage: draft
-:revdate: 2025-09-03
+:revdate: 2025-09-26
 :copyright-year: 2025
 :language: en
 :edition: 1
@@ -39,13 +39,23 @@
 :role-description_6: leadership
 :contributor-position_6: Senior Ethics Advisor
 :comment: [backcover] participants list below
-:fullname_7: Stephane Fellah
-:fullname_8: Gabriel René
-:fullname_9: Dan Mapes
+:fullname_7: Stephane Fellah (lead editor)
+:fullname_8: Kurt Cagle 
+:fullname_9: Scott Carroll
 :fullname_10: Bastiaan den Braber
-:fullname_11: George Percivall
-:fullname_12: Dan Richardson
-:fullname_13: Dr. Sarah Grace Manski
+:fullname_11: Aidin Eslami
+:fullname_12: Jacqueline Hynes 
+:fullname_13: Alex Kiefer
+:fullname_14: George Percivall
+:fullname_15: Christine Perey
+:fullname_16: Capm Petersen
+:fullname_17: Jeff Pike 
+:fullname_18: Reese Plews
+:fullname_19: Gabriel René
+:fullname_20: Lior Saar
+:fullname_21: Markus Sabadello
+:fullname_22: Hari Thiruvengada
+:fullname_23: Ronald Tse
 
 include::sections/00-participants.adoc[]
 
