@@ -14,7 +14,7 @@
 :mn-output-extensions: xml,html,pdf,rxl
 :doctype: standard
 :status: published
-:docidentifier: SWF 2:2025 (0.2.0)
+:docidentifier: SWF STD-2:2025 (0.2.0)
 :imagesdir: images
 :local-cache-only:
 :toc-figures: true
