@@ -46,7 +46,7 @@ Policies must reference one or more Norms via `gov:hasNorm`.
 | <<gov-norm-property-appliesTo,`gov:appliesTo`>>
 | `appliesTo`
 | Targets governed by the norm (agents, activities, domains, or role classes).
-| `hsml:Entity` or `rdfs:Class`
+| `core:Entity` or `rdfs:Class`
 | 1..*
 | **Mandatory**
 

@@ -161,7 +161,7 @@ The Hyperspace Module is intentionally **open-ended**. In addition to its curren
 ** *Quantum or Hilbert Spaces* – supporting future quantum computation or simulation domains.
 
 +
-New types can be introduced simply by declaring subclasses of `hsml:Hyperspace`, ensuring extensibility without changes to the Core Model.
+New types can be introduced simply by declaring subclasses of `hspace:Hyperspace`, ensuring extensibility without changes to the Core Model.
 
 * *Governance Extensions:*
 Governance models vary across cultures and industries. HSML allows the definition of new contract forms, policy languages, and credential profiles. For example, a financial domain might introduce a *RegulatoryComplianceProfile* requiring specific verifiable credentials, while a social domain might define an *EthicsProfile* for AI agent behavior.

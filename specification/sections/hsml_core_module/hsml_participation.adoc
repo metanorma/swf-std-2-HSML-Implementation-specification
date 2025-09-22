@@ -31,7 +31,7 @@ This pattern is fundamental in the Spatial Web because it provides a standardize
 | <<core-participation-property-hasParticipant,core:hasParticipant>>
 | hasParticipant
 | The entity playing the role.
-| hsml:Entity
+| core:Entity
 | 1..1
 | Mandatory
 
@@ -72,7 +72,7 @@ This section provides the detailed normative definitions for the properties of t
 | JSON name | hasParticipant
 | Requirement Level | Mandatory
 | Cardinality | 1..1
-| Range | hsml:Entity
+| Range | core:Entity
 | Definition | The actual resource (agent, object, etc.) that is involved in the context.
 | Usage Note | This property links the core:Participation instance to the participating entity itself.
 |===

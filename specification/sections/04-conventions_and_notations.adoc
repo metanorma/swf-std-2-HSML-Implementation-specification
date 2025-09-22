@@ -199,7 +199,7 @@ The following conventions apply:
 
 * Property shapes specify expected predicates, datatypes, or cardinality constraints.
 
-* HSML-specific annotations (e.g., `hsml:parameter`, `hsml:precondition`) may extend SHACL for Activity schemas.
+* HSML-specific annotations may extend SHACL for Activity schemas.
 
 * Shapes may serve as **Activity payload templates**, validating inputs and outputs.
 

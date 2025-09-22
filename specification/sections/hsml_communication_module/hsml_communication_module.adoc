@@ -52,14 +52,14 @@ Channels are always **linked to Activities**. This supports use cases such as:
 * Streaming sensor data into a Channel associated with a monitoring Activity.
 * Collaborative annotation or decision-making during an Activity lifecycle.
 
-The `hsml:forActivity` property ensures that Channels carry explicit purpose, grounding otherwise transient message streams in the enduring Activity model of HSML.
+The `comm:forActivity` property ensures that Channels carry explicit purpose, grounding otherwise transient message streams in the enduring Activity model of HSML.
 
 ==== Governance Delegation
 
 Policies and credential checks are not embedded directly in Channels. Instead:
 
 * **Domain-level governance** defines who may create or join Channels.
-* Channels may include optional hints (e.g., `hsml:allowedAgent`) but **formal credential gates and policy enforcement remain in the Governance Module**.
+* Channels may include optional hints (e.g., `comm:allowedAgent`) but **formal credential gates and policy enforcement remain in the Governance Module**.
 * This simplifies the Channel model while ensuring consistent enforcement across Activities, Domains, and Channels.
 
 ==== Interoperability and Extensibility

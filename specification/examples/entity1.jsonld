@@ -1,7 +1,7 @@
 {
   "@context": "http://spatialwebfoundation.org/context/hsml.jsonld",
   "@id": "https://example.com/web/mything",
-  "@type": "hsml:Thing",
+  "@type": "core:Thing",
   "swid": "did:web:org:example:mything",
   "label": "my thing",
   "comment": "This is a description of my thing"

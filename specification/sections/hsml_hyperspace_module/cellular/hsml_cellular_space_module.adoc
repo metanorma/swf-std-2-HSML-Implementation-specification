@@ -82,8 +82,8 @@ The namespace prefix `cell:` refers to identifier:[https://www.spatialwebfoundat
 |===
 | Class | Description
 
-| <<hsml-cellularspace,hsml:CellularSpace>>
-| A specialization of hsml:Hyperspace where elements are discrete cells and paths are defined by adjacency relations.
+| <<hsml-cellularspace,cell:CellularSpace>>
+| A specialization of `hspace:Hyperspace`` where elements are discrete cells and paths are defined by adjacency relations.
 
 | <<hsml-cell,cell:Cell>>
 | A convenience class representing a discrete unit of space (pixel, hexagon, voxel). Each cell SHALL have a unique identifier and MAY carry a geometry and attributes.
