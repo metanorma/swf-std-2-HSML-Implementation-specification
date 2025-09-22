@@ -1,10 +1,10 @@
 = HSML Implementation
-:title-intro-en: Spatial Web Implementation
-:title-main-en: HSML Implementation
-:docnumber: 2
+:title-intro-en: The Spatial Web 
+:title-main-en: Hyperspace Modeling Language (HSML) Implementation Specification
+:docnumber: STD-002
 :doctype: standard
 :docstage: draft
-:revdate: 2025-09-03
+:revdate: 2025-09-26
 :copyright-year: 2025
 :language: en
 :edition: 1
@@ -14,11 +14,48 @@
 :mn-output-extensions: xml,html,pdf,rxl
 :doctype: standard
 :status: published
-:docidentifier: SWF 2:2025 (0.2.0)
+:docidentifier: SWF STD-2:2025 (0.2.0)
 :imagesdir: images
 :local-cache-only:
 :toc-figures: true
 :toc-tables: true
+:comment: [backcover] leadership team list below
+:fullname: Gabriel René
+:role-description: leadership
+:contributor-position: Executive Director / Founder
+:fullname_2: Dan Mapes
+:role-description_2: leadership
+:contributor-position_2: Managing Director / Founder
+:fullname_3: Bastiaan den Braber
+:role-description_3: leadership
+:contributor-position_3: Director of Operations
+:fullname_4: George Percivall
+:role-description_4: leadership
+:contributor-position_4: Distinguished Engineering Fellow
+:fullname_5: Dan Richardson
+:role-description_5: leadership
+:contributor-position_5: Director of Market Analysis
+:fullname_6: Dr. Sarah Grace Manski
+:role-description_6: leadership
+:contributor-position_6: Senior Ethics Advisor
+:comment: [backcover] participants list below
+:fullname_7: Stephane Fellah (lead editor)
+:fullname_8: Kurt Cagle 
+:fullname_9: Scott Carroll
+:fullname_10: Bastiaan den Braber
+:fullname_11: Aidin Eslami
+:fullname_12: Jacqueline Hynes 
+:fullname_13: Alex Kiefer
+:fullname_14: George Percivall
+:fullname_15: Christine Perey
+:fullname_16: Capm Petersen
+:fullname_17: Jeff Pike 
+:fullname_18: Reese Plews
+:fullname_19: Gabriel René
+:fullname_20: Lior Saar
+:fullname_21: Markus Sabadello
+:fullname_22: Hari Thiruvengada
+:fullname_23: Ronald Tse
 
 include::sections/00-participants.adoc[]
 
@@ -66,4 +103,3 @@ include::sections/annex-system_requirements.adoc[]
 
 include::sections/annex-bibliography.adoc[]
 
-include::sections/annex-swf_authors.adoc[]

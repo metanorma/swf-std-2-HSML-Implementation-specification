@@ -2,13 +2,7 @@
 
 === Working group
 
-Participants of the working group include:
-
-* Stephane Fellah
-* George Percivall
-* Kurt Cagle
-* Scott Carroll
-* Christine Perey
+Contributors to this specification are listed on the back cover.
 
 // TODO: Re-enable when https://github.com/metanorma/metanorma-taste/issues/35 is fixed
 // item:: Stephane Fellah
