@@ -9,7 +9,7 @@ while using the same inputs and producing comparable outputs.
 [[hspace-operation-class]]
 ==== Class Definition
 
-.Class Definition for `hspace:Operation`
+.Class Definition for hspace:Operation
 [cols="1,3"]
 |===
 | RDF Class | `hspace:Operation`
@@ -23,7 +23,7 @@ while using the same inputs and producing comparable outputs.
 [[hspace-operation-properties-summary]]
 ==== Properties Summary
 
-.Property Definitions for `hspace:Operation`
+.Property Definitions for hspace:Operation
 [cols="1,1,3,1",options="header"]
 |===
 | Predicate | JSON(-LD) name | Description | Cardinality
