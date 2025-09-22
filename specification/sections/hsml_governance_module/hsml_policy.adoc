@@ -38,7 +38,7 @@ The class `gov:Policy` is a governance artifact issued by an authority to **decl
 | <<gov-policy-property-issuedBy,`schema:creator`>>
 | `issuedBy`
 | Issuing authority (Domain or Agent) responsible for the policy.
-| `hsml:Domain` or `agt:Agent`
+| `core:Domain` or `agt:Agent`
 | 1..1
 | **Mandatory**
 
@@ -66,7 +66,7 @@ The class `gov:Policy` is a governance artifact issued by an authority to **decl
 | <<gov-policy-property-appliesToDomain,`gov:appliesToDomain`>>
 | `appliesToDomain`
 | Domain(s) (places/orgs/contexts) where the policy applies.
-| `hsml:Domain`
+| `core:Domain`
 | 0..*
 | Optional
 
@@ -167,9 +167,9 @@ The class `gov:Policy` is a governance artifact issued by an authority to **decl
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..1
 | **Domain** | `gov:Policy`
-| **Range** | `hsml:Domain` or `agt:Agent`
+| **Range** | `core:Domain` or `agt:Agent`
 | **Definition** | Identifies the authority that authors and promulgates the policy.
-| **Usage Note** | Prefer the controlling `hsml:Domain` when the issuer is an organization; use an Agent for individual signatories.
+| **Usage Note** | Prefer the controlling `core:Domain` when the issuer is an organization; use an Agent for individual signatories.
 |===
 
 [[gov-policy-property-validFrom]]
@@ -231,7 +231,7 @@ The class `gov:Policy` is a governance artifact issued by an authority to **decl
 | **Requirement Level** | Optional
 | **Cardinality** | 0..*
 | **Domain** | `gov:Policy`
-| **Range** | `hsml:Domain`
+| **Range** | `core:Domain`
 | **Definition** | Limits applicability to one or more Domains (e.g., sites, org units).
 | **Usage Note** | If omitted, default scope is the issuer’s Domain and its sub‑domains (implementation‑defined).
 |===

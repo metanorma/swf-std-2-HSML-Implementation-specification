@@ -36,6 +36,30 @@ This enables the creation of specific `Goal` subclasses that align with differen
 
 By defining these and other goal specializations (like **Hard** vs. **Soft Goals** with preference models), the architecture allows for a rich and precise description of agent behavior. A sophisticated Deliberative Agent might pursue complex `AchievementGoal`s, while a simpler monitoring agent would be concerned with a `MaintenanceGoal`. This provides a flexible and future-proof framework that can adapt to new agent designs by simply introducing new, well-defined subclasses of `agt:Goal`.
 
+==== The Embodiment Pattern: Separating Agency from Substrate
+
+
+<<ieee-p2874,clause=" 6.3.2.1.7">> defines a `core:Thing` as a type of DOMAIN that:
+
+[quote]
+____
+A thing type of DOMAIN shall encompass entities or objects that are bounded items without agency. These entities shall be passive and lack the ability for autonomous decision making or proactive behavior.
+____
+
+From this definition, HSML Core declares `agt:Agent` and `core:Thing` to be *disjoint classes*: an individual cannot simultaneously be a Thing and an Agent.
+
+At the same time, many agents in the Spatial Web are *embodied*—for example, a human body, a humanoid robot, or a connected device that an agent inhabits. To support this without violating the disjointness constraint, the Agent Module introduces the *embodiment relation*:
+
+* `agt:embodiedIn` -- links an `agt:Agent` to the `core:Thing` that serves as its embodiment.
+* `agt:embodiedBy` -- the inverse, linking a `core:Thing` to the `agt:Agent` it embodies.
+
+This pattern allows the ontology to represent:
+
+* *Embodied agents* (e.g., humans, robots) as agents tied to a Thing that provides their physical or digital substrate.
+* *Disembodied agents* (e.g., cloud services, software agents) as agents without any embodiment relation.
+
+*Principle:* By separating agency (`agt:Agent`) from substrate (`core:Thing`) and linking them only through embodiment, HSML upholds the disjointness mandated by P2874 and avoids Cartesian dualism, while enabling a consistent way to model both embodied and disembodied agents.
+
 === Normative Classes
 
 This clause provides the normative definitions for all class concepts within the HSML Agent Module. Each class is detailed in a table that specifies its URI, description, JSON-LD context name, usage notes, and relationship to other classes.

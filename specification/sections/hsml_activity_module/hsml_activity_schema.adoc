@@ -12,7 +12,7 @@ ____
 
 Key Requirements
 
-* Identity: Every `act:ActivitySchema` SHALL possess a Spatial Web Identifier (hsml:swid, W3C DID Core-compliant).
+* Identity: Every `act:ActivitySchema` SHALL possess a Spatial Web Identifier (core:swid, W3C DID Core-compliant).
 
 * Condition Specification: An `act:ActivitySchema` SHOULD define its required state and results using act:hasPrecondition and act:hasEffect.
 
@@ -29,7 +29,7 @@ These requirements ensure that activities based on schemas are machine-checkable
 | RDF Class | `act:ActivitySchema`
 | Is Abstract | No
 | Definition | A reusable, design-time template for a type of activity, defining its logic, interface (inputs and outputs), preconditions, and effects.
-| Subclass Of | `hsml:Entity`
+| Subclass Of | `core:Entity`
 | Usage Note | Schemas are published and reused across multiple act:Activity instances. They are the foundation of the "trust-by-reference" governance model.
 | Rationale | Provides a formal mechanism for modeling reusable processes and workflows in compliance with the P2874 Activity model, separating the definition of an action from its execution.
 |===
@@ -53,7 +53,7 @@ This section provides the detailed normative definitions for the properties of t
 | 1..n
 | Mandatory
 
-| hsml:swid
+| core:swid
 | swid
 | Spatial Web Identifier conformant with W3C DID Core.
 | xsd:anyURI

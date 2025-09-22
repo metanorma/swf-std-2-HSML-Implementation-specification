@@ -7,7 +7,7 @@
 
 ==== Activity
 
-A temporally-extended process defined by a set of changes an `hsml:Agent` can effect.
+A temporally-extended process defined by a set of changes an `agt:Agent` can effect.
 
 An *Activity Schema* provides a template with conditions, parameters, and variables.
 
@@ -17,11 +17,11 @@ In HSML, Activity Schemas are expressed in RDF/OWL/SHACL for validation and reas
 
 ==== Agent
 
-An `hsml:Entity` that senses and responds to its environment, maintains a model of that environment, and performs Activities to achieve goals. Agents communicate using Spatial Web protocols.
+An `core:Entity` that senses and responds to its environment, maintains a model of that environment, and performs Activities to achieve goals. Agents communicate using Spatial Web protocols.
 
 ==== Channel
 
-A Spatial Web entity (`hsml:Channel`) that groups a stream of HSML entities related to an Activity in a specific context that does not itself warrant a Domain or hierarchy. Channels support ad-hoc coordination, limited-scope data exchange, and contextual search.
+A Spatial Web entity (`comm:Channel`) that groups a stream of HSML entities related to an Activity in a specific context that does not itself warrant a Domain or hierarchy. Channels support ad-hoc coordination, limited-scope data exchange, and contextual search.
 
 ==== Contract
 
@@ -41,7 +41,7 @@ A governing authority responsible for the lifecycle and trust model of a Domain,
 
 ==== Entity
 
-The base class for all Spatial Web entities (`hsml:Entity`). Entities with persistent identity are modeled as Domains. All Entities must have an associated SWID.
+The base class for all Spatial Web entities (`core:Entity`). Entities with persistent identity are modeled as Domains. All Entities must have an associated SWID.
 
 ==== Holon
 

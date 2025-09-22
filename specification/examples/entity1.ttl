@@ -4,7 +4,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://example.com/web/mything>
-  a hsml:Thing ;
-  hsml:swid did:web:org:example:mything;
+  a core:Thing ;
+  core:swid did:web:org:example:mything;
   rdfs:label "my thing" ;
   rdfs:comment "This is a description of my thing" ;

@@ -52,7 +52,7 @@ Standard RDF reification (using `rdf:Statement`, `rdf:subject`, `rdf:predicate`,
 
 * **RDF-star (RDF\*)**: RDF-star directly addresses the limitation of expressing properties about statements. It introduces a concise syntax to assert triples *about* other triples (nested triples).
 
-** **For Holons:** This is invaluable for modeling holonic relationships. Instead of cumbersome reification, one could directly state `<< :CityA hsml:hasPart :BuildingB >> hsml:startDate "2023-01-01"^^xsd:date .` This allows the precise capture of metadata (like creation date, governing authority, or specific permissions) directly on the part-whole relationship between holonic Domains. It makes the model of a holon's internal composition much richer and more governable.
+** **For Holons:** This is invaluable for modeling holonic relationships. Instead of cumbersome reification, one could directly state `<< :CityA rdfh:hasPart :BuildingB >> schema:startDate "2023-01-01"^^xsd:date .` This allows the precise capture of metadata (like creation date, governing authority, or specific permissions) directly on the part-whole relationship between holonic Domains. It makes the model of a holon's internal composition much richer and more governable.
 
 * **Named Graphs**: Named Graphs extend RDF by allowing a collection of triples to be identified by a URI (its "name" or context). This effectively partitions the RDF graph into distinct sub-graphs.
 
@@ -64,7 +64,7 @@ Standard RDF reification (using `rdf:Statement`, `rdf:subject`, `rdf:predicate`,
 
 ** **Access Control:** Access permissions could be managed at the Named Graph level, dictating who can read or write triples within a specific holon's representation, aligning with Domain Authority concepts.
 
-* **"Ad-Hoc Relations" (drawing from RDF-H principles):** In the dynamic and decentralized environment of a holonic graph like the Spatial Web, not all relationships between entities or domains are permanent, universally defined, or strictly dictated by a pre-existing, rigid schema. This is where the concept of "ad-hoc relations" becomes particularly relevant. These relations are emergent, contextual, and flexible, arising dynamically from the interactions or needs of specific entities or agents. For instance, a temporary collaboration between two geographically distant research `ConceptDomain`s might lead to a unique "collaboratesOnProjectX" link that isn't part of the standard `hsml:isRelatedTo` hierarchy. Holons' autonomy and interdependence necessitate these:
+* **"Ad-Hoc Relations" (drawing from RDF-H principles):** In the dynamic and decentralized environment of a holonic graph like the Spatial Web, not all relationships between entities or domains are permanent, universally defined, or strictly dictated by a pre-existing, rigid schema. This is where the concept of "ad-hoc relations" becomes particularly relevant. These relations are emergent, contextual, and flexible, arising dynamically from the interactions or needs of specific entities or agents. For instance, a temporary collaboration between two geographically distant research `ConceptDomain`s might lead to a unique "collaboratesOnProjectX" link that isn't part of the standard `rdfh:isRelatedTo` hierarchy. Holons' autonomy and interdependence necessitate these:
 
 ** **Internal Self-Organization:** A `ProjectDomain` (a holon) might dynamically create temporary "taskDependency" relations between its internal `Activity` entities for a specific project phase, which are only relevant within that `ProjectDomain`.
 
@@ -77,7 +77,7 @@ To handle "Ad-Hoc Relations" within HSML's Semantic Web Stack:
 
 ** **Dynamic Predicate Creation and Registration:** New predicates (URIs for relations) could be generated and "registered" on the fly, perhaps within a specific Domain's context or by a Domain Authority. This implies a lightweight mechanism for declaring the _intent_ or _scope_ of these new predicates.
 
-** **Higher-Order Logic/Reasoning (OWL & SHACL):** Even if specific ad-hoc predicates are dynamic, OWL can define broader patterns or categories for these relations (e.g., an `owl:Class` called `hsml:TemporaryAdministrativeLink`). SHACL can then constrain the properties of these ad-hoc relations, ensuring data quality and consistency even for emergent links.
+** **Higher-Order Logic/Reasoning (OWL & SHACL):** Even if specific ad-hoc predicates are dynamic, OWL can define broader patterns or categories for these relations (e.g., an `owl:Class` called `ex:TemporaryAdministrativeLink`). SHACL can then constrain the properties of these ad-hoc relations, ensuring data quality and consistency even for emergent links.
 
 ** **Provenance of Relationships (RDF-star):** Using RDF-star, the assertion of an "ad-hoc relation" itself can be treated as a statement with its own metadata. This allows the Spatial Web to precisely record *who* asserted this temporary relation, *when*, *why*, and *for how long* it is considered valid. This provenance is critical for auditability and maintaining trust in a decentralized, dynamic environment where relationships aren't always static.
 

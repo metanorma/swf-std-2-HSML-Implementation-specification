@@ -21,7 +21,7 @@ Crucially, Hyperspaces in HSML are *made operational by explicit mappings*:
 * *Elements* → classes or datatypes (e.g., `geo:Geometry`, `cell:Cell`, `xsd:integer`).
 * *Arrows* (atomic steps) → RDF properties or edge classes (e.g., `graph:edge`, `cell:adjacentTo`).
 * *Paths* (compositions) → explicit path resources (e.g., `graph:Route`, `cell:CellChain`) or SPARQL property paths.
-* *Operations* → instances of `hsml:Operation` bound to these mappings, validated via SHACL profiles.
+* *Operations* → instances of `hspace:Operation` bound to these mappings, validated via SHACL profiles.
 
 Through these mappings, navigation (neighbors, reachability, path composition) and operations (distance, similarity, routing)
 are not hard-coded into the ontology, but arise from *declared structures* that can be validated, extended, and executed.
@@ -50,18 +50,18 @@ Navigation in a Domain’s Hyperspace is not hard-coded; it is *achieved by mapp
 
 * **Elements**
   - Mapped to an RDF class (e.g., `graph:Node`, `cell:Cell`) or a datatype (e.g., `geosparql:wktLiteral`, `tensor:ArrayLiteral`).
-  - Optionally bound via a `hyperspace:spatialProperty` (e.g., `geo:hasGeometry`, `hsml:cell`) to point to the actual value.
+  - Optionally bound via a `hyperspace:spatialProperty` (e.g., `geo:hasGeometry`, `hspace:cell`) to point to the actual value.
 
 * **Arrows (atomic steps)**
   - Mapped to an RDF property (e.g., `graph:edge`, `cell:adjacentTo`) connecting valid element instances.
-  - Alternatively represented as a reified edge class with `hsml:source` and `hsml:target`, or as RDF-star annotated triples for weighted/labeled edges.
+  - Alternatively represented as a reified edge class with `hspace:source` and `hspace:target`, or as RDF-star annotated triples for weighted/labeled edges.
 
 * **Paths (compositions)**
   - *Implicit:* expressed through SPARQL property paths over the declared arrow property (e.g., `(graph:edge)+` for reachability).
-  - *Explicit:* represented as RDF resources (e.g., `graph:Route`, `cell:CellChain`) with ordered `hsml:step`, `hsml:startsAt`, and `hsml:endsAt` properties.
+  - *Explicit:* represented as RDF resources (e.g., `graph:Route`, `cell:CellChain`) with ordered `hspace:step`, `hspace:startsAt`, and `hspace:endsAt` properties.
 
 These mappings allow core navigation queries such as:
-- **Neighbors:** `?a hsml:hasArrowType ?b`
+- **Neighbors:** `?a hspace:hasArrowType ?b`
 - **Reachability:** `ASK { ?a ( ?arrow )+ ?b }`
 - **Path Extraction:** select explicit path resources linking two elements.
 
@@ -69,7 +69,7 @@ Thus, navigation is universally defined but concretely realized through the mapp
 
 ==== Design Decision: Paths with Literal Elements (Generalized)
 
-In some Hyperspaces, `hsml:hasElementType` is a **datatype** (e.g., `xsd:string`, JSON literals, tensors, WKT).
+In some Hyperspaces, `hspace:hasElementType` is a **datatype** (e.g., `xsd:string`, JSON literals, tensors, WKT).
 Because RDF literals cannot be subjects, arrows and paths **CANNOT** be expressed as direct triples between literals.
 This decision specifies **general, profile-able mapping patterns** and properties that work for *any* element kind
 (class- or datatype-based) and *any* path representation. (We include a `geo:Geometry` example purely illustratively.)
@@ -84,21 +84,21 @@ the Hyperspace’s **arrow mapping** (predicate edge or reified edge), not from 
 *P3 — Two interoperable mappings*:: Profiles MAY choose either **Value-Node** (recommended) or **Literal-End** mappings.
 Both are first-class in HSML; the choice MUST be advertised by the Hyperspace’s mapping properties.
 
-*P4 — Path resource portability*:: Paths SHOULD be first-class resources (subclasses of `hsml:Path`) so implementations
+*P4 — Path resource portability*:: Paths SHOULD be first-class resources (subclasses of `hspace:Path`) so implementations
 can attach metadata (cost, provenance) and validate steps with SHACL—independent of element representation.
 
 ===== Patterns
 
 *Pattern L1 — Value-Node (RECOMMENDED)*::
-Materialize each element as a **resource node** (instances of a class declared by `hsml:hasElementType`), and carry the
-raw value via a datatype property (`hsml:elementValue` or a domain-standard property). Arrows are normal object properties
-(+hsml:arrowProperty+) or reified edge instances (`hsml:arrowClass` with `hsml:arrowSource` / `hsml:arrowTarget`).
-Paths use `hsml:startsAt` / `hsml:endsAt` and optional `hsml:step`.
+Materialize each element as a **resource node** (instances of a class declared by `hspace:hasElementType`), and carry the
+raw value via a datatype property (`hspace:elementValue` or a domain-standard property). Arrows are normal object properties
+(`hspace:arrowProperty`) or reified edge instances (`hspace:arrowClass` with `hspace:arrowSource` / `hspace:arrowTarget`).
+Paths use `hspace:startsAt` / `hspace:endsAt` and optional `hspace:step`.
 
 *Pattern L2 — Literal-End (SUPPORTED)*::
-Keep elements as **literals** (i.e., `hsml:hasElementType` is a datatype). Represent arrows as **reified edge resources**
-with **literal endpoints** (+hsml:arrowSourceValue+, `hsml:arrowTargetValue`). Represent paths as **resources** whose
-endpoints/steps are **literal-valued** (+hsml:startsAtValue+, `hsml:endsAtValue`, `hsml:stepList` or `hsml:pathLiteral`).
+Keep elements as **literals** (i.e., `hspace:hasElementType` is a datatype). Represent arrows as **reified edge resources**
+with **literal endpoints** (`hspace:arrowSourceValue`, `hspace:arrowTargetValue`). Represent paths as **resources** whose
+endpoints/steps are **literal-valued** (`hspace:startsAtValue``, `hspace:endsAtValue`, `hspace:stepList` or `hspace:pathLiteral`).
 
 [NOTE]
 ====

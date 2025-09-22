@@ -12,12 +12,12 @@ ____
 
 **Key Requirements**
 
-* **Identity** Every Contract **SHALL** possess a Spatial Web Identifier (`hsml:swid`, W3C DID Core-compliant).
-* **Initiator** Exactly one `hsml:isRequestedBy` **SHALL** reference the *Domain* that issued the request.
-* **Acceptance** One or more `hsml:isAcceptedBy` references **SHALL** identify the Agent(s) that accept the terms.
-* **Fulfilment** One or more `hsml:isFulfilledBy` references **SHALL** identify the Agent(s) responsible for execution.
-* **Governed Activity** One or more `hsml:contractFor` references **SHALL** identify the Activity(ies) the contract governs.
-* **Lifecycle**  `hsml:contractStatus` references **SHALL** record the contract’s state
+* **Identity** Every Contract **SHALL** possess a Spatial Web Identifier (`core:swid`, W3C DID Core-compliant).
+* **Initiator** Exactly one `gov:isRequestedBy` **SHALL** reference the *Domain* that issued the request.
+* **Acceptance** One or more `gov:isAcceptedBy` references **SHALL** identify the Agent(s) that accept the terms.
+* **Fulfilment** One or more `gov:isFulfilledBy` references **SHALL** identify the Agent(s) responsible for execution.
+* **Governed Activity** One or more `gov:contractFor` references **SHALL** identify the Activity(ies) the contract governs.
+* **Lifecycle**  `gov:contractStatus` references **SHALL** record the contract’s state
 * **Extensibility** Additional clauses, policy links, or monetary terms **MAY** be added via further properties or subclasses without altering these core semantics.
 
 These rules guarantee that every contract is discoverable, auditable, and machine-actionable across Spatial-Web systems.
@@ -31,7 +31,7 @@ These rules guarantee that every contract is discoverable, auditable, and machin
 |===
 | RDF Class | `gov:Contract`
 | Is Abstract | No
-| Definition | A binding agreement governing the execution of one or more `act:Activity` instances by specific `agt:Agent`s within a `hsml:Domain` context.
+| Definition | A binding agreement governing the execution of one or more `act:Activity` instances by specific `agt:Agent`s within a `core:Domain` context.
 | Subclass Of | `core:Entity`
 | Usage Notes | A `gov:Contract` must carry a SWID and link to its initiating domain, accepting and fulfilling agents, the governed activity, and its lifecycle status. For detailed roles, it uses `core:Participation` records.
 |===
@@ -100,9 +100,9 @@ This section provides the detailed normative definitions for the properties of t
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..1
 | **Domain** | `gov:Contract`
-| **Range** | `hsml:Domain`
-| **Definition** | Identifies the `hsml:Domain` that initiated or requested creation of the contract.
-| **Usage Note** | Exactly one initiating `hsml:Domain` is recorded.
+| **Range** | `core:Domain`
+| **Definition** | Identifies the `core:Domain` that initiated or requested creation of the contract.
+| **Usage Note** | Exactly one initiating `core:Domain` is recorded.
 |===
 
 [[gov-contract-property-isAcceptedBy]]

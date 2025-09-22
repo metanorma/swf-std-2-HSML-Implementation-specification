@@ -12,9 +12,9 @@ ____
 
 **Key Requirements**
 
-* **Identity**: Every `act:Activity` **SHALL** possess a Spatial Web Identifier (`hsml:swid`, W3C DID Core-compliant).
+* **Identity**: Every `act:Activity` **SHALL** possess a Spatial Web Identifier (`core:swid`, W3C DID Core-compliant).
 * **Schema Conformance**: An `act:Activity` **SHALL** reference exactly one `act:ActivitySchema` via the `act:activitySchema` property.
-* **Agent Assignment**: An `act:Activity` **SHALL** identify the `hsml:Agent`(s) responsible for its execution via the `act:performedBy` property.
+* **Agent Assignment**: An `act:Activity` **SHALL** identify the `agt:Agent`(s) responsible for its execution via the `act:performedBy` property.
 * **Parameter Binding**: An `act:Activity` **SHALL** provide concrete values for all required inputs of its schema using `act:VariableBinding` instances.
 * **Lifecycle Tracking**: An `act:Activity` **SHALL** have its current state tracked via the `act:status` property, using the normative HSML Activity Status vocabulary.
 * **Temporality**: An `act:Activity` **SHOULD** record the time execution began (`schema:startTime`) and concluded (`schema:endTime`).
@@ -31,7 +31,7 @@ These requirements ensure that every executed action is a complete, self-contain
 | RDF Class | `act:Activity`
 | Is Abstract | No
 | Definition | A concrete, stateful execution of an `act:ActivitySchema`. It is the record of an action that has been, is being, or is planned to be performed.
-| Subclass Of | `hsml:Entity`
+| Subclass Of | `core:Entity`
 | Usage Note | An `act:Activity` instance is created for every action that is initiated via a `gov:Contract`. It contains `act:VariableBinding` instances for all required inputs and its `act:status` property tracks its lifecycle.
 | Rationale | Provides the normative record of execution for all actions, ensuring that every event is auditable, governable, and traceable to its formal definition and responsible parties.
 |===
@@ -50,8 +50,8 @@ These requirements ensure that every executed action is a complete, self-contain
 
 | <<act-activity-property-performedBy,`act:performedBy`>>
 | `performedBy`
-| Identifies the `hsml:Agent`(s) responsible for performing the `act:Activity`.
-| `hsml:Agent`
+| Identifies the `agt:Agent`(s) responsible for performing the `act:Activity`.
+| `agt:Agent`
 | 1..*
 | **Mandatory**
 
@@ -130,8 +130,8 @@ This section provides the detailed normative definitions for the properties of t
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..*
 | **Domain** | `act:Activity`
-| **Range** | `hsml:Agent`
-| **Definition** | Identifies the `hsml:Agent` (or agents) responsible for performing an `act:Activity`.
+| **Range** | `agt:Agent`
+| **Definition** | Identifies the `agt:Agent` (or agents) responsible for performing an `act:Activity`.
 | **Usage Note** | Establishes accountability for the action's execution and outcomes.
 |===
 

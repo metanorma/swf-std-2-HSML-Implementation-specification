@@ -3,13 +3,13 @@
 
 The `comm:Channel` class realizes the *CHANNEL* concept as defined in the IEEE P2e874 draft standard. As a central element of the communications (+comm+) module, it provides a contextual container that links participants, data, and messages around specific Activities without forming part of the permanent domain hierarchy. This enables ad-hoc, session-based, or otherwise transient coordination and monitoring.
 
-This class is a subclass of `hsml:Entity`, inheriting a `hsml:swid` as its unique identifier.
+This class is a subclass of `core:Entity`, inheriting a `core:swid` as its unique identifier.
 
 
 ==== Key Requirements & Design Principles
 
-* A `comm:Channel` *shall link* to at least one `hsml:Activity` it supports.
-* A `comm:Channel` *shall be disjoint* from `hsml:Domain`, as it represents a non-hierarchical, transient grouping.
+* A `comm:Channel` *shall link* to at least one `act:Activity` it supports.
+* A `comm:Channel` *shall be disjoint* from `core:Domain`, as it represents a non-hierarchical, transient grouping.
 * A `comm:Channel` *shall include* one or more participants via the `core:hasParticipant` property.
 * Parent-child relationships between channels *shall be modeled* using the inverse properties `comm:hasSubChannel` and `comm:subChannelOf`.
 * Governance and access control *are intentionally delegated* to the Governance Module and are not embedded properties of a Channel.
@@ -25,7 +25,7 @@ This class is a subclass of `hsml:Entity`, inheriting a `hsml:swid` as its uniqu
 | *RDF Class* | `comm:Channel`
 | *Is Abstract* | No
 | *Definition* | A contextual, non-hierarchical grouping of entities associated with a specific Activity or purpose, for coordinating transient communications.
-| *Subclass Of* | `hsml:Entity`
+| *Subclass Of* | `core:Entity`
 | *Usage Note* | Channels are for transient, ad-hoc collaboration; they do not define domain boundaries or permanent hierarchies. The `core` namespace refers to a separate module defining foundational, cross-cutting properties.
 | *Rationale* | Provides a lightweight mechanism for coordinating information and participants. Access control is delegated to the Governance Module; Channels do not embed their own access control lists (ACLs).
 |===
@@ -40,7 +40,7 @@ This class is a subclass of `hsml:Entity`, inheriting a `hsml:swid` as its uniqu
 | Predicate | JSON(-LD) Name | Description | Cardinality
 
 | <<core-entity-property-type,rdf:type>> | `@type` | Declares the resource as an instance of `comm:Channel`. | 1..n
-| <<core-entity-property-swid,core:swid>> | `swid` | The Spatial Web Identifier (SWID) inherited from `hsml:Entity`. | 1
+| <<core-entity-property-swid,core:swid>> | `swid` | The Spatial Web Identifier (SWID) inherited from `core:Entity`. | 1
 | <<property-channel-hasParticipant,core:hasParticipant>> | `hasParticipant` | Identifies the entities participating in the Channel. | 1..n
 | <<property-channel-forActivity,comm:forActivity>> | `forActivity` | Links the Channel to the Activity it supports. | 1..n
 | <<property-channel-hasSubChannel,comm:hasSubChannel>> | `hasSubChannel` | Links to a nested sub-channel. | 0..n
@@ -63,7 +63,7 @@ This class is a subclass of `hsml:Entity`, inheriting a `hsml:swid` as its uniqu
 | *Requirement Level* | Mandatory
 | *Cardinality* | 1..n
 | *Domain* | `comm:Channel`
-| *Range* | `hsml:Entity`
+| *Range* | `core:Entity`
 | *Definition* | Links the Channel to its participants (Agents, Things, or other Entities).
 | *Usage Note* | A Channel must have at least one participant to be meaningful.
 |===
@@ -79,7 +79,7 @@ This class is a subclass of `hsml:Entity`, inheriting a `hsml:swid` as its uniqu
 | *JSON Name* | `forActivity`
 | *Requirement Level* | Mandatory
 | *Cardinality* | 1..n
-| *Range* | `hsml:Activity`
+| *Range* | `act:Activity`
 | *Definition* | Associates the Channel with one or more Activities it supports or relates to.
 | *Usage Note* | Channels provide the necessary communication and data context for their referenced Activities.
 |===

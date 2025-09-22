@@ -8,13 +8,14 @@ ____
 An ENTITY that senses, responds, and maintains a model of its environment while performing ACTIVITIES to achieve its goals.
 ____
 
-`agt:Agent` represents an autonomous entity capable of perceiving its environment, making decisions, and enacting `act:Activity` instances in pursuit of its goals. It may represent a person, robot, AI system, or other autonomous entity.
+`agt:Agent` represents an autonomous entity capable of perceiving its environment, making decisions, and enacting `act:Activity` instances in pursuit of explicitly declared goals. An Agent may represent a person, robot, AI system, or other autonomous entity.
 
 **Key Requirements**
 
-* **Identity**: Every `agt:Agent` **SHALL** possess a Spatial Web Identifier (`core:swid`, W3C DID Core-compliant).
-* **Goal-Directed**: An `agt:Agent` **SHALL** be linked to one or more objectives it seeks to achieve via the `agt:hasGoal` property.
-* **Capability**: An `agt:Agent` **SHALL** be linked to the `act:ActivitySchema` definitions for the activities it is capable of performing via the `agt:hasCapability` property.
+* **Identity**:: Every `agt:Agent` **SHALL** possess a Spatial Web Identifier (`core:swid`, W3C DID Core–compliant).
+* **Goal-Directed**:: An `agt:Agent` **SHALL** be linked to one or more objectives via `agt:hasGoal`.
+* **Capability**:: An `agt:Agent` **SHALL** be linked to the `act:ActivitySchema` definitions it can perform via `agt:canPerform`.
+* **Embodiment (when applicable)**:: If an Agent acts through a physical or digital substrate, it **SHOULD** indicate that substrate via `agt:embodiedIn` to a `core:Thing`. The inverse relation `agt:embodiedBy` links a `core:Thing` back to the Agent it embodies. Absence of `agt:embodiedIn` denotes a disembodied Agent.
 
 [[agt-agent-class]]
 ==== Class Definition
@@ -26,8 +27,9 @@ ____
 | Is Abstract | No
 | Definition | An autonomous entity capable of perceiving, deciding, and performing Activities to achieve its goals.
 | Subclass Of | `core:Domain`
-| Usage Note | Agents are the actors in the Spatial Web. They initiate `gov:Contract` instances and perform `act:Activity` instances.
-| Rationale | Provides the normative model for autonomous actors in the Spatial Web, supporting goal-directed behavior and governed interactions.
+| Disjoint With | `core:Thing`  // per P2874 Thing DOMAIN: bounded items **without agency**
+| Usage Note | Agents are the actors in the Spatial Web. They declare goals, obtain authorization (e.g., via `gov:Contract`), and perform `act:Activity` instances.
+| Rationale | Provides the normative model for autonomous actors in the Spatial Web, supporting goal-directed behavior, governed interactions, and (when relevant) explicit embodiment without conflating agency with substrate.
 |===
 
 .Properties Summary for agt:Agent
@@ -48,12 +50,26 @@ ____
 | `act:ActivitySchema`
 | 1..*
 | **Mandatory**
+
+| <<agt-agent-property-embodiedIn,`agt:embodiedIn`>>
+| `embodiedIn`
+| Indicates the `core:Thing` that serves as the Agent’s physical or digital substrate.
+| `core:Thing`
+| 0..1
+| **Recommended** (when embodied)
+
+| <<agt-agent-property-embodiedBy,`agt:embodiedBy`>>
+| `embodiedBy`
+| Inverse of `agt:embodiedIn`; links a `core:Thing` back to the Agent it embodies.
+| `agt:Agent`
+| 0..1
+| **Recommended** (when embodied)
 |===
 
 [[agt-agent-properties]]
 ==== Properties
 
-This section provides the detailed normative definitions for the properties of the `agt:Agent` class.
+This clause provides the detailed normative definitions for the properties of the `agt:Agent` class.
 
 [[agt-agent-property-hasGoal]]
 ===== Property: hasGoal
@@ -65,10 +81,10 @@ This section provides the detailed normative definitions for the properties of t
 | **JSON name** | `hasGoal`
 | **Requirement Level** | **Mandatory**
 | **Cardinality** | 1..*
-| **Domain** | `agent:Agent`
-| **Range** | `agent:Goal`
+| **Domain** | `agt:Agent`
+| **Range** | `agt:Goal`
 | **Definition** | Links an Agent to one or more goals that it aims to fulfill through its Activities.
-| **Usage Note** | Goals represent abstract or concrete states the Agent seeks to bring about. The range is `core:Entity` to allow goals to be simple text descriptions or complex, structured entities.
+| **Usage Note** | Goals are explicit, inspectable objects enabling explainable and governable autonomy; they may be specialized (e.g., Achievement, Maintenance) per the Agent’s design.
 |===
 
 [[agt-agent-property-canPerform]]
@@ -84,5 +100,37 @@ This section provides the detailed normative definitions for the properties of t
 | **Domain** | `agt:Agent`
 | **Range** | `act:ActivitySchema`
 | **Definition** | Identifies the types of Activities the Agent is capable of performing.
-| **Usage Note** | This property links an agent to the `act:ActivitySchema` templates for its skills. This is distinct from an `act:Activity`, which is a record of a specific execution.
+| **Usage Note** | Declares an Agent’s skills as reusable templates (`act:ActivitySchema`). Actual executions are captured as `act:Activity` instances.
+|===
+
+[[agt-agent-property-embodiedIn]]
+===== Property: embodiedIn
+.Property Definition: agt:embodiedIn
+[cols="2,4"]
+|===
+| **Property** | `agt:embodiedIn`
+| **IRI** | identifier:[https://www.spatialwebfoundation.org/ns/hsml/agent#embodiedIn]
+| **JSON name** | `embodiedIn`
+| **Requirement Level** | **Recommended** (when embodied)
+| **Cardinality** | 0..1 *(atemporal graphs; temporal histories may be represented via Embodiment records)*
+| **Domain** | `agt:Agent`
+| **Range** | `core:Thing`
+| **Definition** | Links an Agent to the `core:Thing` that serves as its physical or digital substrate.
+| **Usage Note** | Preserves the P2874 disjointness between `agt:Agent` and `core:Thing` (Thing DOMAIN: bounded items **without agency**; see §6.3.2.1.7). Use absence of this property to denote disembodied Agents (e.g., cloud services). For time-varying embodiment, model histories using time-bounded Embodiment records and derive the current substrate.
+|===
+
+[[agt-agent-property-embodiedBy]]
+===== Property: embodiedBy
+.Property Definition: agt:embodiedBy
+[cols="2,4"]
+|===
+| **Property** | `agt:embodiedBy`
+| **IRI** | identifier:[https://www.spatialwebfoundation.org/ns/hsml/agent#embodiedBy]
+| **JSON name** | `embodiedBy`
+| **Requirement Level** | **Recommended** (when embodied)
+| **Cardinality** | 0..1
+| **Domain** | `core:Thing`
+| **Range** | `agt:Agent`
+| **Definition** | Inverse of `agt:embodiedIn`; links a `core:Thing` back to the Agent it embodies.
+| **Usage Note** | This property allows implementers to navigate from the physical or digital substrate (`core:Thing`) to the agentive entity it supports. It complements `agt:embodiedIn` and maintains symmetry in embodiment modeling.
 |===

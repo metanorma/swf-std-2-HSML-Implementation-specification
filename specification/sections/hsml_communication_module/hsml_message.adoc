@@ -1,15 +1,15 @@
 [[comm-message]]
 === Class: comm:Message
 
-comm:Message models an optional semantic projection of a transported envelope (per HSTP) into HSML. It is used to persist provenance, governance, validation, discovery, and correlation of communications that occur within a chan:Channel and concern an hsml:Activity. Transport framing, headers, and bindings remain the responsibility of HSTP; comm:Message captures the who/what/when/why at the semantic layer.
+comm:Message models an optional semantic projection of a transported envelope (per HSTP) into HSML. It is used to persist provenance, governance, validation, discovery, and correlation of communications that occur within a chan:Channel and concern an act:Activity. Transport framing, headers, and bindings remain the responsibility of HSTP; comm:Message captures the who/what/when/why at the semantic layer.
 
 Messages are not required for all exchanges. Implementations materialize comm:Message only when traceability or auditability is needed.
 
 **Key Requirements**
 
 . A comm:Message shall be associated with exactly one chan:Channel via comm:inChannel.
-. A comm:Message shall be linked to at least one hsml:Activity via comm:aboutActivity.
-. A comm:Message shall identify at least one comm:sender of type hsml:Agent.
+. A comm:Message shall be linked to at least one act:Activity via comm:aboutActivity.
+. A comm:Message shall identify at least one comm:sender of type agt:Agent.
 . A comm:Message shall record a generation timestamp (e.g., prov:generatedAtTime).
 . A comm:Message should declare comm:mediaType and one or more comm:contentSchema to enable validation/routing.
 . A comm:Message may include integrity (comm:contentHash) and ordering (comm:sequenceNumber) metadata, and may correlate to other messages (comm:correlatesWith).
@@ -48,21 +48,21 @@ Messages are not required for all exchanges. Implementations materialize comm:Me
 | <<comm-message-property-aboutActivity,comm:aboutActivity>>
 | aboutActivity
 | Activity that this message concerns.
-| hsml:Activity
+| act:Activity
 | 1..*
 | Mandatory
 
 | <<comm-message-property-sender,comm:sender>>
 | sender
 | Author/emitter of the message.
-| hsml:Agent
+| agt:Agent
 | 1..*
 | Mandatory
 
 | <<comm-message-property-recipient,comm:recipient>>
 | recipient
 | Intended audience (Agents or Channels).
-| hsml:Agent or chan:Channel
+| agt:Agent or chan:Channel
 | 0..*
 | Optional
 
@@ -118,7 +118,7 @@ Messages are not required for all exchanges. Implementations materialize comm:Me
 | <<comm-message-property-wasAttributedTo,prov:wasAttributedTo>>
 | wasAttributedTo
 | Attribution of authorship (often same as comm:sender).
-| hsml:Agent
+| agt:Agent
 | 1..*
 | Mandatory
 |===
@@ -153,7 +153,7 @@ Messages are not required for all exchanges. Implementations materialize comm:Me
 | Requirement Level | Mandatory
 | Cardinality | 1..*
 | Domain | comm:Message
-| Range | hsml:Activity
+| Range | act:Activity
 | Definition | Identifies the Activity that the message concerns.
 | Usage Note | Grounds transient communication in enduring Activity provenance.
 |===
@@ -185,7 +185,7 @@ Messages are not required for all exchanges. Implementations materialize comm:Me
 | Requirement Level | Optional
 | Cardinality | 0..*
 | Domain | comm:Message
-| Range | hsml:Agent or chan:Channel
+| Range | agt:Agent or chan:Channel
 | Definition | Intended audience of the message.
 | Usage Note | Use multiple values for broadcast/fan-out. Omit when Channel audience suffices.
 |===
@@ -313,7 +313,7 @@ Messages are not required for all exchanges. Implementations materialize comm:Me
 | Requirement Level | Mandatory
 | Cardinality | 1..*
 | Domain | comm:Message
-| Range | hsml:Agent
+| Range | agt:Agent
 | Definition | Attribution of authorship/agency for the message.
 | Usage Note | Often same individual(s) as comm:sender; keep both for PROV/tooling compatibility.
 |===

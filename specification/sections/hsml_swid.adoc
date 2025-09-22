@@ -1,12 +1,12 @@
 
 == The Importance of the Spatial Web Identifier (SWID)
 
-The **Spatial Web Identifier (SWID)** is a cornerstone of the Spatial Web architecture, serving as the fundamental mechanism for identity, security, and interoperability. A SWID is defined as a unique identifier for any `hsml:Entity`, formulated as a URL that conforms to the W3C Decentralized Identifier (DID) standard. Every addressable object in the Spatial Web—whether a person, device, piece of data, or abstract domain—**shall** have a SWID. Its importance stems from several key functions.
+The **Spatial Web Identifier (SWID)** is a cornerstone of the Spatial Web architecture, serving as the fundamental mechanism for identity, security, and interoperability. A SWID is defined as a unique identifier for any `core:Entity`, formulated as a URL that conforms to the W3C Decentralized Identifier (DID) standard. Every addressable object in the Spatial Web—whether a person, device, piece of data, or abstract domain—**shall** have a SWID. Its importance stems from several key functions.
 
 
 === Universal and Unique Addressability
 
-At its most basic level, the SWID provides a single, unambiguous address for every entity within the vast, distributed network of the Spatial Web. The HSML specification mandates that every `hsml:Entity` must have exactly one SWID. This guarantees that any entity can be uniquely identified, discovered via the Universal Domain Graph (UDG), and interacted with, preventing conflicts and ensuring data coherence.
+At its most basic level, the SWID provides a single, unambiguous address for every entity within the vast, distributed network of the Spatial Web. The HSML specification mandates that every `core:Entity` must have exactly one SWID. This guarantees that any entity can be uniquely identified, discovered via the Universal Domain Graph (UDG), and interacted with, preventing conflicts and ensuring data coherence.
 
 
 === Foundation for Decentralized Identity
@@ -21,7 +21,7 @@ Crucially, SWIDs are not just identifiers; they are a formal implementation of *
 
 The decentralized and cryptographic nature of SWIDs is the bedrock of the Spatial Web's zero-trust security model. By associating SWIDs with cryptographic keys, the system enables:
 
-* **Verifiable Credentials**: An `hsml:Agent` can present credentials that are cryptographically signed by an issuer and tied to the agent's SWID. This allows for verifiable, tamper-evident claims about identity, capabilities, or permissions without relying on a third-party intermediary.
+* **Verifiable Credentials**: An `agt:Agent` can present credentials that are cryptographically signed by an issuer and tied to the agent's SWID. This allows for verifiable, tamper-evident claims about identity, capabilities, or permissions without relying on a third-party intermediary.
 * **Authenticated Interactions**: The identities of all Spatial Web Domains and entities are verifiable by their SWID. This allows for the authentication of parties before a contract is signed or an activity is performed, ensuring that interactions are legitimate.
 
 

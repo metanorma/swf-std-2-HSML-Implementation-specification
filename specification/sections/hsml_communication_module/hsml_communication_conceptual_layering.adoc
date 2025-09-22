@@ -10,7 +10,7 @@ image::specification/images/mermaid-hsml_communication_conceptual_layering.svg[]
 // ----
 // graph TD
 //     subgraph Domain
-//         D[hsml:Domain]
+//         D[core:Domain]
 //     end
 //
 //     subgraph Communication

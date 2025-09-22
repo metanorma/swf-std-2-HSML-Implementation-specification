@@ -6,9 +6,9 @@ HSML is designed for evolution and adaptation. While the Core Model provides a u
 
 Extensions **must** build upon the established HSML core classes. This is the primary mechanism for ensuring that new concepts are compliant, interoperable, and inherit foundational characteristics.
 
-* *How to Model*: New classes **shall** be defined using `rdfs:subClassOf` to inherit from a base HSML class like `hsml:Thing`, `hsml:Agent`, or `hsml:Activity`. For example, a `smartbuilding:Elevator` would be a subclass of `hsml:Thing`.
+* *How to Model*: New classes **shall** be defined using `rdfs:subClassOf` to inherit from a base HSML class like `core:Thing`, `agt:Agent`, or `act:Activity`. For example, a `smartbuilding:Elevator` would be a subclass of `core:Thing`.
 
-* *Reasoning*: This ensures that every new entity is a valid holon that can be uniquely identified by a `hsml:swid`, exist within a `hsml:Domain`, and participate in the governance framework.
+* *Reasoning*: This ensures that every new entity is a valid holon that can be uniquely identified by a `core:swid`, exist within a `core:Domain`, and participate in the governance framework.
 
 
 === Maximize Reuse of Existing Ontologies

@@ -24,7 +24,7 @@ This clause explains the design choices behind the HSML Communication Module and
 
 A core principle is that **Channels are not Domains**. While Domains represent enduring identity-bearing contexts (geographic, organizational, or conceptual), Channels are **ad-hoc and transient groupings** of HSML Entities around a purpose or Activity. P2874 defines a Channel as “a stream of HSML ENTITIES that are related to an ACTIVITY of a specific context that does not itself warrant a DOMAIN or hierarchy.” This design ensures that Channels do not alter the permanent domain hierarchy but still allow session-like coordination.
 
-* Channels are modeled as subclass of `hsml:Entity` but declared **disjoint from `hsml:Domain`**.
+* Channels are modeled as subclass of `core:Entity` but declared **disjoint from `core:Domain`**.
 * Membership is flexible, but typically they are Agent, Person entities.
 * Sub-channels allow hierarchical scoping of collaborative contexts without redefining domain hierarchies.
 
