@@ -26,6 +26,7 @@ This section provides the detailed normative definitions for the properties of t
 
 [[agt-goal-property-description]]
 ===== Property: description
+
 .Property Definition: schema:description
 [cols="2,4"]
 |===

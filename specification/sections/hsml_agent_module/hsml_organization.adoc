@@ -15,7 +15,7 @@ cor:Organization represents collective actors—such as companies, institutions,
 [[agt-organization-class]]
 ==== Class Definition
 
-.Class Definition for `agt:Organization`
+.Class Definition for agt:Organization
 [cols="1,3"]
 |===
 | RDF Class | `agt:Organization`

@@ -15,7 +15,7 @@ Policies must reference one or more Norms via `gov:hasNorm`.
 [[gov-norm-class]]
 ==== Class Definition
 
-.Class Definition for `gov:Norm`
+.Class Definition for gov:Norm
 [cols="1,3",options="header"]
 |===
 | RDF Class | `gov:Norm`
@@ -38,7 +38,7 @@ Policies must reference one or more Norms via `gov:hasNorm`.
 [[gov-norm-summary]]
 ==== Properties Summary
 
-.Properties Summary for `gov:Norm`
+.Properties Summary for gov:Norm
 [cols="2,2,4,2,1,2",options="header"]
 |===
 | Predicate | JSON-LD name | Description | Range | Cardinality | Requirement
