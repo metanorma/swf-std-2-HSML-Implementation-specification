@@ -1,6 +1,3 @@
-Got it — here’s the **updated landing page** with the GitHub Issues link added under **Support**.
-
-
 
 # 🌌 HSML User Guide
 
