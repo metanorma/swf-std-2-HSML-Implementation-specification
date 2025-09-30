@@ -17,11 +17,12 @@ The Spatial Web envisions a world where **people, devices, and AI agents** inter
 * **Hyperspaces** → Spatial, metric, graph, cellular, and vector structures
 
 With HSML you can:
-✅ Represent **autonomous agents** and their capabilities
-✅ Model **digital twins** that mirror real-world assets
-✅ Coordinate **multi-agent activities** through **channels**
-✅ Enforce **credentials and policies** for secure interactions
-✅ Navigate **spaces** (from city maps to cellular grids) with unified semantics
+
+* ✅ Represent **autonomous agents** and their capabilities
+* ✅ Model **digital twins** that mirror real-world assets
+* ✅ Coordinate **multi-agent activities** through **channels**
+* ✅ Enforce **credentials and policies** for secure interactions
+* ✅ Navigate **spaces** (from city maps to cellular grids) with unified semantics
 
 
 
@@ -29,7 +30,6 @@ With HSML you can:
 
 * **HSML Implementation Specification** → [Latest Draft v0.2 PDF](https://github.com/Spatial-Web-Foundation/swf-std-2-HSML-Implementation-specification/releases/download/v0.2/hsml-implementation.pdf)
 * **HSML Schema Repository** → [GitHub Repository](https://github.com/Spatial-Web-Foundation/HSML-schema)
-* **Feedback & Issues** → [GitHub Issues](https://github.com/Spatial-Web-Foundation/swf-std-2-HSML-Implementation-specification/issues)
 
 
 
