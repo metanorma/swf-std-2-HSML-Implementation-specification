@@ -95,3 +95,7 @@ The namespace prefix `th:` refers to identifier:[[https://www.spatialwebfoundati
 | A structural affordance through which a `Thing` can be interacted with.
 |===
 
+
+
+
+include::hsml_thing.adoc[leveloffset=+1]

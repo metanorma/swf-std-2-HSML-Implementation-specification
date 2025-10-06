@@ -1,5 +1,5 @@
-[[core-thing]]
-=== Class: core:Thing
+[[th-thing]]
+=== Class: th:Thing
 
 The class core:Thing realises the THING DOMAIN type defined in <<ieee-p2874,clause="6.3.2.1.7">>:
 
@@ -10,12 +10,12 @@ ____
 
 core:Thing represents physical or virtual entities that lack autonomous action but may be observed, measured, manipulated, or referenced by Agents or Activities. Examples include devices, sensors, vehicles, digital files, or other discrete objects.
 
-[[core-thing-class]]
+[[th-thing-class]]
 ==== Class Definition
 .Class Definition for core:Thing
 [cols="1,3",options="header"]
 |===
-| RDF Class | core:Thing
+| RDF Class | th:Thing
 | Is Abstract | No
 | Definition | A passive core:Domain representing a bounded item without agency, which may be sensed, acted upon, or described.
 | Subclass Of | core:Domain
@@ -24,7 +24,6 @@ core:Thing represents physical or virtual entities that lack autonomous action b
 | Rationale | Provides a formal category for all non-agentic entities in the Spatial Web, ensuring compliance with P2874’s Domain taxonomy.
 |===
 
-[[core-thing-properties]]
+[[th-thing-properties]]
 ==== Properties
 
-The core:Thing class inherits all properties from core:Domain and core:Entity. It introduces no new properties at this level, providing a minimal base class that can be extended by more specific standards (such as W3C WoT or SAREF) for detailed device modeling.
