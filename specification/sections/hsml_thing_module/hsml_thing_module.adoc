@@ -1,0 +1,97 @@
+== HSML Thing Module (`th:`)
+
+The `Thing` module provides the vocabulary for describing the passive, structural world. In the HSML ontology, a `Thing` is one of four fundamental pillars, representing the *"what"* or the *entity-substrate*. It serves as the counterpart to the `Agent` (the "who"), is the subject of the `Activity` (the "how"), and is defined by the `Concept Domain` (the "idea").
+
+This module formalizes the `th:` namespace and provides the classes and properties for representing any bounded, non-agentic entity, from physical objects to digital assets.
+
+=== Architectural Principles and Design Rationale
+
+This clause describes the architectural principles underlying the `th:Thing` module. These principles are _informative_ but recommended for a correct and robust implementation.
+
+==== The Actor-Substrate Duality: Separating Agency from Structure
+
+The cornerstone of HSML's logical clarity is the strict separation of entities that *act* from those that are *acted upon*.
+
+* `agt:Agent`: The actor, possessing agency and goals.
+* `th:Thing`: The substrate, a passive entity defined by its state and structure.
+
+This is enforced by a formal *disjoint axiom* (`th:Thing` ⟂ `agt:Agent`). To model complex real-world entities like robots, the model uses the *Embodiment Pattern*: a distinct `Agent` (the "mind") is linked to a distinct `Thing` (the "body") via the `agt:embodiedIn` property. This preserves the logical separation while accurately representing embodied actors.
+
+==== The Entity vs. Locus Pattern: Distinguishing Objects from Space
+
+A critical distinction is made between a `Thing Domain` and a `Geographic Domain`. Both are passive substrates, but they are ontologically distinct.
+
+* A *_`Thing Domain`_* (`th:Thing`) represents a discrete, bounded _entity_ or object that occupies a position _within_ space. Examples: a car, a sensor, a dataset.
+* A *_`Geographic Domain`_* represents a bounded _locus_ or partitioning _of_ space itself. It is a container, not an object. Examples: a city's administrative boundaries, a designated airspace, a property parcel.
+
+This pattern clarifies relationships: a `SpatialThing` _is located within_ one or more `Geographic Domains`. This prevents the model from conflating an object with its location, providing a more precise foundation for spatial reasoning and governance.
+
+[TIP]
+.Rule of Thumb: The Mobility Test
+====
+To decide between the two classes, ask this question: *If I moved this entity to a different location, would it preserve its identity?*
+
+* *If YES, it's a `Thing Domain`*. A `Thing`'s identity is independent of its location.
+
+--
+*Example*: If you take a specific delivery drone (Drone #734) from a warehouse in Leesburg and move it to a warehouse in another city, it is still Drone #734. Its identity is preserved.
+--
+
+* *If NO, it's a `Geographic Domain`*. A `Geographic Domain`'s identity is intrinsically defined by its location.
+
+--
+*Example*: The designated airspace _above_ the Leesburg warehouse cannot be "moved." Its identity is its specific coordinates on Earth. A new airspace defined with the same dimensions over another city would be a completely different `Geographic Domain`, not the original one relocated.
+--
+====
+
+==== The Compositional Pattern: Modeling Systems of Systems
+
+Entities in the world are inherently compositional. By subclassing `core:Domain`, every `th:Thing` inherits the `h:hasPart` property, allowing for the natural, recursive modeling of complex systems. This *holonic* architecture provides a consistent grammar for describing the internal structure of any entity, enabling multi-level queries and the cascading of governance policies.
+
+==== The State and Interface Pattern: What Things Are and How They're Used
+
+A `Thing` is described by its state and its interfaces, connecting it to the other pillars of HSML.
+
+* *State (`th:Property`)*: A `Property` describes an observable attribute. As a subclass of `core:Variable`, it creates a direct semantic link between the world's state and an `Agent`'s `Goal`.
+* *Interface (`th:InteractionPoint`)*: An `InteractionPoint` is a structural affordance (e.g., a port, API endpoint) through which a `Thing` can be manipulated by an `Activity`.
+
+This pattern creates a clean symmetry: an `Agent`'s *Goals* target a `Thing`'s *state*, and its *Activities* engage a `Thing`'s *interface*.
+
+==== The Duality of Existence Pattern: Modeling Spatial and Abstract Things
+
+Within the category of `Thing Domains`, a further distinction is made based on the nature of their existence:
+
+* `th:SpatialThing`: An entity that has a location and orientation in a spatial hyperspace (e.g., a drone, a building). It must have at least one `hspace:ReferenceFrame`.
+* `th:AbstractThing`: A non-spatial entity that exists in a conceptual or datatype hyperspace (e.g., a dataset, an API service, a legal contract).
+
+This bifurcation allows for more precise modeling, ensuring that spatial properties are only applied where relevant.
+
+=== Normative Classes
+
+This clause provides the normative definitions for all class concepts within the HSML Thing Module.
+
+The namespace prefix `th:` refers to identifier:[[https://www.spatialwebfoundation.org/ns/hsml/thing#](https://www.spatialwebfoundation.org/ns/hsml/thing#)].
+
+==== Summary of Normative Classes
+
+.Summary of HSML Thing Module Classes
+[cols="1,3",options="header"]
+|===
+| Class | Description
+
+| <<th-thing,th:Thing>>
+| A passive `core:Domain` representing a bounded item without agency that can be acted upon.
+
+| <<th-spatialthing,th:SpatialThing>>
+| A `Thing` that exists within one or more spatial hyperspaces and has a reference frame.
+
+| <<th-abstractthing,th:AbstractThing>>
+| A `Thing` that exists in a non-spatial, conceptual, or datatype hyperspace.
+
+| <<th-property,th:Property>>
+| A `core:Variable` that describes an observable attribute or state of a `Thing`.
+
+| <<th-interactionpoint,th:InteractionPoint>>
+| A structural affordance through which a `Thing` can be interacted with.
+|===
+
