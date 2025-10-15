@@ -19,7 +19,7 @@
 | <<vector-innerproduct-property-hasInnerProduct,vector:hasInnerProduct>>
 | hasInnerProduct
 | Identifies the inner product of the space; determines the induced norm.
-| @id (IRI to an inner-product definition) or rdfs:Resource
+| vector:InnerProduct 
 | 0..1
 | Optional
 |===

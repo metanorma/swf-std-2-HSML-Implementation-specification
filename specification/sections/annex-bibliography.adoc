@@ -28,7 +28,6 @@
 
 * [[[w3c_vocab-org,W3C vocab-org]]], Organization Ontology
 
-* [[[ogc_geosparql,OGC 22-047r1]]], GeoSPARQL
 
 * [[[xmlns_foaf,FOAF]]],
 span:surname[Brickley], span:givenname[Dan]

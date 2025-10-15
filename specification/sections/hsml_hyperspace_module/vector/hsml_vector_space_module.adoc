@@ -1,4 +1,4 @@
-[[hsml-vectorspace]]
+[[vectorspace-module]]
 == HSML VectorSpace SubModule
 
 === Introduction
