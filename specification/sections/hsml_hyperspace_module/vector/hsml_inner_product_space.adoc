@@ -1,0 +1,25 @@
+[[vector-innerproduct]]
+=== Class: `vector:InnerProductSpace`
+
+.Property Definition: *Class summary*
+[cols="2,4"]
+|===
+| IRI | identifier:[https://www.spatialwebfoundation.org/ns/hsml/hyperspace/vector#InnerProductSpace]
+| JSON name | innerProductSpace
+| Subclass Of | `vector:NormedVectorSpace`
+| Definition | A normed vector space equipped with an inner product ⟨·,·⟩; the norm is induced as ‖v‖=√⟨v,v⟩.
+| Usage Notes | Enables semantics like angles, projections, orthogonality; preferred for geometric analysis.
+|===
+
+.Properties Summary for `vector:InnerProductSpace`
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Card. | Req. Level
+
+| <<vector-innerproduct-property-hasInnerProduct,vector:hasInnerProduct>>
+| hasInnerProduct
+| Identifies the inner product of the space; determines the induced norm.
+| @id (IRI to an inner-product definition) or rdfs:Resource
+| 0..1
+| Optional
+|===

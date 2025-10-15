@@ -1,0 +1,33 @@
+
+[[vector-normed]]
+=== Class: `vector:NormedVectorSpace`
+
+.Property Definition: *Class summary*
+[cols="2,4"]
+|===
+| IRI | identifier:[https://www.spatialwebfoundation.org/ns/hsml/hyperspace/vector#NormedVectorSpace]
+| JSON name | normedVectorSpace
+| Subclass Of | `vector:VectorSpace`
+| Definition | A vector space equipped with a norm function ‖·‖ that induces a metric *d(u,v)=‖u−v‖*.
+| Usage Notes | Use when explicit length/scale semantics are required (e.g., kNN in embeddings, physical length).
+|===
+
+.Properties Summary for `vector:NormedVectorSpace`
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Card. | Req. Level
+
+| <<vector-normed-property-hasNorm,vector:hasNorm>>
+| hasNorm
+| Identifies the norm used by the space.
+| @id (IRI to a norm definition) or rdfs:Resource
+| 0..1
+| Optional
+
+| <<vector-normed-property-inducesMetric,vector:inducesMetric>>
+| inducesMetric
+| Metric resource induced by the norm (for discovery/interop with `metric:`).
+| @id (IRI to `metric:Metric`)
+| 0..1
+| Optional
+|===

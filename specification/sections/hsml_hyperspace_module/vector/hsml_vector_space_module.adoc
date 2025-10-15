@@ -1,21 +1,73 @@
+[[hsml-vectorspace]]
 == HSML VectorSpace SubModule
 
 === Introduction
 
-The VectorSpace Module specializes the Hyperspace abstraction for **linear spaces**.
-It realizes the *VECTOR SPACE* concept of <<ieee-p2874,clause="6.2.x">> as a Hyperspace whose elements admit **linear combination over a scalar field**, with an abstract **origin** and **composable arrows** corresponding to linear displacements.
+The *VectorSpace* submodule specializes the Hyperspace abstraction for **linear spaces**. It realizes the *VECTOR SPACE* concept of <<ieee-p2874,clause="6.2.x">> as a Hyperspace whose elements admit **linear combination over a scalar field**, with an abstract **origin** and **composable arrows** corresponding to linear displacements.
 
 [quote]
 ____
 A vector space is a set whose elements can be added and scaled, satisfying linearity axioms.
-In HSML, a VectorSpace is a Hyperspace that also qualifies as a MetricSpace, exposing linear and distance semantics without prescribing a particular element encoding or path representation.
+In HSML, a `vector:VectorSpace` is a `hspace:Hyperspace` that also qualifies as a `metric:MetricSpace`, exposing linear and distance semantics **without prescribing** a particular element encoding or path representation.
 ____
 
-This module is intentionally **non-prescriptive** about representation. It defines vector-space semantics and mapping hooks while allowing deployments to bind coordinates, arrays, or geometries according to their needs.
-Vector spaces are used across the Spatial Web for **geometric coordinates**, **embeddings and feature spaces**, **signal/field representations**, and **local linearizations** of complex manifolds.
+This module is intentionally **representation-agnostic**. It defines vector-space semantics and mapping hooks while allowing deployments to bind coordinates, arrays, or geometries as needed. Vector spaces are used across the Spatial Web for **geometric coordinates**, **embeddings and feature spaces**, **signal/field representations**, and **local linearizations** of complex manifolds.
 
 By design, a `vector:VectorSpace`:
 
 * Inherits all properties of `hspace:Hyperspace` (elements, arrows, paths, operations).
 * Inherits all properties of `metric:MetricSpace` (distance, polarity, axioms, metrics).
-* Adds linear structure hooks (scalar field, dimension, origin policy, CRS).
+* Adds linear-structure hooks (scalar field, dimension, origin policy, CRS).
+
+Namespace. identifier:[https://www.spatialwebfoundation.org/ns/hsml/hyperspace/vector#]  
+Prefix. `vector:`
+
+.Key Requirements
+* **Separation of concerns.** A `core:Domain` *owns* one or more hyperspaces via `core:hasHyperspace`; Vector Space contributes the **linear structure** for those spaces.
+* **Linear + metric inheritance.** `vector:VectorSpace` inherits element/path semantics from `hspace:Hyperspace` and distance/similarity semantics from `metric:MetricSpace`.
+* **CRS grounding.** Every `vector:VectorSpace` **SHALL** bind to an ISO 19111 CRS using a registry IRI (e.g., EPSG) so **axes, units, and frames** are unambiguous.
+* **Dimensionality.** A vector space **SHALL** declare its finite dimension (e.g., `2` or `3`).
+* **Representation-neutral.** The module does **not** impose vector/geometry classes; element/path encodings are mapped via Hyperspace declarations.
+* **Operations-ready.** Vector spaces participate in Hyperspace operations (e.g., **subspace**, **direct sum**, **tensor product**) defined by the standard.
+
+=== Architecture and Design Rationale
+
+TODO
+
+
+=== Normative Classes
+
+This clause provides the normative definitions for all class concepts within the HSML **Vector Space** Submodule. Each class is detailed in a table that specifies its URI, description, JSON-LD context name, usage notes, and relationships to other classes.
+
+The namespace prefix `vector:` refers to identifier:[https://www.spatialwebfoundation.org/ns/hsml/hyperspace/vector#].  
+Related prefixes (informative): `hspace:` → identifier:[https://www.spatialwebfoundation.org/ns/hsml/hyperspace#], `metric:` → identifier:[https://www.spatialwebfoundation.org/ns/hsml/hyperspace/metric#].
+
+.Summary of Vector Module Classes
+[cols="1,3",options="header"]
+|===
+| Class | Description
+
+| <<vector-vectorspace,vector:VectorSpace>>
+| Specialization of `hspace:Hyperspace` (and `metric:MetricSpace`) that provides linear-structure semantics and CRS grounding for interoperable coordinates.
+
+| <<vector-crs,vector:CoordinateReferenceSystem>>
+| First-class resource describing a CRS used to ground a `vector:VectorSpace`. Encapsulates the registry identifier and optional authority metadata.
+
+| <<vector-normed,vector:NormedVectorSpace>>
+| A `vector:VectorSpace` equipped with a norm; induces a metric on elements.
+
+| <<vector-innerproduct,vector:InnerProductSpace>>
+| A `vector:NormedVectorSpace` equipped with an inner product; induces the norm.
+
+| <<vector-euclidean,vector:EuclideanSpace>>
+| Finite-dimensional `vector:InnerProductSpace` with standard Euclidean structure (orthonormal basis exists).
+|===
+
+
+include::hsml_vector_space.adoc[leveloffset=+1]
+
+include::hsml_normed_vector_space.adoc[leveloffset=+1]
+
+include::hsml_inner_product_space.adoc[leveloffset=+1]
+
+include::hsml_euclidian_space.adoc[leveloffset=+1]
