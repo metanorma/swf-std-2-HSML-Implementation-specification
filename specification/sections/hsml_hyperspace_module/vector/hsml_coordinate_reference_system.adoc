@@ -1,0 +1,39 @@
+[[vector-crs]]
+=== Class: `vector:CoordinateReferenceSystem`
+
+.Property Definition: *Class summary*
+[cols="2,4"]
+|===
+| IRI | identifier:[https://www.spatialwebfoundation.org/ns/hsml/hyperspace/vector#CoordinateReferenceSystem]
+| JSON name | coordinateReferenceSystem
+| Subclass Of | *(none)*
+| Definition | First-class description of a Coordinate Reference System that grounds a `vector:VectorSpace`.
+| Usage Notes | Wraps the authoritative registry identifier (e.g., EPSG URI) and optional authority/code metadata; reusable across spaces.
+|===
+
+.Properties Summary for `vector:CoordinateReferenceSystem`
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<vector-crs-property-identifier,vector:crsIdentifier>>
+| crsIdentifier
+| Authoritative registry IRI that identifies the CRS (e.g., an EPSG URI form).
+| @id (IRI)
+| 1..1
+| Mandatory
+
+| <<vector-crs-property-authority,vector:authorityName>>
+| authorityName
+| Human-readable authority (e.g., `"EPSG"`).
+| xsd:string
+| 0..1
+| Optional
+
+| <<vector-crs-property-code,vector:code>>
+| code
+| Authority code string (e.g., `"4978"`).
+| xsd:string
+| 0..1
+| Optional
+|===
