@@ -24,3 +24,23 @@ They are essential for modeling positions, transformations, embeddings, and high
   - `vector:EuclideanSpace` (a finite-dimensional inner product space with standard norm).  
 * **Compatibility** — Vector Spaces integrate seamlessly with GeoSPARQL geometries, embeddings, and CRS-defined coordinates.  
 * **Semantic Portability** — Engines can reason about dimension, basis, and operations independently of storage format.
+
+.Properties Summary for `vector:VectorSpace`
+[cols="2,2,4,2,1,2",options="header"]
+|===
+| Predicate | JSON-LD name | Description | Range | Cardinality | Requirement Level
+
+| <<vector-vectorspace-property-hasCRS,vector:hasCRS>>
+| hasCRS
+| Binds the vector space to an ISO 19111 CRS using a registry IRI (e.g., EPSG). Provides grounded axes, units, and reference frame for interoperable coordinates.
+| @id (IRI)
+| 1..1
+| Mandatory
+
+| <<vector-vectorspace-property-dimension,vector:dimension>>
+| dimension
+| Declares the finite dimensionality (e.g., 2 or 3) of the vector space for validation and reasoning.
+| xsd:integer
+| 1..1
+| Mandatory
+|===

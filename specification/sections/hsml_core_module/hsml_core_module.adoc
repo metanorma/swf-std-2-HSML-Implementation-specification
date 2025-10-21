@@ -102,8 +102,6 @@ include::hsml_domain.adoc[leveloffset=+1]
 
 include::hsml_concept.adoc[leveloffset=+1]
 
-include::hsml_thing.adoc[leveloffset=+1]
-
 include::hsml_spatial_feature.adoc[leveloffset=+1]
 
 include::hsml_role.adoc[leveloffset=+1]
